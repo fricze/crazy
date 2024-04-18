@@ -18,6 +18,88 @@
                 }
             }
 
+            @keyframes fade-in {
+                0% {
+                    /* clip-path: circle(50% at 50% 50%); */
+                    clip-path: inset(50%);
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                    clip-path: inset(0%);
+                    /* clip-path: circle(70.7% at 50% 50%); */
+                }
+            }
+
+            @keyframes fade-out {
+                0% {
+                    clip-path: circle(70.7% at 50% 50%);
+                }
+                100% {
+                    opacity: 0;
+                    scale: 3;
+                    clip-path: circle(50% at 50% 50%);
+                }
+            }
+
+            @keyframes slide-from-right {
+                from {
+                    transform: translateX(30px);
+                }
+            }
+
+            @keyframes slide-to-left {
+                to {
+                    transform: translateX(-30px);
+                }
+            }
+
+            ::view-transition-old(root) {
+                animation:
+                    0.8s cubic-bezier(0.4, 0, 1, 1) both fade-out,
+                    0.8s cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+            }
+
+            ::view-transition-new(root) {
+                animation:
+                    0.8s cubic-bezier(0, 0, 0.2, 1) both fade-in,
+                    0.8s cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+                animation-delay: 1s;
+            }
+
+            .view-transition {
+                display: flex;
+                flex-direction: row;
+                position: relative;
+                height: 100vh;
+
+                p:first-child {
+                    position: absolute;
+                    font-size: 8vw;
+                    color: deeppink;
+                }
+
+                p:last-child {
+                    position: absolute;
+                    font-size: 2vw;
+                    width: 60vw;
+                    bottom: 30%;
+                    left: 7%;
+                    color: #fff;
+                }
+
+                &.gallery img {
+                    display: block;
+                }
+
+                img {
+                    display: none;
+                    width: 30vw;
+                    aspect-ratio: 1;
+                    object-fit: cover;
+                }
+            }
+
             .entry-exit {
                 gap: 2vw;
                 row-gap: 2lh;
@@ -50,6 +132,7 @@
                         opacity: 0;
                         rotate: 5deg;
                         display: none;
+                        clip-path: circle(50% at 50% 50%);
                     }
 
                     width: 30vw;
@@ -57,9 +140,12 @@
                     object-fit: cover;
                     transition: all 0.5s;
                     transition-behavior: allow-discrete;
+                    clip-path: circle(70.7% at 50% 50%);
+
                     @starting-style {
-                        opacity: 0;
+                        filter: brightness(2);
                         rotate: 5deg;
+                        clip-path: circle(50% at 50% 50%);
                     }
                 }
             }
@@ -84,12 +170,17 @@
                     width: 30vw;
                     aspect-ratio: 1;
                     object-fit: cover;
+                    clip-path: circle(50% at 50% 50%);
                 }
             }
 
             @keyframes move {
+                0% {
+                    clip-path: circle(50% at 50% 50%);
+                }
                 100% {
                     translate: -100% 50%;
+                    clip-path: circle(70.7% at 50% 50%);
                 }
             }
 
@@ -867,6 +958,43 @@ section {
             <img src="three.webp" />
         </section>
 
+        <section class="view-transition">
+            <p>View Transition</p>
+            <img src="one.webp" />
+            <img src="two.webp" />
+            <img src="three.webp" />
+            <p>
+                Are great and easy way to transition between two different DOM
+                states
+            </p>
+        </section>
+
+        <section>
+            <pre>
+viewTransitionButton.addEventListener("click", () => {
+  document.startViewTransition(() => {
+    viewTransitionContainer.removeChild(viewTransitionButton);
+    viewTransitionContainer.classList.add("gallery");
+  });
+});</pre
+            >
+
+            <pre>
+::view-transition-old(root) {
+  animation:
+    0.8s cubic-bezier(0.4, 0, 1, 1) both fade-out,
+    0.8s cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+  }
+
+::view-transition-new(root) {
+  animation:
+    0.8s cubic-bezier(0, 0, 0.2, 1) both fade-in,
+    0.8s cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+    animation-delay: 1s;
+}</pre
+            >
+        </section>
+
         <section>
             <p>
                 for even more crazy animations and visualizations, run three.js
@@ -918,6 +1046,19 @@ section {
             Array.from(images).forEach((image) => {
                 image.addEventListener("click", (e) => {
                     image.classList.add("removed");
+                });
+            });
+
+            const viewTransitionContainer =
+                document.querySelector(".view-transition");
+
+            const viewTransitionButton = document.querySelector(
+                ".view-transition p:first-child",
+            );
+            viewTransitionButton.addEventListener("click", () => {
+                document.startViewTransition(() => {
+                    viewTransitionContainer.removeChild(viewTransitionButton);
+                    viewTransitionContainer.classList.add("gallery");
                 });
             });
         </script>
