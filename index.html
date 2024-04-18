@@ -7,6 +7,36 @@
                 box-sizing: border-box;
             }
 
+            p {
+                margin: 0;
+                padding: 0;
+            }
+
+            .no-break {
+                white-space: nowrap;
+            }
+
+            svg {
+                height: 1000px;
+                width: 100px;
+            }
+            svg circle#css-motion-path {
+                animation: move-it 5s -2.5s infinite both linear;
+                motion-path: path(
+                    "M50,0 C100,0 100,50 50,50 C0,50 0,100 50,100 C100,100 100,150 50,150 C0,150 0,200 50,200 C100,200 100,250 50,250C0,250 0,300 50,300C100,300 100,350 50,350C0,350 0,400 50,400C100,400 100,450 50,450C0,450 0,500 50,500C100,500 100,550 50,550C0,550 0,600 50,600  C100,600 100,650 50,650    C0,650 0,700 50,700    C100,700 100,750 50,750    C0,750 0,800 50,800    C100,800 100,850 50,850    C0,850 0,900 50,900    C100,900 100,950 50,950    C0,950 0,1000 50,1000    C100,1000 100,1050 50,1050"
+                );
+                offset-path: path(
+                    "M50,0 C100,0 100,50 50,50 C0,50 0,100 50,100 C100,100 100,150 50,150 C0,150 0,200 50,200 C100,200 100,250 50,250C0,250 0,300 50,300C100,300 100,350 50,350C0,350 0,400 50,400C100,400 100,450 50,450C0,450 0,500 50,500C100,500 100,550 50,550C0,550 0,600 50,600  C100,600 100,650 50,650    C0,650 0,700 50,700    C100,700 100,750 50,750    C0,750 0,800 50,800    C100,800 100,850 50,850    C0,850 0,900 50,900    C100,900 100,950 50,950    C0,950 0,1000 50,1000    C100,1000 100,1050 50,1050"
+                );
+            }
+
+            @keyframes move-it {
+                100% {
+                    motion-offset: 100%;
+                    offset-distance: 100%;
+                }
+            }
+
             :root,
             body {
                 scrollbar-gutter: stable;
@@ -15,6 +45,96 @@
                 padding: 0;
                 scrollbar-width: none;
                 font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .contain {
+                contain: strict;
+
+                &:hover {
+                    p {
+                        transition: all 0.7s;
+                        font-size: 8vw;
+                        color: deeppink;
+                        font-weight: 800;
+                        border-left: 20px solid deeppink;
+                        padding-left: 3vw;
+                    }
+
+                    div {
+                        transition: all 0.7s;
+                        translate: 10% -140%;
+                        font-size: 4vw;
+                    }
+                }
+            }
+
+            .user-form {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 1lh 2lh 1lh 2lh max-content;
+                width: 60vw;
+                font-size: 1.4vw;
+                row-gap: 0.5lh;
+                column-gap: 2vw;
+
+                &.custom {
+                    accent-color: deeppink;
+                }
+
+                input[type="radio"] {
+                    width: 16px;
+                }
+
+                fieldset {
+                    grid-column: 3 / 4;
+                    grid-row: 1 / 5;
+
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5lh;
+
+                    div {
+                        display: flex;
+                    }
+                }
+
+                label {
+                    grid-template-rows: subgrid;
+                    display: grid;
+                    grid-row: 1 / 3;
+                    padding: 5px;
+
+                    &:has(input:invalid) {
+                        outline: 2px solid red;
+                        border-radius: 4px;
+
+                        p::after {
+                            content: " (please fill the name)";
+                            font-style: italic;
+                            color: deeppink;
+                        }
+                    }
+
+                    &:has(textarea) {
+                        grid-row: 3 / 5;
+                        grid-column: 1 / 3;
+                    }
+
+                    &:has(input[type="range"]) {
+                        grid-row: 5 / 6;
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    p {
+                        grid-row: 1;
+                    }
+                    textarea,
+                    input {
+                        font-size: 1.4vw;
+                        grid-row: 2;
+                    }
+                }
             }
 
             .info {
@@ -45,7 +165,6 @@
                 animation-range: entry 80% entry 180%;
                 overflow-clip-margin: content-box;
                 overflow: clip;
-                /* clip-path: inset(45% 20% 45% 20%); */
             }
 
             section {
@@ -54,9 +173,13 @@
                 display: grid;
                 place-items: center;
                 scroll-snap-align: start;
-                font-size: 4rem;
+                font-size: 3vw;
                 overflow: hidden;
                 padding: 4vw;
+
+                pre {
+                    font-size: 1.4vw;
+                }
 
                 & > p {
                     max-width: 40ch;
@@ -69,6 +192,7 @@
                 grid-template-columns: repeat(3, 1fr);
                 width: 80vw;
                 row-gap: 1lh;
+                column-gap: 1vw;
 
                 &.rectangle {
                     grid-template-columns: repeat(2, 1fr);
@@ -84,6 +208,27 @@
                 .box {
                     grid-column: span 1;
                     container: box / inline-size;
+                    position: relative;
+
+                    img {
+                        width: 100cqw;
+                        object-fit: cover;
+                        aspect-ratio: 2 / 1;
+
+                        @container (min-width: 700px) {
+                            aspect-ratio: 6 / 1;
+                            position: absolute;
+                            top: -10cqh;
+                            opacity: 0.4;
+                        }
+                    }
+
+                    p {
+                        margin: 0;
+                        padding: 0;
+                        position: relative;
+                        z-index: 1;
+                    }
                 }
 
                 .content {
@@ -111,10 +256,10 @@
                 display: flex;
                 place-items: baseline;
                 flex-direction: column;
-                view-timeline: --subjectReveal block;
+                view-timeline: --subject-reveal block;
 
                 .gap-example {
-                    animation-timeline: --subjectReveal;
+                    animation-timeline: --subject-reveal;
                     gap: 0px;
 
                     animation-name: appear;
@@ -151,8 +296,9 @@
     </head>
     <body>
         <section>
-            <pre>withDefault = x => x ?? „”</pre>
+            <pre>const withDefault = x => x ?? "";</pre>
         </section>
+
         <section>
             <pre>opt.chaining.for.data.not.there</pre>
         </section>
@@ -209,8 +355,9 @@
 
         <section class="big">
             <p>
-                To distance flex/grid elements, just use gap property. no more
-                margins problems! Gap is simple and just works
+                To create a distance between flex / grid elements – just use gap
+                property. No more overlapping margins problems! Gap is simple
+                and just works
             </p>
             <div class="gap-example">
                 <div>block 1</div>
@@ -223,12 +370,14 @@
         <section>
             <p>
                 If your component has to adjust to different containers and
-                places on page, use container queries and container units
+                places on page, use container queries and container units. Font
+                size in <code class="hljs language-css">.box</code> is based on
+                container width.
             </p>
 
             <div class="container">
                 <div class="box">
-                    <div class="content">I'm a .box</div>
+                    <div class="content">I'm just a .box</div>
                 </div>
                 <div class="box">
                     <div class="content">I'm also a .box</div>
@@ -243,9 +392,40 @@
         </section>
 
         <section>
+            <p>You can have fun with layout too!</p>
+
+            <div class="container">
+                <div class="box">
+                    <div class="content">
+                        <img src="./tree.webp" />
+                        <p>I'm just a .box</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="content">
+                        <img src="./tree.webp" />
+                        <p>I'm also a .box</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="content">
+                        <img src="./tree.webp" />
+                        <p>I'm also a .box</p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="content">
+                        <img src="./tree.webp" />
+                        <p>I'm also a .box</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
             <div class="container rectangle">
                 <div class="box">
-                    <div class="content">I'm a .box</div>
+                    <div class="content">I'm just a .box</div>
                 </div>
                 <div class="box">
                     <div class="content">I'm also a .box</div>
@@ -262,39 +442,263 @@
         <section>
             <p>
                 and if you want similar possibilities for older browsers, check
-                out the raven technique
+                out
+                <a
+                    href="https://css-tricks.com/the-raven-technique-one-step-closer-to-container-queries/"
+                    >The Raven Technique</a
+                >
             </p>
+            <pre>
+--breakpoint_wide: 1500px;
+/* Wider than 1500px will be considered wide */
+--breakpoint_medium: 800px;
+/* From 801px to 1500px will be considered medium */
+/* Smaller than or exact 800px will be small */
+--is_wide: clamp(0px,
+  var(--base_size) - var(--breakpoint_wide),
+  1px
+);
+</pre
+            >
         </section>
 
         <section>
-            <p>to make full use of CSS grid, check out subgrid</p>
+            <p>To make full use of CSS grid, check out subgrid</p>
+
+            <form class="user-form">
+                <label>
+                    <p>Name</p>
+                    <input type="text" />
+                </label>
+
+                <label>
+                    <p>Email</p>
+                    <input type="text" />
+                </label>
+
+                <fieldset>
+                    <legend>Sex</legend>
+
+                    <div>
+                        <input
+                            type="radio"
+                            id="male1"
+                            name="gender1"
+                            value="male"
+                            checked
+                        />
+                        <label for="male">Male</label>
+                    </div>
+
+                    <div>
+                        <input
+                            type="radio"
+                            id="female1"
+                            name="gender1"
+                            value="female"
+                        />
+                        <label for="female">Female</label>
+                    </div>
+                </fieldset>
+
+                <label>
+                    <p>Your CV</p>
+                    <textarea></textarea>
+                </label>
+
+                <label>
+                    <p>Provide your age</p>
+                    <input type="range" />
+                </label>
+            </form>
+        </section>
+
+        <section>
+            <p>Use accent-color if you want to customize your form controls</p>
+
+            <form class="user-form custom">
+                <label>
+                    <p>Name</p>
+                    <input type="text" />
+                </label>
+
+                <label>
+                    <p>Email</p>
+                    <input type="text" />
+                </label>
+
+                <fieldset>
+                    <legend>Sex</legend>
+
+                    <div>
+                        <input
+                            type="radio"
+                            id="male"
+                            name="gender"
+                            value="male"
+                            checked
+                        />
+                        <label for="male">Male</label>
+                    </div>
+
+                    <div>
+                        <input
+                            type="radio"
+                            id="female"
+                            name="gender"
+                            value="female"
+                        />
+                        <label for="female">Female</label>
+                    </div>
+                </fieldset>
+
+                <label>
+                    <p>Your CV</p>
+                    <textarea></textarea>
+                </label>
+
+                <label>
+                    <p>Provide your age</p>
+                    <input type="range" />
+                </label>
+            </form>
         </section>
 
         <section>
             <p>
-                or `display: content` for similar „hacky” version, that’s little
-                less elastic, but might be enough for some situations
+                Parent selector <code class="hljs language-css">:has()</code> is
+                a great help if you want to style parent, based on state of
+                children
+            </p>
+
+            <form class="user-form custom">
+                <label>
+                    <p>Name</p>
+                    <input type="text" required />
+                </label>
+
+                <label>
+                    <p>Email</p>
+                    <input type="text" />
+                </label>
+
+                <fieldset>
+                    <legend>Sex</legend>
+
+                    <div>
+                        <input
+                            type="radio"
+                            id="male"
+                            name="gender"
+                            value="male"
+                            checked
+                        />
+                        <label for="male">Male</label>
+                    </div>
+
+                    <div>
+                        <input
+                            type="radio"
+                            id="female"
+                            name="gender"
+                            value="female"
+                        />
+                        <label for="female">Female</label>
+                    </div>
+                </fieldset>
+
+                <label>
+                    <p>Your CV</p>
+                    <textarea></textarea>
+                </label>
+
+                <label>
+                    <p>Provide your age</p>
+                    <input type="range" />
+                </label>
+            </form>
+        </section>
+
+        <section>
+            <p>
+                or `display: contents` for similar „hacky” version, that’s
+                little less elastic, but might be enough for some situations
             </p>
         </section>
 
         <section>
             <p>
-                if your application is huge, and you want to defer rendering,
-                just go with `content-visibility: auto`
+                If your application is huge, and you want to defer rendering of
+                some parts, just go with
+                <code class="hljs language-css">content-visibility: auto</code>
             </p>
+        </section>
+
+        <section>
+            <img src="./content-vis.webp" />
         </section>
 
         <section>
             <p>
-                and if some part of your application updates more often, and has
-                some crazy animations in it, you can `contain: strict`, so
-                browser will know, that this layer should not impact rendering
-                of other layers
+                If some part of your application updates more often than others,
+                and has some crazy animations in it, you can
+                <code class="hljs language-css no-break">contain: strict</code>,
+                so browser will know, that this layer should not impact
+                rendering of other layers
             </p>
         </section>
 
-        <section>
-            <p>to make your animation go on a path, use motion path</p>
+        <section class="contain">
+            <p>This text can change font size, color and border</p>
+            <div>and it doesn't matter to rest of application</div>
+        </section>
+
+        <section class="big">
+            <p>To make your animation go on a path, use motion path</p>
+            <svg viewBox="0 0 100 1000">
+                <path
+                    stroke="#444"
+                    fill="none"
+                    stroke-width="2"
+                    d="M50,0 C100,0 100,50 50,50
+                C0,50 0,100 50,100
+                C100,100 100,150 50,150
+                C0,150 0,200 50,200
+                C100,200 100,250 50,250
+                C0,250 0,300 50,300
+                C100,300 100,350 50,350
+                C0,350 0,400 50,400
+                C100,400 100,450 50,450
+                C0,450 0,500 50,500
+                C100,500 100,550 50,550
+                C0,550 0,600 50,600
+                C100,600 100,650 50,650
+                C0,650 0,700 50,700
+                C100,700 100,750 50,750
+                C0,750 0,800 50,800
+                C100,800 100,850 50,850
+                C0,850 0,900 50,900
+                C100,900 100,950 50,950
+                C0,950 0,1000 50,1000
+                C100,1000 100,1050 50,1050"
+                    id="theMotionPath"
+                />
+                <circle
+                    cx=""
+                    cy=""
+                    r="15"
+                    fill="#45bcde"
+                    id="css-motion-path"
+                />
+                <circle cx="" cy="" r="15" fill="red">
+                    <!-- Define the motion path animation -->
+                    <animateMotion dur="5s" repeatCount="indefinite">
+                        <mpath xlink:href="#theMotionPath" />
+                    </animateMotion>
+                </circle>
+            </svg>
+
+            <p class="sweet">sweet, isn't it?</p>
         </section>
 
         <section>
@@ -324,5 +728,29 @@
                 on separate thread with Offscreen Canvas
             </p>
         </section>
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+        <!-- and it's easy to individually load additional languages -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/css.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+        <!--
+        <script>
+            hljs.highlightAll();
+        </script> -->
+
+        <script>
+            var preTags = document.getElementsByTagName("pre");
+            var size = preTags.length;
+            for (var i = 0; i < size; i++) {
+                preTags[i].innerHTML =
+                    "<code>" + preTags[i].innerHTML + "</code>"; // wrap content of pre tag in code tag
+            }
+            hljs.highlightAll(); // apply highlighting
+        </script>
     </body>
 </html>
