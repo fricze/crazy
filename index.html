@@ -12,14 +12,104 @@
                 padding: 0;
             }
 
+            .dvh {
+                code {
+                    font-size: 2vw;
+                }
+            }
+
+            .entry-exit {
+                gap: 2vw;
+                row-gap: 2lh;
+                grid-template-rows: 2lh max-content;
+                grid-template-columns: 1fr 1fr 1fr;
+
+                p {
+                    grid-column: 1 / 3;
+                }
+
+                p,
+                button {
+                    grid-row: 1 / 2;
+                }
+
+                button {
+                    cursor: pointer;
+                    font-size: 2vw;
+                    white-space: nowrap;
+                    padding: 0.5lh;
+                    background: #fff;
+                    border-radius: 5px;
+                }
+
+                img {
+                    grid-row: 2 / 3;
+                    cursor: pointer;
+
+                    &.removed {
+                        opacity: 0;
+                        rotate: 5deg;
+                        display: none;
+                    }
+
+                    width: 30vw;
+                    aspect-ratio: 1;
+                    object-fit: cover;
+                    transition: all 0.5s;
+                    transition-behavior: allow-discrete;
+                    @starting-style {
+                        opacity: 0;
+                        rotate: 5deg;
+                    }
+                }
+            }
+
+            .horizontal {
+                display: flex;
+                gap: 2vw;
+                height: 150dvh;
+                view-timeline-name: --section-pin-tl;
+                view-timeline-axis: block;
+
+                p {
+                    white-space: nowrap;
+                    place-self: baseline;
+                }
+
+                img {
+                    translate: 100% -50%;
+                    animation: linear move forwards;
+                    animation-timeline: --section-pin-tl;
+                    animation-range: contain 0% contain 100%;
+                    width: 30vw;
+                    aspect-ratio: 1;
+                    object-fit: cover;
+                }
+            }
+
+            @keyframes move {
+                100% {
+                    translate: -100% 50%;
+                }
+            }
+
             .no-break {
                 white-space: nowrap;
+            }
+
+            .sweet {
+                place-self: center;
+                color: deeppink;
+                text-decoration: underline;
+                text-decoration-thickness: 10px;
             }
 
             svg {
                 height: 1000px;
                 width: 100px;
+                place-self: center;
             }
+
             svg circle#css-motion-path {
                 animation: move-it 5s -2.5s infinite both linear;
                 motion-path: path(
@@ -144,19 +234,15 @@
                 position: relative;
                 z-index: 5;
                 padding: 0.5lh;
+                place-self: center;
+                animation: linear switch-color both;
+                animation-timeline: --revealing-image;
+                animation-range: entry 80% entry 180%;
             }
 
-            section:has(.revealing-image, .clipped-image) {
+            section:has(.clipped-image) {
                 view-timeline-name: --revealing-image;
                 view-timeline-axis: block;
-            }
-
-            .revealing-image {
-                animation: linear reveal both;
-                animation-timeline: --revealing-image;
-                animation-range: entry 0% entry 100%;
-                overflow-clip-margin: content-box;
-                overflow: clip;
             }
 
             .clipped-image {
@@ -165,6 +251,7 @@
                 animation-range: entry 80% entry 180%;
                 overflow-clip-margin: content-box;
                 overflow: clip;
+                place-self: center;
             }
 
             section {
@@ -202,6 +289,7 @@
                 &:not(.rectangle) {
                     .box:first-child {
                         grid-column: span 3;
+                        color: deeppink;
                     }
                 }
 
@@ -261,6 +349,8 @@
                 .gap-example {
                     animation-timeline: --subject-reveal;
                     gap: 0px;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
 
                     animation-name: appear;
                     animation-fill-mode: both;
@@ -275,9 +365,10 @@
                 }
 
                 to {
-                    gap: 10vw;
+                    gap: 30vw;
                     translate: 0 100dvh;
                     background: #999;
+                    font-size: 5vw;
                 }
             }
 
@@ -290,6 +381,18 @@
                     opacity: 1;
                     translate: 0% 70%;
                     clip-path: inset(0% 0% 0% 0%);
+                }
+            }
+
+            @keyframes switch-color {
+                0% {
+                    color: #333;
+                }
+                50% {
+                    color: deeppink;
+                }
+                100% {
+                    opacity: 0;
                 }
             }
         </style>
@@ -341,16 +444,17 @@
             </p>
         </section>
 
-        <section>
+        <section class="dvh">
             <p>
-                To make sure, you’re element has full window height, even on
-                mobile with controls visible, use dvh unit
+                To make sure, your element has full window height, even on
+                mobile with controls visible, use dvh unit. It’s what I’m using
+                here, so it will be viewable even on mobile.
             </p>
             <pre>
-                section {
-                  height: 100dvh;
-                }
-            </pre>
+section {
+  height: 100dvh;
+}</pre
+            >
         </section>
 
         <section class="big">
@@ -698,7 +802,7 @@
                 </circle>
             </svg>
 
-            <p class="sweet">sweet, isn't it?</p>
+            <p class="sweet">sweet, isn’t it?</p>
         </section>
 
         <section>
@@ -707,7 +811,7 @@
 
         <section class="big">
             <p>
-                mask and clips are great idea if you want to hide part of your
+                Masks and clips are great idea if you want to hide part of your
                 element
             </p>
 
@@ -720,6 +824,47 @@
                 class="clipped-image"
             />
             <p class="info">and, maybe, show it later with animation</p>
+        </section>
+
+        <section>
+            <p>
+                All this is synchronized with awesome
+                <code class="hljs language-css no-break">view-timeline</code>
+                possibilites. This and
+                <code class="hljs language-css no-break">scroll-timeline</code>
+                are new APIs to sync animation with scroll position.
+            </p>
+        </section>
+
+        <section class="horizontal">
+            <p>This really is fun!</p>
+            <img src="one.webp" />
+            <img src="two.webp" />
+            <img src="three.webp" />
+        </section>
+
+        <section class="entry-exit">
+            <p>
+                With
+                <code class="hljs language-css no-break">@starting-style</code>
+                I can add styles to element just before I add it to DOM and
+                transition easily.
+            </p>
+            <button>Add image</button>
+        </section>
+
+        <section class="entry-exit">
+            <p>
+                <code class="hljs language-css no-break"
+                    >transition-behavior: allow-discrete;</code
+                >
+                allows us to transition element to
+                <code class="hljs language-css no-break">display: none</code> to
+                remove it from DOM tree at the end of animation.
+            </p>
+            <img src="one.webp" />
+            <img src="two.webp" />
+            <img src="three.webp" />
         </section>
 
         <section>
@@ -751,6 +896,30 @@
                     "<code>" + preTags[i].innerHTML + "</code>"; // wrap content of pre tag in code tag
             }
             hljs.highlightAll(); // apply highlighting
+        </script>
+
+        <script>
+            let idx = 0;
+            const imgs = ["one", "two", "three", "four"];
+
+            const button = document.querySelector(".entry-exit button");
+            const images = document.querySelectorAll(".entry-exit img");
+
+            button.addEventListener("click", () => {
+                const img = document.createElement("img");
+                img.src = `${imgs[idx]}.webp`;
+                idx++;
+                if (idx >= 3) {
+                    idx = 0;
+                }
+                document.querySelector(".entry-exit").appendChild(img);
+            });
+
+            Array.from(images).forEach((image) => {
+                image.addEventListener("click", (e) => {
+                    image.classList.add("removed");
+                });
+            });
         </script>
     </body>
 </html>
