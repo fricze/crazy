@@ -583,6 +583,10 @@
             }
 
             section {
+                &.fullscreen {
+                    padding: 0;
+                }
+
                 contain: strict;
                 width: 100%;
                 height: 100dvh;
@@ -1593,9 +1597,18 @@ text-decoration-skip-ink: none;</pre
 
         <section>
             <p>
-                for even more crazy animations and visualizations, run three.js
+                For even more crazy animations and visualizations, run three.js
                 on separate thread with Offscreen Canvas
             </p>
+        </section>
+
+        <section class="fullscreen">
+            <iframe
+                style="width: 100%; height: 100dvh; border: 0"
+                width="100%"
+                height="100%"
+                src="https://three-offscreen.vercel.app/"
+            ></iframe>
         </section>
 
         <section class="custom-search">
