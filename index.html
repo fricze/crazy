@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Web Dev for 2024</title>
+        <style id="layers"></style>
         <style>
             * {
                 box-sizing: border-box;
@@ -18,6 +19,71 @@
                 }
             }
 
+            #switch-layers {
+                cursor: pointer;
+            }
+
+            @layer basic {
+                .balance {
+                    &.decoration {
+                        div {
+                            p {
+                                text-decoration: underline;
+                                text-underline-offset: 5px;
+                                text-decoration-color: gray;
+                                text-decoration-thickness: 0.25lh;
+                                text-decoration-skip-ink: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+            @layer crazy {
+                .balance {
+                    &.decoration {
+                        div {
+                            p {
+                                text-decoration: underline;
+                                text-underline-offset: 5px;
+                                text-decoration-color: deeppink;
+                                text-decoration-thickness: 0.5lh;
+                                text-decoration-skip-ink: none;
+
+                                &:nth-child(2) {
+                                    text-decoration-style: wavy;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .balance {
+                &.decoration {
+                    div {
+                        p:nth-child(2) {
+                            text-decoration-thickness: 0.125lh;
+                        }
+                    }
+                }
+
+                div {
+                    width: 80vw;
+                    display: flex;
+                    gap: 3vw;
+                    font-size: 1.6vw;
+                    p:nth-child(2) {
+                        text-wrap: balance;
+                        line-height: 1.3;
+                    }
+
+                    p {
+                        line-height: 1.6;
+                    }
+                }
+            }
+
             .custom-search {
                 font-size: 2vw;
                 display: flex;
@@ -29,7 +95,8 @@
                 input {
                     margin-top: 0.5lh;
                     font-size: 2vw;
-                    height: 1lh;
+                    height: 1.5lh;
+                    padding: 0.25lh;
                 }
             }
 
@@ -97,6 +164,12 @@
                     position: absolute;
                     font-size: 8vw;
                     color: deeppink;
+                    cursor: pointer;
+
+                    &:hover {
+                        text-decoration: underline;
+                        text-underline-offset: 20px;
+                    }
                 }
 
                 p:last-child {
@@ -106,10 +179,14 @@
                     bottom: 30%;
                     left: 7%;
                     color: #fff;
+                    text-shadow: 1px 1px 1px #333;
                 }
 
-                &.gallery img {
-                    display: block;
+                &.gallery {
+                    gap: 2vw;
+                    img {
+                        display: block;
+                    }
                 }
 
                 img {
@@ -498,7 +575,7 @@
                 }
                 100% {
                     opacity: 1;
-                    translate: 0% 70%;
+                    translate: 0% 90dvh;
                     clip-path: inset(0% 0% 0% 0%);
                 }
             }
@@ -655,25 +732,25 @@ section {
             <div class="container">
                 <div class="box">
                     <div class="content">
-                        <img src="./tree.webp" />
+                        <img src="./tree.webp" loading="lazy" />
                         <p>I'm just a .box</p>
                     </div>
                 </div>
                 <div class="box">
                     <div class="content">
-                        <img src="./tree.webp" />
+                        <img src="./tree.webp" loading="lazy" />
                         <p>I'm also a .box</p>
                     </div>
                 </div>
                 <div class="box">
                     <div class="content">
-                        <img src="./tree.webp" />
+                        <img src="./tree.webp" loading="lazy" />
                         <p>I'm also a .box</p>
                     </div>
                 </div>
                 <div class="box">
                     <div class="content">
-                        <img src="./tree.webp" />
+                        <img src="./tree.webp" loading="lazy" />
                         <p>I'm also a .box</p>
                     </div>
                 </div>
@@ -893,7 +970,7 @@ section {
         </section>
 
         <section>
-            <img src="./content-vis.webp" />
+            <img src="./content-vis.webp" loading="lazy" />
         </section>
 
         <section>
@@ -970,12 +1047,13 @@ section {
             </p>
 
             <img
-                src="https://scroll-driven-animations.style/shared/img/photo-1610570426407-efa770f9d31a.jpeg"
+                src="./bear.webp"
                 alt=""
                 title=""
                 width="1080"
                 height="720"
                 class="clipped-image"
+                loading="lazy"
             />
             <p class="info">and, maybe, show it later with animation</p>
         </section>
@@ -992,9 +1070,9 @@ section {
 
         <section class="horizontal">
             <p>This really is fun!</p>
-            <img src="one.webp" />
-            <img src="two.webp" />
-            <img src="three.webp" />
+            <img src="one.webp" loading="lazy" />
+            <img src="two.webp" loading="lazy" />
+            <img src="three.webp" loading="lazy" />
         </section>
 
         <section class="entry-exit">
@@ -1007,6 +1085,17 @@ section {
             <button>Add image</button>
         </section>
 
+        <section>
+            <pre>
+// This style is applied to element just before it appears in DOM
+@starting-style {
+  filter: brightness(2);
+  rotate: 5deg;
+  clip-path: circle(50% at 50% 50%);
+}</pre
+            >
+        </section>
+
         <section class="entry-exit">
             <p>
                 <code class="hljs language-css no-break"
@@ -1016,16 +1105,16 @@ section {
                 <code class="hljs language-css no-break">display: none</code> to
                 remove it from DOM tree at the end of animation.
             </p>
-            <img src="one.webp" />
-            <img src="two.webp" />
-            <img src="three.webp" />
+            <img src="one.webp" loading="lazy" />
+            <img src="two.webp" loading="lazy" />
+            <img src="three.webp" loading="lazy" />
         </section>
 
         <section class="view-transition">
             <p>View Transition</p>
-            <img src="one.webp" />
-            <img src="two.webp" />
-            <img src="three.webp" />
+            <img src="one.webp" loading="lazy" />
+            <img src="two.webp" loading="lazy" />
+            <img src="three.webp" loading="lazy" />
             <p>
                 Are great and easy way to transition between two different DOM
                 states
@@ -1056,6 +1145,167 @@ viewTransitionButton.addEventListener("click", () => {
     animation-delay: 1s;
 }</pre
             >
+        </section>
+
+        <section>
+            <p>
+                By the way: all images you’re seeing are <code>.webp</code> with
+                lazy loading. I’m using format that allows the best optimization
+                and lazy loading. Images are light and if you don’t see images,
+                they’re not loaded at all!
+            </p>
+            <pre>
+&lt;img src=&quot;./tree.webp&quot; loading=&quot;lazy&quot; /&gt;</pre
+            >
+        </section>
+
+        <section class="balance">
+            <p>
+                To make my titles look nice on the page, I’m using
+                <code class="hljs language-css">text-wrap: balance</code>.
+            </p>
+            <div>
+                <p>
+                    This title is a normal, but a little long title, maybe from
+                    some local newspaper
+                </p>
+                <p>
+                    This has to be from some proper media! Look how balanced and
+                    tidy it is!
+                </p>
+            </div>
+        </section>
+
+        <section class="balance decoration">
+            <p>
+                To control this underlines I don't need any borders nor
+                <code class="hljs language-css">:before</code> elements. It's
+                just <code class="hljs language-css">text-decoration</code>
+            </p>
+            <pre class="hljs language-css">
+text-decoration: underline;
+text-underline-offset: 5px;
+text-decoration-color: gray;
+text-decoration-thickness: 0.25lh;
+text-decoration-skip-ink: none;</pre
+            >
+            <div>
+                <p>
+                    This title is a normal, but a little long title, maybe from
+                    some local newspaper
+                </p>
+                <p>
+                    This has to be from some proper media! Look how balanced and
+                    tidy it is!
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                Because I’m lazy a lot of elements here do not have any classes.
+                I’m just using native CSS nesting.
+            </p>
+            <pre class="hljs language-css">
+.balance {
+    &.decoration {
+        div {
+            p:nth-child(2) {
+                text-decoration-color: deeppink;
+                text-decoration-style: solid;
+                text-decoration-thickness: 0.125lh;
+            }
+
+            p {
+                text-decoration: underline;
+                text-underline-offset: 5px;
+                text-decoration-color: gray;
+                text-decoration-thickness: 0.25lh;
+                text-decoration-skip-ink: none;
+            }
+        }
+    }
+}</pre
+            >
+        </section>
+
+        <section>
+            <p>
+                Is it the best, most performant and maintainable solution for
+                all codebases? Nope. Does it fulfill my goals for this app?
+                Sure! Know your target ;)
+            </p>
+            <pre class="hljs language-css">
+.balance {
+    &.decoration {
+        div {
+            p:nth-child(2) {
+                text-decoration-color: deeppink;
+                text-decoration-style: solid;
+                text-decoration-thickness: 0.125lh;
+            }
+        ...
+        }
+    }
+}</pre
+            >
+        </section>
+
+        <section>
+            <p>
+                But even for small projects, it will become chaos in no time!
+                What then? Then I can use
+                <code class="hljs language-css">@layers</code>
+            </p>
+        </section>
+
+        <section class="balance decoration">
+            <p></p>
+            <pre class="hljs language-css">
+@layer basic {
+  .balance {
+      &.decoration {
+          div {
+              p {
+                  text-decoration-color: gray;
+                  text-decoration-thickness: 0.125lh;
+              }
+          }
+      }
+  }
+}
+
+@layer crazy {
+  .balance {
+      &.decoration {
+          div {
+              p {
+                  text-decoration-color: deeppink;
+                  text-decoration-thickness: 0.25lh;
+              }
+          }
+      }
+  }
+}
+</pre
+            >
+        </section>
+
+        <section class="balance decoration">
+            <pre id="switch-layers" class="hljs language-css">
+@layer crazy, basic;
+</pre
+            >
+            <div>
+                <p>
+                    This title is a normal, but a little long title, maybe from
+                    some local newspaper
+                </p>
+                <p>
+                    This has to be from some proper media! Look how balanced and
+                    tidy it is!
+                </p>
+            </div>
         </section>
 
         <section>
@@ -1098,7 +1348,7 @@ viewTransitionButton.addEventListener("click", () => {
 
         <section>
             <pre class="hljs language-javascript">
-const ranges = queries.map(() => {
+const ranges = queries.map(({ el, str }, index) => {
   const range = new Range();
   range.setStart(el, index);
   range.setEnd(el, index + str.length);
@@ -1251,6 +1501,21 @@ CSS.highlights.set("search-results", searchResultsHighlight);
             };
             query.addEventListener("input", onInput);
             onInput();
+
+            let layer = true;
+
+            document
+                .querySelector("#switch-layers")
+                .addEventListener("click", (e) => {
+                    const content = layer
+                        ? "@layer crazy, basic;"
+                        : "@layer basic, crazy;";
+
+                    layer = !layer;
+
+                    document.querySelector("style#layers").innerHTML = content;
+                    e.target.innerHTML = content;
+                });
         </script>
     </body>
 </html>
