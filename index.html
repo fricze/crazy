@@ -792,6 +792,20 @@ result === {
         </section>
 
         <section class="dvh">
+            <p>How did I create this paging effect? Easy: CSS Scroll Snap</p>
+            <pre>
+:root {
+  scrollbar-gutter: stable;
+  scroll-snap-type: y mandatory;
+}
+
+section {
+  scroll-snap-align: start;
+}</pre
+            >
+        </section>
+
+        <section class="dvh">
             <p>
                 To make sure, your element has full window height, even on
                 mobile with controls visible, use dvh unit. It’s what I’m using
