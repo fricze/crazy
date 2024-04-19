@@ -13,6 +13,81 @@
                 counter-reset: checked-sum, unchecked-sum;
             }
 
+            .news {
+                &.dynamic {
+                    div {
+                        flex-direction: column;
+                    }
+
+                    ul {
+                        flex-basis: 60vh;
+                        overflow: auto;
+                    }
+                }
+
+                .new {
+                    color: deeppink;
+                }
+
+                &.grouped {
+                    li:first-child {
+                        border: none;
+                        text-transform: uppercase;
+                        font-weight: bold;
+                    }
+                }
+
+                &.reversed {
+                    ul {
+                        flex-direction: column-reverse;
+                        justify-content: flex-end;
+
+                        li {
+                            &:last-child {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+
+                &:not(.reversed) {
+                    ul {
+                        li {
+                            &:first-child {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+
+                div {
+                    display: flex;
+                    flex-direction: row;
+                    font-size: 1.8vw;
+                    gap: 2vw;
+
+                    ul,
+                    li {
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5lh;
+                    }
+
+                    li {
+                        padding: 0.5lh;
+                        border: 1px solid #333;
+                        border-radius: 5px;
+                    }
+
+                    ul {
+                        flex-basis: 33%;
+                    }
+                }
+            }
+
             /* counter code */
 
             .counter-grid {
@@ -98,6 +173,26 @@
                     p {
                         padding: 0.5lh;
                         border-bottom: 5px solid #333;
+                    }
+                }
+            }
+
+            .news {
+                button {
+                    align-self: flex-end;
+                    cursor: pointer;
+                    font-size: 2vw;
+                    white-space: nowrap;
+                    padding: 0.5lh;
+                    background: #fff;
+                    border-radius: 5px;
+                    color: deeppink;
+                    transition: 0.1s cubic-bezier(0.4, 0, 1, 1);
+                    margin-top: 2lh;
+
+                    &:hover {
+                        filter: brightness(1.3);
+                        box-shadow: 1px 1px 3px #333;
                     }
                 }
             }
@@ -241,14 +336,12 @@
 
             @keyframes fade-in {
                 0% {
-                    /* clip-path: circle(50% at 50% 50%); */
                     clip-path: inset(50%);
                     opacity: 0;
                 }
                 100% {
                     opacity: 1;
                     clip-path: inset(0%);
-                    /* clip-path: circle(70.7% at 50% 50%); */
                 }
             }
 
@@ -373,6 +466,16 @@
                         clip-path: circle(50% at 50% 50%);
                     }
 
+                    &:nth-of-type(1) {
+                        transition-delay: 0ms;
+                    }
+                    &:nth-of-type(2) {
+                        transition-delay: 1000ms;
+                    }
+                    &:nth-of-type(3) {
+                        transition-delay: 2000ms;
+                    }
+
                     width: 30vw;
                     aspect-ratio: 1;
                     object-fit: cover;
@@ -384,6 +487,7 @@
                         filter: brightness(2);
                         rotate: 45deg;
                         clip-path: circle(50% at 50% 50%);
+                        opacity: 0;
                     }
                 }
             }
@@ -583,7 +687,12 @@
             }
 
             section {
+                p:only-child {
+                    font-size: 6vw;
+                }
+
                 &.fullscreen {
+                    content-visibility: auto;
                     padding: 0;
                 }
 
@@ -721,74 +830,343 @@
     </head>
     <body>
         <section>
-            <pre>const withDefault = x => x ?? "";</pre>
-        </section>
-
-        <section>
-            <pre>opt.chaining.for.data.not.there</pre>
-        </section>
-
-        <section>
             <p>
-                `Promise.allSettled` If one of your promises fails… you still
-                can get result from those that suceeded
+                Imagine that you need to gather info from multiple APIs at once.
             </p>
-        </section>
-        <section>
-            <p>
-                and if you want to create promise that might be fulfilled later…
-                just use `Promise.withResolvers`
-            </p>
-        </section>
-
-        <section>
-            <p>
-                if your async actions need synchronization, wrap them in async
-                iterable and collect with `Array.fromAsync`
-            </p>
-        </section>
-
-        <section>
-            <p>
-                and if you need async event bus, there’s a native one in JS!
-                just subclass EventTarget (or use it directly!)
-            </p>
-        </section>
-
-        <section>
-            <p>If you need grouping, just go with Object.groupBy</p>
             <pre class="hljs language-javascript">
-const inventory = [
-  { name: "asparagus", type: "vegetables", quantity: 5 },
-  { name: "bananas", type: "fruit", quantity: 0 },
-  { name: "goat", type: "meat", quantity: 23 },
-  { name: "cherries", type: "fruit", quantity: 5 },
-  { name: "fish", type: "meat", quantity: 22 },
-];
+const news = Promise.all([fetch("first"), fetch("second"), fetch("third")]);</pre
+            >
+        </section>
 
-const result = Object.groupBy(inventory, ({ type }) => type);
-
-result === {
-  vegetables: [
-    { name: 'asparagus', type: 'vegetables', quantity: 5 },
-  ],
-  fruit: [
-    { name: "bananas", type: "fruit", quantity: 0 },
-    { name: "cherries", type: "fruit", quantity: 5 }
-  ],
-  meat: [
-    { name: "goat", type: "meat", quantity: 23 },
-    { name: "fish", type: "meat", quantity: 22 }
-  ]
-}</pre
+        <section>
+            <p>But one of them fails and destroys everything...</p>
+            <pre>
+const news = Promise.all([resolve(["data"]), reject(new Error("no data!")), resolve(["data"])]);
+news === Promise {&lt;rejected&gt;: Error("no data!")}
+</pre
             >
         </section>
 
         <section>
             <p>
-                and if you’re writing React, you may find these methods useful:
-                .toSorted .toReversed .with .toSpliced
+                Fix it easily with
+                <code class="hljs language-javascript">Promise.allSettled</code>
             </p>
+            <pre>
+const news = Promise.allSettled([resolve(["data"]), reject(new Error("no data!")), resolve(["data"])]);
+news === [["data"], "no data!", ["data"]]
+</pre
+            >
+        </section>
+
+        <section>
+            <p>
+                and to safely access data that can be missing use
+                <b>optional chaining</b> and <b>nullish coalescing</b>.
+            </p>
+
+            <pre class="hljs language-javascript">
+const news = newsData.map(article => {
+  const lead = article?.title ?? "no data";
+  const content = article?.content ?? "no data";
+
+  return {
+    lead,
+    content,
+  }
+});</pre
+            >
+        </section>
+
+        <section class="news">
+            <div>
+                <ul>
+                    <li>
+                        Google worker says the company is 'silencing our voices'
+                        after dozens are fired
+                    </li>
+
+                    <li>
+                        Where gun violence is common, some students say physical
+                        safety is a top concern
+                    </li>
+
+                    <li>
+                        What we know so far about Israel's strike on Iran — and
+                        what could happen next
+                    </li>
+                </ul>
+
+                <ul>
+                    <li>No data</li>
+                </ul>
+
+                <ul>
+                    <li>
+                        Tesla recalls Cybertruck over sticky problem. Blame it
+                        on — yes — soap
+                    </li>
+
+                    <li>Middle East crisis — explained</li>
+
+                    <li>
+                        Amsterdam was flooded with tourists in 2023, so it won't
+                        allow any more hotels
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                If you're writing React app, and want to, for example, reverse
+                data in your array use <code>Array.prototype.toReversed()</code>
+            </p>
+            <pre>
+const [articles, setArticles] = useState([]);
+
+const onReverseHandler = () => setArticles(articles => articles.toReversed());</pre
+            >
+        </section>
+
+        <section class="news to-reverse">
+            <button>Reverse!</button>
+            <div>
+                <ul>
+                    <li>
+                        Google worker says the company is 'silencing our voices'
+                        after dozens are fired
+                    </li>
+
+                    <li>
+                        Where gun violence is common, some students say physical
+                        safety is a top concern
+                    </li>
+
+                    <li>
+                        What we know so far about Israel's strike on Iran — and
+                        what could happen next
+                    </li>
+                </ul>
+
+                <ul>
+                    <li>No data</li>
+                </ul>
+
+                <ul>
+                    <li>
+                        Tesla recalls Cybertruck over sticky problem. Blame it
+                        on — yes — soap
+                    </li>
+
+                    <li>Middle East crisis — explained</li>
+
+                    <li>
+                        Amsterdam was flooded with tourists in 2023, so it won't
+                        allow any more hotels
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                Or <code>Array.prototype.with()</code> to replace particular
+                element in array.
+            </p>
+            <pre>
+const [articles, setArticles] = useState([]);
+
+const onPutArticle = (idx, lead) => setArticles(articles => articles.with(idx, { lead }));</pre
+            >
+        </section>
+
+        <section class="news replace">
+            <button>Replace!</button>
+            <div>
+                <ul>
+                    <li class="new">
+                        Microsoft's VASA-1 can deepfake a person with one photo
+                        and one audio track
+                    </li>
+
+                    <li>
+                        Where gun violence is common, some students say physical
+                        safety is a top concern
+                    </li>
+
+                    <li>
+                        What we know so far about Israel's strike on Iran — and
+                        what could happen next
+                    </li>
+                </ul>
+
+                <ul>
+                    <li>No data</li>
+                </ul>
+
+                <ul>
+                    <li>
+                        Tesla recalls Cybertruck over sticky problem. Blame it
+                        on — yes — soap
+                    </li>
+
+                    <li>Middle East crisis — explained</li>
+
+                    <li>
+                        Amsterdam was flooded with tourists in 2023, so it won't
+                        allow any more hotels
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                All those methods return new version of original array. All safe
+                to use with React state changes, where you always need new
+                object.
+            </p>
+            <pre>
+Array.prototype.toSorted()
+Array.prototype.toReversed()
+Array.prototype.toSpliced()
+Array.prototype.with()</pre
+            >
+        </section>
+
+        <section>
+            <p>
+                If you need to group your articles just use
+                <code>Object.groupBy</code>
+            </p>
+            <pre>
+const articlesByTopic = Object.groupBy(articles, ({ topic }) => topic);</pre
+            >
+        </section>
+
+        <section class="news grouped">
+            <div>
+                <ul>
+                    <li>Tech</li>
+                    <li>
+                        Microsoft's VASA-1 can deepfake a person with one photo
+                        and one audio track
+                    </li>
+
+                    <li>
+                        Tesla recalls Cybertruck over sticky problem. Blame it
+                        on — yes — soap
+                    </li>
+                </ul>
+
+                <ul>
+                    <li>National</li>
+                    <li>
+                        Where gun violence is common, some students say physical
+                        safety is a top concern
+                    </li>
+                </ul>
+
+                <ul>
+                    <li>Abroad</li>
+
+                    <li>Middle East crisis — explained</li>
+
+                    <li>
+                        Amsterdam was flooded with tourists in 2023, so it won't
+                        allow any more hotels
+                    </li>
+
+                    <li>
+                        What we know so far about Israel's strike on Iran — and
+                        what could happen next
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                But if your application is not React based, you just want some
+                JS over HTML, and need to handle async events, try native
+                <code class="hljs language-javascript">EventTarget</code>.
+            </p>
+            <pre>
+class Articles extends EventTarget {
+  constructor(initialValue = []) {
+    super();
+    this.value = initialValue;
+  }
+
+  #emitPushEvent() {
+      this.dispatchEvent(
+          new CustomEvent("valuepush", {
+              detail: this.value[this.value.length - 1],
+          }),
+      );
+  }
+
+  addArticle({ lead }) {
+      this.value.push({ lead });
+      this.#emitPushEvent();
+  }
+}
+
+const articles = new Articles();
+articles.addEventListener("valuepush", ({ detail }) => { /*...handle DOM update*/ });</pre
+            >
+        </section>
+
+        <section class="news dynamic add-one">
+            <div>
+                <ul>
+                    <li>
+                        Microsoft's VASA-1 can deepfake a person with one photo
+                        and one audio track
+                    </li>
+
+                    <li>
+                        Tesla recalls Cybertruck over sticky problem. Blame it
+                        on — yes — soap
+                    </li>
+                </ul>
+                <button>Get new!</button>
+            </div>
+        </section>
+
+        <section>
+            <p>
+                To synchronize async data and collect them together use
+                <code>Promise.withResolvers()</code> that gives you direct
+                access to Promise API.
+            </p>
+            <pre class="hljs language-javascript">
+Promise.withResolvers() === { promise, resolve, reject }
+
+const asyncArticles = [Promise.withResolvers(), Promise.withResolvers(), Promise.withResolvers()];
+asyncArticles[0].resolve({ lead: "New Article "});
+
+Promise.allSettled(asyncArticles.map({ promise }) => promise)
+    .then(values => { /* update DOM when all are resolved */ });</pre
+            >
+        </section>
+
+        <section class="news dynamic promises">
+            <div>
+                <ul>
+                    <li>
+                        Microsoft's VASA-1 can deepfake a person with one photo
+                        and one audio track
+                    </li>
+
+                    <li>
+                        Tesla recalls Cybertruck over sticky problem. Blame it
+                        on — yes — soap
+                    </li>
+                </ul>
+                <button>Get new!</button>
+            </div>
         </section>
 
         <section class="dvh">
@@ -989,6 +1367,13 @@ section {
         </section>
 
         <section>
+            <p>
+                Check out <code>display: contents</code> for „hacky” version of
+                subgrid, with wider browser support.
+            </p>
+        </section>
+
+        <section>
             <p>Use accent-color if you want to customize your form controls</p>
 
             <form class="user-form custom">
@@ -1096,13 +1481,6 @@ section {
 
         <section>
             <p>
-                or `display: contents` for similar „hacky” version, that’s
-                little less elastic, but might be enough for some situations
-            </p>
-        </section>
-
-        <section>
-            <p>
                 If your application is huge, and you want to defer rendering of
                 some parts, just go with
                 <code class="hljs language-css">content-visibility: auto</code>
@@ -1175,10 +1553,10 @@ section {
 
             <p class="sweet">sweet, isn’t it?</p>
         </section>
-
+        <!--
         <section>
             <p>and scroll-behavior for this nice, smooth scrolling effect to</p>
-        </section>
+        </section> -->
 
         <section class="big">
             <p>
@@ -1222,7 +1600,7 @@ section {
                 I can add styles to element just before I add it to DOM and
                 transition easily.
             </p>
-            <button>Add image</button>
+            <button>Add images</button>
         </section>
 
         <section>
@@ -1352,7 +1730,7 @@ viewTransitionButton.addEventListener("click", () => {
         </section>
 
         <section>
-            <p>No JS autocomplete!</p>
+            <p>Autocomplete without JS!</p>
             <pre>
 &lt;form&gt;
     &lt;label for=&quot;dinosaur-choice&quot;&gt;
@@ -1609,22 +1987,6 @@ text-decoration-skip-ink: none;</pre
             </div>
         </section>
 
-        <section>
-            <p>
-                For even more crazy animations and visualizations, run three.js
-                on separate thread with Offscreen Canvas
-            </p>
-        </section>
-
-        <section class="fullscreen">
-            <iframe
-                style="width: 100%; height: 100dvh; border: 0"
-                width="100%"
-                height="100%"
-                src="https://three-offscreen.vercel.app/"
-            ></iframe>
-        </section>
-
         <section class="custom-search">
             <label
                 >If you need to search within text and mark what you found use
@@ -1680,6 +2042,62 @@ CSS.highlights.set("search-results", searchResultsHighlight);
             >
         </section>
 
+        <section>
+            <p>
+                If all those features are still not enough for your app, you can
+                use Offscreen Canvas! All canvas drawing power on separate
+                thread.
+            </p>
+        </section>
+
+        <section class="fullscreen">
+            <iframe
+                style="width: 100%; height: 100dvh; border: 0"
+                width="100%"
+                height="100%"
+                src="https://three-offscreen.vercel.app/"
+            ></iframe>
+        </section>
+
+        <section>
+            <p>Cool. Now try this in browser different than Chrome...</p>
+        </section>
+
+        <section>
+            <p>How to approach new features?</p>
+        </section>
+
+        <section>
+            <p>New JS features</p>
+        </section>
+
+        <section>
+            <p>
+                Babel with preset-env and module/nomodule pattern for REALLY OLD
+                BROWSER support
+            </p>
+        </section>
+
+        <section>
+            <p>New CSS features</p>
+        </section>
+
+        <section>
+            <p>GSAP / Framer Motion and progressive enhancement</p>
+        </section>
+
+        <section>
+            <p>New HTML features</p>
+        </section>
+
+        <section>
+            <p>Polyfills and progressive enhancement again...</p>
+        </section>
+
+        <section>
+            <p>What will future bring us?</p>
+        </section>
+
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
@@ -1712,13 +2130,11 @@ CSS.highlights.set("search-results", searchResultsHighlight);
             const images = document.querySelectorAll(".entry-exit img");
 
             button.addEventListener("click", () => {
-                const img = document.createElement("img");
-                img.src = `${imgs[idx]}.webp`;
-                idx++;
-                if (idx >= 3) {
-                    idx = 0;
-                }
-                document.querySelector(".entry-exit").appendChild(img);
+                [0, 1, 2].forEach((idx) => {
+                    const img = document.createElement("img");
+                    img.src = `${imgs[idx]}.webp`;
+                    document.querySelector(".entry-exit").appendChild(img);
+                });
             });
 
             Array.from(images).forEach((image) => {
@@ -1826,6 +2242,114 @@ CSS.highlights.set("search-results", searchResultsHighlight);
                     document.querySelector("style#layers").innerHTML = content;
                     e.target.innerHTML = content;
                 });
+
+            class Articles extends EventTarget {
+                constructor(initialValue = []) {
+                    super();
+                    this.value = initialValue;
+                }
+
+                #emitPushEvent() {
+                    this.dispatchEvent(
+                        new CustomEvent("valuepush", {
+                            detail: this.value[this.value.length - 1],
+                        }),
+                    );
+                }
+
+                addArticle({ lead }) {
+                    this.value.push({ lead });
+                    this.#emitPushEvent();
+                }
+            }
+
+            const articles = new Articles();
+            const newsDynamic = document.querySelector(".news.dynamic.add-one");
+
+            const freshArticles = [
+                "Tesla recalls Cybertruck over sticky problem. Blame it on — yes — soap",
+                "Middle East crisis — explained",
+                "Amsterdam was flooded with tourists in 2023, so it won't allow any more hotels",
+            ];
+
+            function* articlesIterator() {
+                let iterationCount = 0;
+
+                while (true) {
+                    yield freshArticles[iterationCount];
+
+                    iterationCount++;
+                    if (iterationCount >= 3) {
+                        iterationCount = 0;
+                    }
+                }
+            }
+
+            const iter = articlesIterator();
+            newsDynamic
+                .querySelector("button")
+                .addEventListener("click", () => {
+                    articles.addArticle({ lead: iter.next().value });
+                });
+
+            articles.addEventListener("valuepush", ({ detail }) => {
+                const article = document.createElement("li");
+                article.innerHTML = detail.lead;
+                newsDynamic.querySelector("ul").prepend(article);
+            });
+
+            const asyncCol = [
+                Promise.withResolvers(),
+                Promise.withResolvers(),
+                Promise.withResolvers(),
+            ];
+
+            Promise.allSettled(asyncCol.map(({ promise }) => promise)).then(
+                (articles) => {
+                    articles
+                        .map(({ value }) => value)
+                        .forEach(({ lead }) => {
+                            const article = document.createElement("li");
+                            article.innerHTML = lead;
+                            document
+                                .querySelector(".news.promises ul")
+                                .prepend(article);
+                        });
+                },
+            );
+
+            class AsyncArticles {
+                constructor(initialValue = []) {
+                    this.value = initialValue;
+                    this.index = 0;
+                }
+
+                addArticle({ lead }) {
+                    const p = asyncCol[this.index];
+                    console.log(p);
+                    p.resolve({ lead });
+                    this.index++;
+                }
+            }
+
+            const async = new AsyncArticles();
+
+            document
+                .querySelector(".news.promises button")
+                .addEventListener("click", () => {
+                    async.addArticle({ lead: iter.next().value });
+                });
+
+            const toRev = document.querySelector(".to-reverse");
+            toRev.addEventListener("click", () =>
+                toRev.classList.toggle("reversed"),
+            );
+
+            const toRep = document.querySelector(".replace");
+            toRep.querySelector("button").addEventListener("click", () => {
+                toRep.querySelector(".new").innerHTML =
+                    "Google worker says the company is 'silencing our voices' after dozens are fired";
+            });
         </script>
     </body>
 </html>
