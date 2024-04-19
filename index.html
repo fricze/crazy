@@ -2,10 +2,59 @@
 <html>
     <head>
         <title>Web Dev for 2024</title>
-        <style id="layers"></style>
+        <style id="layers">
+            @layer crazy, basic;
+        </style>
         <style>
             * {
                 box-sizing: border-box;
+            }
+
+            input#dinosaur-choice {
+                margin-top: 0.5lh;
+                font-size: 2vw;
+                height: 1.5lh;
+                padding: 0.25lh;
+            }
+
+            .dialog-example {
+                button {
+                    cursor: pointer;
+                    font-size: 2vw;
+                    white-space: nowrap;
+                    padding: 0.5lh;
+                    background: #fff;
+                    border-radius: 5px;
+                    color: deeppink;
+                    transition: 0.1s cubic-bezier(0.4, 0, 1, 1);
+                    margin-top: 2lh;
+
+                    &:hover {
+                        filter: brightness(1.3);
+                        box-shadow: 1px 1px 3px #333;
+                    }
+                }
+            }
+            /*   IS-OPEN STATE   */
+            dialog[open] {
+                translate: 0 0;
+            }
+
+            /*   EXIT STATE   */
+            dialog {
+                width: 80vw;
+                transition:
+                    translate 0.7s ease-out,
+                    overlay 0.7s ease-out,
+                    display 0.7s ease-out allow-discrete;
+                translate: 0 100vh;
+            }
+
+            /*   0. BEFORE-OPEN STATE   */
+            @starting-style {
+                dialog[open] {
+                    translate: 0 100vh;
+                }
             }
 
             p {
@@ -234,7 +283,7 @@
 
                     &.removed {
                         opacity: 0;
-                        rotate: 5deg;
+                        rotate: 45deg;
                         display: none;
                         clip-path: circle(50% at 50% 50%);
                     }
@@ -248,7 +297,7 @@
 
                     @starting-style {
                         filter: brightness(2);
-                        rotate: 5deg;
+                        rotate: 45deg;
                         clip-path: circle(50% at 50% 50%);
                     }
                 }
@@ -423,16 +472,15 @@
             }
 
             .info {
-                background: #dddddd96;
-                border: 1px solid #333;
-                border-radius: 5px;
                 position: relative;
                 z-index: 5;
                 padding: 0.5lh;
                 place-self: center;
-                animation: linear switch-color both;
-                animation-timeline: --revealing-image;
-                animation-range: entry 80% entry 180%;
+                translate: 0 -60vh;
+                color: deeppink;
+                /* animation: linear switch-color both;
+                animation-timeline: --revealing-image; */
+                /* animation-range: entry 0% exit 100%; */
             }
 
             section:has(.clipped-image) {
@@ -450,6 +498,7 @@
             }
 
             section {
+                contain: strict;
                 width: 100%;
                 height: 100dvh;
                 display: grid;
@@ -579,18 +628,6 @@
                     clip-path: inset(0% 0% 0% 0%);
                 }
             }
-
-            @keyframes switch-color {
-                0% {
-                    color: #333;
-                }
-                50% {
-                    color: deeppink;
-                }
-                100% {
-                    opacity: 0;
-                }
-            }
         </style>
     </head>
     <body>
@@ -669,7 +706,7 @@ result === {
             <p>
                 To make sure, your element has full window height, even on
                 mobile with controls visible, use dvh unit. It’s what I’m using
-                here, so it will be viewable even on mobile.
+                here, so it will adjust to full height even on mobile.
             </p>
             <pre>
 section {
@@ -1087,10 +1124,10 @@ section {
 
         <section>
             <pre>
-// This style is applied to element just before it appears in DOM
+/* This style is applied to element just before it appears in DOM */
 @starting-style {
   filter: brightness(2);
-  rotate: 5deg;
+  rotate: 45deg;
   clip-path: circle(50% at 50% 50%);
 }</pre
             >
@@ -1108,6 +1145,44 @@ section {
             <img src="one.webp" loading="lazy" />
             <img src="two.webp" loading="lazy" />
             <img src="three.webp" loading="lazy" />
+        </section>
+
+        <section>
+            <p>
+                Maybe you didn’t notice, but I’m using
+                <code class="no-break">rotate: 45deg</code> directly in code. No
+                transform needed! All transform properties now work as
+                individual properties <code>rotate</code>,
+                <code>translate</code> and <code>scale</code>.
+            </p>
+            <pre>
+@starting-style {
+  filter: brightness(2);
+  /* With individual transform properties I can write just: */
+  rotate: 45deg;
+  /* instead of: */
+  transform: rotate(45deg);
+  clip-path: circle(50% at 50% 50%);
+}</pre
+            >
+        </section>
+
+        <section class="dialog-example">
+            <dialog>
+                <p>
+                    <code>@starting-style</code> and
+                    <code>transition-behavior</code> are really helpful to
+                    animate new HTML <code>dialog</code> element. Native modals
+                    in HTML!
+                </p>
+                <form method="dialog">
+                    <button>Nice!</button>
+                </form>
+            </dialog>
+
+            <button onclick="document.querySelector('dialog').showModal()">
+                While we’re at entry/exit animations
+            </button>
         </section>
 
         <section class="view-transition">
@@ -1144,6 +1219,56 @@ viewTransitionButton.addEventListener("click", () => {
     0.8s cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
     animation-delay: 1s;
 }</pre
+            >
+        </section>
+
+        <section>
+            <p>
+                I mentioned native modals with <code>&lt;dialog&gt;</code>. But
+                HTML has more useful elements. For example
+                <code>&lt;datalist&gt;</code>.
+            </p>
+            <form>
+                <label for="dinosaur-choice"
+                    >Pick your favourite dinosaur</label
+                >
+                <input
+                    list="dinosaur-list"
+                    id="dinosaur-choice"
+                    name="dinosaur-choice"
+                />
+
+                <datalist id="dinosaur-list">
+                    <option value="Alvarezsaurus"></option>
+                    <option value="Bonitasaura"></option>
+                    <option value="Camarillasaurus"></option>
+                    <option value="Coelurus"></option>
+                    <option value="Guanlong"></option>
+                </datalist>
+            </form>
+        </section>
+
+        <section>
+            <p>No JS autocomplete!</p>
+            <pre>
+&lt;form&gt;
+    &lt;label for=&quot;dinosaur-choice&quot;&gt;
+        Pick your favourite dinosaur
+    &lt;/label&gt;
+    &lt;input
+        list=&quot;dinosaur-list&quot;
+        id=&quot;dinosaur-choice&quot;
+        name=&quot;dinosaur-choice&quot;
+    /&gt;
+
+    &lt;datalist id=&quot;dinosaur-list&quot;&gt;
+        &lt;option value=&quot;Alvarezsaurus&quot;&gt;&lt;/option&gt;
+        &lt;option value=&quot;Bonitasaura&quot;&gt;&lt;/option&gt;
+        &lt;option value=&quot;Camarillasaurus&quot;&gt;&lt;/option&gt;
+        &lt;option value=&quot;Coelurus&quot;&gt;&lt;/option&gt;
+        &lt;option value=&quot;Guanlong&quot;&gt;&lt;/option&gt;
+    &lt;/datalist&gt;
+&lt;/form&gt;</pre
             >
         </section>
 
@@ -1502,7 +1627,7 @@ CSS.highlights.set("search-results", searchResultsHighlight);
             query.addEventListener("input", onInput);
             onInput();
 
-            let layer = true;
+            let layer = false;
 
             document
                 .querySelector("#switch-layers")
