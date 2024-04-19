@@ -17,6 +17,31 @@
                 padding: 0.25lh;
             }
 
+            .details {
+                div {
+                    border: 5px solid #333;
+                    border-radius: 5px;
+                    width: 80vw;
+                    display: flex;
+                    flex-direction: column;
+                }
+                details {
+                    summary {
+                        background: #ddd;
+                        padding: 0.5lh;
+                        border-bottom: 5px solid #333;
+                        cursor: pointer;
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                    p {
+                        padding: 0.5lh;
+                        border-bottom: 5px solid #333;
+                    }
+                }
+            }
+
             .dialog-example {
                 button {
                     cursor: pointer;
@@ -1172,8 +1197,8 @@ section {
                 <p>
                     <code>@starting-style</code> and
                     <code>transition-behavior</code> are really helpful to
-                    animate new HTML <code>dialog</code> element. Native modals
-                    in HTML!
+                    animate new HTML <code>&lt;dialog&gt;</code> element. Native
+                    modals in HTML! <code>top-layer</code> FTW!
                 </p>
                 <form method="dialog">
                     <button>Nice!</button>
@@ -1270,6 +1295,32 @@ viewTransitionButton.addEventListener("click", () => {
     &lt;/datalist&gt;
 &lt;/form&gt;</pre
             >
+        </section>
+
+        <section class="details">
+            <div>
+                <details name="accordion" open>
+                    <summary>Native accordions are also a thing now!</summary>
+                    <p>
+                        With help of <code>&lt;details&gt;</code> and
+                        <code>&lt;summary&gt;</code>
+                        elements!
+                    </p>
+                </details>
+
+                <details name="accordion">
+                    <summary>
+                        Group <code>&lt;details&gt;</code> elements using
+                        <code>name</code> attribute
+                    </summary>
+                    <p>Only one can be opened at the same time</p>
+                </details>
+
+                <details name="accordion">
+                    <summary>Repeat after me:</summary>
+                    <p>Less JS, less work, smaller bundles!</p>
+                </details>
+            </div>
         </section>
 
         <section>
