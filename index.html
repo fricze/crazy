@@ -12,6 +12,18 @@
                 box-sizing: border-box;
             }
 
+            img[src="fricze.svg"] {
+                height: 50dvh;
+            }
+
+            a {
+                color: deeppink;
+            }
+
+            #switch-layers {
+                user-select: none;
+            }
+
             section.error {
                 color: #fff;
                 font-weight: bold;
@@ -500,7 +512,6 @@
             .horizontal {
                 display: flex;
                 gap: 2vw;
-                height: 150dvh;
                 view-timeline-name: --section-pin-tl;
                 view-timeline-axis: block;
 
@@ -510,24 +521,22 @@
                 }
 
                 img {
-                    translate: 100% -50%;
                     animation: linear move forwards;
                     animation-timeline: --section-pin-tl;
-                    animation-range: contain 0% contain 100%;
+                    animation-range: contain 100% exit 200%;
                     width: 30vw;
                     aspect-ratio: 1;
                     object-fit: cover;
                     clip-path: circle(50% at 50% 50%);
+                    translate: 5vw -10dvh;
+                    opacity: 0.5;
                 }
             }
 
             @keyframes move {
-                0% {
-                    clip-path: circle(50% at 50% 50%);
-                }
-                100% {
-                    translate: -100% 50%;
-                    clip-path: circle(70.7% at 50% 50%);
+                to {
+                    translate: -45vw 200dvh;
+                    opacity: 1;
                 }
             }
 
@@ -594,6 +603,8 @@
             }
 
             .contain {
+                contain: strict;
+
                 &:hover {
                     p {
                         transition: all 0.7s;
@@ -736,14 +747,12 @@
                     padding: 0;
                 }
 
-                contain: strict;
                 width: 100%;
                 height: 100dvh;
                 display: grid;
                 place-items: center;
                 scroll-snap-align: start;
                 font-size: 3vw;
-                overflow: hidden;
                 padding: 4vw;
 
                 pre {
@@ -822,6 +831,10 @@
             }
 
             .big {
+                &:has(.gap-example) {
+                    overflow: hidden;
+                }
+
                 height: 200dvh;
                 display: flex;
                 place-items: baseline;
@@ -867,9 +880,146 @@
                     clip-path: inset(0% 0% 0% 0%);
                 }
             }
+
+            section.whoami {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5lh;
+                align-items: flex-start;
+                p {
+                    font-size: 2vw;
+                    line-height: 1.5;
+                }
+            }
         </style>
     </head>
     <body>
+        <section class="whoami">
+            <p>whoami</p>
+            <p>
+                Andrzej Fricze – Full Stack Dev, currently The HEINEKEN COMPANY
+            </p>
+            <p>
+                started programming in secondary school, professionally around
+                11 years
+            </p>
+            <p>
+                also music producer (<a href="https://www.youtube.com/@23carats"
+                    >yt @23carats</a
+                >)
+            </p>
+            <p>event organizer (meet.js, Kraków JS Conf, Future Conf)</p>
+            <p>
+                fresh Twitch streamer (<a href="https://www.twitch.tv/friczecom"
+                    >Twitch - friczecom</a
+                >)
+            </p>
+            <p>newly married</p>
+        </section>
+
+        <section>
+            <p>Web Platform – 30 years later</p>
+        </section>
+
+        <section>
+            <p>JS appeared in 1995</p>
+        </section>
+
+        <section>
+            <p>CSS first sketch was created in 1994</p>
+        </section>
+
+        <section>
+            <p>HTML initial release was in 1993</p>
+        </section>
+
+        <section>
+            <p>
+                and we used it to create awesome webpages,
+                <a href="https://www.spacejam.com/1996/jam.html"
+                    >like this one</a
+                >, from 1996
+            </p>
+        </section>
+
+        <section>
+            <p>
+                Fast-forward to 2024.
+                <a href="https://www.apple.com/iphone/">See any difference?</a>
+            </p>
+        </section>
+
+        <section>
+            <p>CSS became standard for creating layouts beyond web apps</p>
+        </section>
+
+        <section>
+            <p>
+                You can find flexbox implementations in layout systems for
+                Swift, Clojure, Rust...
+            </p>
+        </section>
+
+        <section>
+            <p>Every new GUI framework is React-like</p>
+        </section>
+
+        <section>
+            <p>
+                V8, JS engine used in Chrome, became inspiration for other
+                technologies, like GraalVM
+            </p>
+        </section>
+
+        <section>
+            <p>
+                Web Platform started small, but it’s availability and low entry
+                barrier made it most popular apps/content platform
+            </p>
+        </section>
+
+        <section>
+            <p>
+                In 2015 ES6 appeared and JS started getting traction as real
+                programming language.
+            </p>
+            <p>
+                Destructuring, modules, classes, let and const, template
+                strings, arrow functions...
+            </p>
+        </section>
+
+        <section>
+            <p>
+                Almost every new programming language has to-JS compiler to make
+                sure someone uses it!
+            </p>
+        </section>
+
+        <section>
+            <p>Web Platform adoption is great example of Worse is Better</p>
+        </section>
+
+        <section>
+            <p>
+                But lastly it’s evolving faster than ever and we’re really
+                making it Better
+            </p>
+        </section>
+
+        <section>
+            <p>
+                So I’ll show you some of the latest features and then I’ll try
+                to explain how to approach them
+            </p>
+        </section>
+
+        <section>
+            <p>Lets go!</p>
+        </section>
+
+        <section></section>
+
         <section>
             <p>
                 Imagine that you need to gather info from multiple APIs at once.
@@ -907,7 +1057,9 @@ news === [["data"], "no data!", ["data"]]
         <section>
             <p>
                 and to safely access data that can be missing use
-                <b>optional chaining</b> and <b>nullish coalescing</b>.
+                <b>optional chaining</b> and <b>nullish coalescing</b> (safe
+                <b>or ||</b>
+                alternative).
             </p>
 
             <pre class="hljs language-javascript">
@@ -1068,9 +1220,9 @@ const onPutArticle = (idx, lead) => setArticles(articles => articles.with(idx, {
 
         <section>
             <p>
-                All those methods return new version of original array. All safe
-                to use with React state changes, where you always need new
-                object.
+                All those methods return new version of array and leave original
+                untouched. All safe to use with React state changes, where you
+                always need new object.
             </p>
             <pre>
 Array.prototype.toSorted()
@@ -1083,7 +1235,7 @@ Array.prototype.with()</pre
         <section>
             <p>
                 If you need to group your articles just use
-                <code>Object.groupBy</code>
+                <code>Object.groupBy</code>. No more lodash!? 🤯
             </p>
             <pre>
 const articlesByTopic = Object.groupBy(articles, ({ topic }) => topic);</pre
@@ -1185,7 +1337,7 @@ articles.addEventListener("valuepush", ({ detail }) => { /*...handle DOM update*
 
         <section>
             <p>
-                To synchronize async data and collect them together use
+                To synchronize async data and collect it together use
                 <code>Promise.withResolvers()</code> that gives you direct
                 access to Promise API.
             </p>
@@ -1217,8 +1369,17 @@ Promise.allSettled(asyncArticles.map({ promise }) => promise)
             </div>
         </section>
 
+        <section></section>
+
+        <section>
+            <p>Let’s make something visual. Today CSS is fun!</p>
+        </section>
+
         <section class="dvh">
-            <p>How did I create this paging effect? Easy: CSS Scroll Snap</p>
+            <p>
+                How did I create this paging effect? Easy: CSS Scroll Snap. It’s
+                tricky at times, but here it works fairly nice
+            </p>
             <pre>
 :root {
   scrollbar-gutter: stable;
@@ -1271,8 +1432,9 @@ section {
         <section>
             <p>
                 If your component has to adjust to different containers and
-                places on page, use container queries and container units. Font
-                size in <code class="hljs language-css">.box</code> is based on
+                places on page, use <b>container queries</b> and
+                <b>container units</b>. Font size in
+                <code class="hljs language-css">.box</code> is based on
                 container width.
             </p>
 
@@ -1358,6 +1520,28 @@ section {
     }
 }</pre
             >
+        </section>
+
+        <section>
+            <iframe
+                height="100%"
+                style="width: 100%"
+                scrolling="no"
+                title="Container Query Calendar"
+                src="https://codepen.io/chriscoyier/embed/jOeBzNN?default-tab="
+                frameborder="no"
+                loading="lazy"
+                allowtransparency="true"
+                allowfullscreen="true"
+            >
+                See the Pen
+                <a href="https://codepen.io/chriscoyier/pen/jOeBzNN">
+                    Container Query Calendar</a
+                >
+                by Chris Coyier (<a href="https://codepen.io/chriscoyier"
+                    >@chriscoyier</a
+                >) on <a href="https://codepen.io">CodePen</a>.
+            </iframe>
         </section>
 
         <section>
@@ -1562,7 +1746,6 @@ section {
 
 /* You can really go detailed with it */
 /* Select section that has only one p and pre element that are siblings */
-
 section:has(p:only-of-type, pre:only-of-type + p:only-of-type) {
     pre {
         place-self: baseline;
@@ -1574,9 +1757,10 @@ section:has(p:only-of-type, pre:only-of-type + p:only-of-type) {
 
         <section>
             <p>
-                If your application is huge, and you want to defer rendering of
-                some parts, just go with
-                <code class="hljs language-css">content-visibility: auto</code>
+                If you want to defer rendering of some parts of your app, just
+                go with
+                <code class="hljs language-css">content-visibility: auto</code>.
+                Part of new <b>containment spec</b>
             </p>
         </section>
 
@@ -1595,10 +1779,10 @@ section:has(p:only-of-type, pre:only-of-type + p:only-of-type) {
 
         <section class="contain">
             <p>This text can change font size, color and border</p>
-            <div>and it doesn't matter to rest of application</div>
+            <div>and size and it doesn't matter to rest of application</div>
         </section>
 
-        <section class="big">
+        <section>
             <p>To make your animation go on a path, use CSS motion path</p>
             <svg viewBox="0 0 100 1000">
                 <path
@@ -1642,7 +1826,8 @@ section:has(p:only-of-type, pre:only-of-type + p:only-of-type) {
                     </animateMotion>
                 </circle>
             </svg>
-
+        </section>
+        <section>
             <p class="sweet">sweet, isn’t it?</p>
         </section>
         <!--
@@ -1650,7 +1835,7 @@ section:has(p:only-of-type, pre:only-of-type + p:only-of-type) {
             <p>and scroll-behavior for this nice, smooth scrolling effect to</p>
         </section> -->
 
-        <section class="big">
+        <section>
             <p>
                 Masks and clips are great idea if you want to hide part of your
                 element
@@ -1665,6 +1850,9 @@ section:has(p:only-of-type, pre:only-of-type + p:only-of-type) {
                 class="clipped-image"
                 loading="lazy"
             />
+        </section>
+
+        <section>
             <p class="info">and, maybe, show it later with animation</p>
         </section>
 
@@ -1684,6 +1872,9 @@ section:has(p:only-of-type, pre:only-of-type + p:only-of-type) {
             <img src="two.webp" loading="lazy" />
             <img src="three.webp" loading="lazy" />
         </section>
+
+        <section></section>
+        <section></section>
 
         <section>
             <pre>
@@ -1733,6 +1924,23 @@ section:has(.clipped-image) {
             <img src="one.webp" loading="lazy" />
             <img src="two.webp" loading="lazy" />
             <img src="three.webp" loading="lazy" />
+        </section>
+
+        <section>
+            <pre>
+img {
+    &.removed {
+        opacity: 0;
+        rotate: 45deg;
+        display: none;
+        clip-path: circle(50% at 50% 50%);
+    }
+
+    object-fit: cover;
+    transition: all 0.5s;
+    transition-behavior: allow-discrete;
+}</pre
+            >
         </section>
 
         <section>
@@ -1925,16 +2133,18 @@ input[type="checkbox"]:checked {
 }
 .totalChecked::after {
     content: counter(checked-sum);
-}
-            </pre>
+}</pre
+            >
         </section>
 
         <section>
             <p>
-                By the way: all images you’re seeing are <code>.webp</code> with
-                lazy loading. <code>.webp</code> allows the best optimization so
-                images are light. With lazy loading if you don’t see images,
-                they’re not loaded at all!
+                By the way: all images you’re seeing are
+                <code class="hljs language-css">.webp</code> with lazy loading.
+                <br /><code class="hljs language-css">.webp</code> allows great
+                optimization so images are light. <br />
+                With <code class="hljs language-css">[loading="lazy"]</code> if
+                you don’t see images, they’re not loaded at all!
             </p>
             <pre>
 &lt;img src=&quot;./tree.webp&quot; loading=&quot;lazy&quot; /&gt;</pre
@@ -2009,9 +2219,8 @@ text-decoration-skip-ink: none;</pre
 
         <section>
             <p>
-                Is it the best, most performant and maintainable solution for
-                all codebases? Nope. Does it fulfill my goals for this app?
-                Sure! Know your target ;)
+                Is it the best solution for all codebases? Probably no. But it
+                fulfills my goals for this app so I’ll use it ;)
             </p>
         </section>
 
@@ -2145,7 +2354,11 @@ CSS.highlights.set("search-results", searchResultsHighlight);
         </section>
 
         <section>
-            <p>Not only caniuse.com. Check out Project Interop!</p>
+            <p>Not only caniuse.com. Check out: Interop Project!</p>
+            <p>
+                For example, container queries got implemented cross-browsers at
+                Interop 2023
+            </p>
         </section>
 
         <section>
@@ -2164,7 +2377,10 @@ CSS.highlights.set("search-results", searchResultsHighlight);
         </section>
 
         <section>
-            <p>GSAP / Framer Motion and progressive enhancement</p>
+            <p>
+                GSAP / Framer Motion and progressive enhancement. Remember to
+                test polyfills!
+            </p>
         </section>
 
         <section>
@@ -2176,7 +2392,56 @@ CSS.highlights.set("search-results", searchResultsHighlight);
         </section>
 
         <section>
-            <p>What will future bring us?</p>
+            <p>What will the future bring us?</p>
+        </section>
+
+        <section>
+            <p>
+                Some of the features I presented are still in implementation.
+                Check out Interop 2024 ;)
+            </p>
+        </section>
+
+        <section>
+            <p>
+                There are interesting (Stage 2) proposals for JS immutable data
+                and pipeline operator. JS is becoming more functional
+            </p>
+        </section>
+
+        <section>
+            <p>
+                There are also proposals for DOM Parts and HTML Template
+                Instantiation. Maybe, someday, React will not be needed anymore
+            </p>
+        </section>
+
+        <section>
+            <p>Quiz Time! bit.ly/ldi24-quiz</p>
+            <img src="qr-quiz.svg" />
+        </section>
+
+        <section>
+            <p>Any last words?</p>
+        </section>
+
+        <section>
+            <p>
+                Try to follow Interop so you, at least, know what features are
+                available cross-browsers
+            </p>
+        </section>
+
+        <section>
+            <p>
+                To learn more about Web Platform details join me on Twitch:
+                twitch.tv/friczecom
+            </p>
+            <img src="fricze.svg" />
+            <p>
+                And see you in 30 years, with bunch of new features to present
+                ;)
+            </p>
         </section>
 
         <link
