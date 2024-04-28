@@ -12,6 +12,12 @@
                 box-sizing: border-box;
             }
 
+            .letsgo {
+                img {
+                    width: 80vw;
+                }
+            }
+
             img[src="fricze.svg"] {
                 height: 50dvh;
             }
@@ -514,10 +520,12 @@
                 gap: 2vw;
                 view-timeline-name: --section-pin-tl;
                 view-timeline-axis: block;
+                position: relative;
 
                 p {
-                    white-space: nowrap;
                     place-self: baseline;
+                    width: 60ch;
+                    position: absolute;
                 }
 
                 img {
@@ -528,7 +536,7 @@
                     aspect-ratio: 1;
                     object-fit: cover;
                     clip-path: circle(50% at 50% 50%);
-                    translate: 5vw -10dvh;
+                    translate: 50vw 0dvh;
                     opacity: 0.5;
                 }
             }
@@ -738,6 +746,12 @@
             }
 
             section {
+                &.image {
+                    img {
+                        width: 100%;
+                    }
+                }
+
                 p:only-child {
                     font-size: 5vw;
                 }
@@ -889,6 +903,7 @@
                 p {
                     font-size: 2vw;
                     line-height: 1.5;
+                    max-width: 80ch;
                 }
             }
         </style>
@@ -896,6 +911,7 @@
     <body>
         <section class="whoami">
             <p>whoami</p>
+            <p>a.fricze@pm.me</p>
             <p>
                 Andrzej Fricze – Full Stack Dev, currently The HEINEKEN COMPANY
             </p>
@@ -914,7 +930,10 @@
                     >Twitch - friczecom</a
                 >)
             </p>
-            <p>newly married</p>
+            <p>
+                I worked as a volunteer at a foster house for 5 years. Chat with
+                me if you’re interested in getting some details
+            </p>
         </section>
 
         <section>
@@ -1014,8 +1033,8 @@
             </p>
         </section>
 
-        <section>
-            <p>Lets go!</p>
+        <section class="letsgo">
+            <img src="letsgo.gif" />
         </section>
 
         <section></section>
@@ -1372,7 +1391,7 @@ Promise.allSettled(asyncArticles.map({ promise }) => promise)
         <section></section>
 
         <section>
-            <p>Let’s make something visual. Today CSS is fun!</p>
+            <p>Let’s make something visual. These days CSS is fun!</p>
         </section>
 
         <section class="dvh">
@@ -1382,7 +1401,6 @@ Promise.allSettled(asyncArticles.map({ promise }) => promise)
             </p>
             <pre>
 :root {
-  scrollbar-gutter: stable;
   scroll-snap-type: y mandatory;
 }
 
@@ -1403,6 +1421,18 @@ section {
   height: 100dvh;
 }</pre
             >
+        </section>
+
+        <section class="image">
+            <img src="small_large.png" />
+        </section>
+
+        <section class="image">
+            <img src="small_large_1.png" />
+        </section>
+
+        <section class="image">
+            <img src="small_large_2.png" />
         </section>
 
         <section class="big">
@@ -1867,7 +1897,10 @@ section:has(p:only-of-type, pre:only-of-type + p:only-of-type) {
         </section>
 
         <section class="horizontal">
-            <p>This really is fun!</p>
+            <p>
+                This really is fun! But remember to test it before deploying.
+                Some scroll frames might get "optimized"
+            </p>
             <img src="one.webp" loading="lazy" />
             <img src="two.webp" loading="lazy" />
             <img src="three.webp" loading="lazy" />
@@ -2337,16 +2370,24 @@ CSS.highlights.set("search-results", searchResultsHighlight);
         </section>
 
         <section class="fullscreen">
-            <!-- <iframe
+            <iframe
                 style="width: 100%; height: 100dvh; border: 0"
                 width="100%"
                 height="100%"
                 src="https://three-offscreen.vercel.app/"
-            ></iframe> -->
+            ></iframe>
         </section>
 
         <section>
             <p>Cool. Now try this in browser different than Chrome...</p>
+        </section>
+
+        <section>
+            <p>
+                Native features are, mostly, faster than libraries and will last
+                even when your favorite framework dies. The problem is: browsers
+                support
+            </p>
         </section>
 
         <section>
@@ -2427,8 +2468,22 @@ CSS.highlights.set("search-results", searchResultsHighlight);
 
         <section>
             <p>
-                Try to follow Interop so you, at least, know what features are
-                available cross-browsers
+                Try to follow Interop so you know what features are available
+                cross-browsers
+            </p>
+        </section>
+
+        <section>
+            <p>
+                Know your target: use analytics to find out what browser are
+                your users using and optimize accordingly
+            </p>
+        </section>
+
+        <section>
+            <p>
+                But if you are just starting your Web Platform journey – play
+                around, have fun and don’t worry about browser support ;)
             </p>
         </section>
 
