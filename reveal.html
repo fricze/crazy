@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Reveal</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            :root,
+            body {
+                padding: 0;
+                margin: 0;
+            }
+
+            .gallery {
+                width: 1024px;
+                overflow-x: hidden;
+                overflow-y: auto;
+                height: 100dvh;
+                /* scrollbar-width: none; */
+                margin: 0 auto;
+            }
+
+            .reveal {
+                height: 200vh;
+                margin: 0 auto;
+                width: 100%;
+                display: grid;
+                view-timeline-name: --section-pin;
+                /* view-timeline-name: view(); */
+                view-timeline-axis: block;
+                position: relative;
+                z-index: 3;
+
+                &:nth-child(2) {
+                    position: relative;
+                    z-index: 2;
+                }
+
+                img {
+                    grid-row: 1;
+                    grid-column: 1;
+                    position: sticky;
+                    top: 0;
+                    translate: 0% 0%;
+
+                    &:nth-child(1) {
+                        clip-path: polygon(100% 0, 100% 31%, 0 71%, 0 0);
+
+                        animation: linear move1 forwards;
+                        animation-timeline: --section-pin;
+                        animation-range: contain 0% contain 50%;
+
+                        position: relative;
+                        z-index: 3;
+                    }
+
+                    &:nth-child(2) {
+                        clip-path: polygon(100% 30%, 100% 100%, 0 100%, 0 70%);
+
+                        animation: linear move2 forwards;
+                        animation-timeline: --section-pin;
+                        animation-range: contain 0% contain 50%;
+
+                        position: relative;
+                        z-index: 3;
+                    }
+
+                    &:nth-child(3) {
+                        clip-path: polygon(100% 0, 100% 31%, 0 71%, 0 0);
+
+                        animation: linear move1 forwards;
+                        animation-timeline: --section-pin;
+                        animation-range: contain 40% contain 100%;
+                    }
+
+                    &:nth-child(4) {
+                        clip-path: polygon(100% 30%, 100% 100%, 0 100%, 0 70%);
+
+                        animation: linear move2 forwards;
+                        animation-timeline: --section-pin;
+                        animation-range: contain 40% contain 100%;
+                    }
+                }
+            }
+
+            @keyframes move1 {
+                /* 50% {
+                    scale: 1;
+                    opacity: 1;
+                } */
+                100% {
+                    transform: translateY(-100vh);
+                    /* scale: 2; */
+                    opacity: 0;
+                }
+            }
+
+            @keyframes move2 {
+                /* 50% {
+                    scale: 1;
+                    opacity: 1;
+                } */
+                100% {
+                    transform: translateY(100vh);
+                    opacity: 0;
+                    /* scale: 2;
+                    transform-origin: 0 0; */
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="gallery">
+            <div class="reveal">
+                <img src="00.webp" />
+                <img src="00.webp" />
+
+                <img src="01.webp" />
+                <img src="01.webp" />
+            </div>
+        </div>
+    </body>
+</html>

@@ -25,6 +25,7 @@
                 max-width: 80ch;
                 margin: calc(var(--basic-line-height) * 4) auto;
                 margin: 4lh auto;
+                padding: 0 4vw;
             }
 
             img {
@@ -55,10 +56,33 @@
                     opacity: 1;
                 }
             }
+
+            .progress-indicator {
+                height: 1lh;
+                background: deeppink;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 5;
+
+                animation-timing-function: linear;
+                animation-timeline: scroll();
+                animation-name: read-progress;
+            }
+
+            @keyframes read-progress {
+                from {
+                    width: 0vw;
+                }
+                to {
+                    width: 100vw;
+                }
+            }
         </style>
     </head>
 
     <body>
+        <div class="progress-indicator"></div>
         <article>
             <h1>Miles Davis (image reveal demo)</h1>
             <p>

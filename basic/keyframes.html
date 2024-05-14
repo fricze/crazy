@@ -32,9 +32,8 @@
                 margin: 0;
                 animation-timeline: view();
                 animation-name: progress;
-                animation-range-end: 50%;
 
-                --percentage: "100%";
+                --percentage: "0%";
                 position: relative;
 
                 &::after {
@@ -42,23 +41,34 @@
                     font-size: 40px;
                     position: absolute;
                     color: deeppink;
-                    top: 0;
+                    top: 100%;
                     left: 0;
                     padding: 0.5lh;
                     background: #fff;
                     text-align: center;
                 }
-            }
 
-            img {
-                margin: 0;
-                padding: 0;
-                max-width: 100%;
-                object-fit: cover;
+                img {
+                    margin: 0;
+                    padding: 0;
+                    max-width: 100%;
+                    object-fit: cover;
+                    opacity: 0;
 
-                animation-timeline: view();
-                animation-range-end: 50%;
-                animation-name: img-reveal;
+                    height: 30dvh;
+
+                    animation-timeline: view();
+                    animation-name: img-reveal;
+                }
+
+                &,
+                img {
+                    /* animation-range: 10% 40%;
+                    animation-range: normal 10% normal 40%; */
+                    animation-range-start: normal 10%;
+                    animation-range-end: normal 40%;
+                    animation-fill-mode: forwards;
+                }
             }
 
             p {
@@ -443,7 +453,36 @@
                 revered jazz trumpeter of all time, not to mention one of the
                 most important musicians of the 20th century," while Gerald
                 Early called him inarguably one of the most influential and
-                innovative musicians of that period.
+                innovative musicians of that period. After a five-year
+                retirement due to poor health, Davis resumed his career in the
+                1980s, employing younger musicians and pop sounds on albums such
+                as The Man with the Horn (1981) and Tutu (1986). Critics were
+                often unreceptive but the decade garnered Davis his highest
+                level of commercial recognition. He performed sold-out concerts
+                worldwide, while branching out into visual arts, film, and
+                television work, before his death in 1991 from the combined
+                effects of a stroke, pneumonia and respiratory failure. In 2006,
+                Davis was inducted into the Rock and Roll Hall of Fame, which
+                recognized him as "one of the key figures in the history of
+                jazz". Rolling Stone described him as "the most revered jazz
+                trumpeter of all time, not to mention one of the most important
+                musicians of the 20th century," while Gerald Early called him
+                inarguably one of the most influential and innovative musicians
+                of that period. After a five-year retirement due to poor health,
+                Davis resumed his career in the 1980s, employing younger
+                musicians and pop sounds on albums such as The Man with the Horn
+                (1981) and Tutu (1986). Critics were often unreceptive but the
+                decade garnered Davis his highest level of commercial
+                recognition. He performed sold-out concerts worldwide, while
+                branching out into visual arts, film, and television work,
+                before his death in 1991 from the combined effects of a stroke,
+                pneumonia and respiratory failure. In 2006, Davis was inducted
+                into the Rock and Roll Hall of Fame, which recognized him as
+                "one of the key figures in the history of jazz". Rolling Stone
+                described him as "the most revered jazz trumpeter of all time,
+                not to mention one of the most important musicians of the 20th
+                century," while Gerald Early called him inarguably one of the
+                most influential and innovative musicians of that period.
             </p>
             <figure>
                 <img src="three.webp" />
