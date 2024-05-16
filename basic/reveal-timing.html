@@ -19,18 +19,22 @@
             body {
                 margin: 0;
                 padding: 0;
+                max-width: 1242px;
+                margin: 0 auto;
+                border-left: 1px solid black;
+                border-right: 1px solid black;
             }
 
             article {
-                max-width: 60ch;
+                max-width: 80ch;
                 margin: calc(var(--basic-line-height) * 4) auto;
                 margin: 4lh auto;
-                padding: 0 4vw;
             }
 
             img {
                 margin: 0;
                 padding: 0;
+                height: 50dvh;
                 max-width: 100%;
                 object-fit: cover;
 
@@ -52,40 +56,17 @@
             @keyframes img-reveal {
                 from {
                     opacity: 0;
-                    clip-path: polygon(20% 0, 80% 0, 80% 72%, 20% 72%);
+                    translate: 0 50%;
                 }
                 to {
                     opacity: 1;
-                    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-                }
-            }
-
-            .progress-indicator {
-                height: 1lh;
-                background: deeppink;
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 5;
-
-                animation-timing-function: linear;
-                animation-timeline: scroll();
-                animation-name: read-progress;
-            }
-
-            @keyframes read-progress {
-                from {
-                    width: 0vw;
-                }
-                to {
-                    width: 100vw;
+                    translate: 0 0%;
                 }
             }
         </style>
     </head>
 
     <body>
-        <div class="progress-indicator"></div>
         <article>
             <h1>Miles Davis (image reveal demo)</h1>
             <p>
@@ -139,6 +120,23 @@
                 innovative musicians of that period.
             </p>
             <img src="three.webp" />
+            <p>
+                After a five-year retirement due to poor health, Davis resumed
+                his career in the 1980s, employing younger musicians and pop
+                sounds on albums such as The Man with the Horn (1981) and Tutu
+                (1986). Critics were often unreceptive but the decade garnered
+                Davis his highest level of commercial recognition. He performed
+                sold-out concerts worldwide, while branching out into visual
+                arts, film, and television work, before his death in 1991 from
+                the combined effects of a stroke, pneumonia and respiratory
+                failure. In 2006, Davis was inducted into the Rock and Roll Hall
+                of Fame, which recognized him as "one of the key figures in the
+                history of jazz". Rolling Stone described him as "the most
+                revered jazz trumpeter of all time, not to mention one of the
+                most important musicians of the 20th century," while Gerald
+                Early called him inarguably one of the most influential and
+                innovative musicians of that period.
+            </p>
         </article>
     </body>
 </html>

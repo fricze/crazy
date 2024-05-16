@@ -19,24 +19,32 @@
             body {
                 margin: 0;
                 padding: 0;
+                max-width: 1242px;
+                margin: 0 auto;
+                /* border-left: 1px solid black;
+                border-right: 1px solid black; */
             }
 
             article {
-                max-width: 60ch;
+                max-width: 80ch;
                 margin: calc(var(--basic-line-height) * 4) auto;
                 margin: 4lh auto;
-                padding: 0 4vw;
             }
 
             img {
+                position: fixed;
+                top: 0;
+                left: 0;
                 margin: 0;
                 padding: 0;
-                max-width: 100%;
+                height: 100dvh;
+                width: 100vw;
                 object-fit: cover;
 
-                animation-timeline: view();
-                animation-range-end: 50%;
+                animation-timeline: scroll();
+                animation-fill-mode: both;
                 animation-name: img-reveal;
+                animation-timing-function: linear;
             }
 
             p {
@@ -45,47 +53,25 @@
             }
 
             h1 {
+                margin-top: 100dvh;
                 font-size: 40px;
                 line-height: 52px;
             }
 
             @keyframes img-reveal {
                 from {
-                    opacity: 0;
-                    clip-path: polygon(20% 0, 80% 0, 80% 72%, 20% 72%);
-                }
-                to {
                     opacity: 1;
                     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
                 }
-            }
-
-            .progress-indicator {
-                height: 1lh;
-                background: deeppink;
-                position: fixed;
-                top: 0;
-                left: 0;
-                z-index: 5;
-
-                animation-timing-function: linear;
-                animation-timeline: scroll();
-                animation-name: read-progress;
-            }
-
-            @keyframes read-progress {
-                from {
-                    width: 0vw;
-                }
                 to {
-                    width: 100vw;
+                    opacity: 0;
+                    clip-path: polygon(20% 0, 80% 0, 80% 72%, 20% 72%);
                 }
             }
         </style>
     </head>
 
     <body>
-        <div class="progress-indicator"></div>
         <article>
             <h1>Miles Davis (image reveal demo)</h1>
             <p>
@@ -120,7 +106,7 @@
                 remains one of the most popular jazz albums of all time, having
                 sold over five million copies in the U.S.
             </p>
-            <img src="two.webp" />
+            <!-- <img src="two.webp" /> -->
             <p>
                 After a five-year retirement due to poor health, Davis resumed
                 his career in the 1980s, employing younger musicians and pop
@@ -138,7 +124,47 @@
                 Early called him inarguably one of the most influential and
                 innovative musicians of that period.
             </p>
-            <img src="three.webp" />
+            <!-- <img src="three.webp" /> -->
+            <p>
+                After a five-year retirement due to poor health, Davis resumed
+                his career in the 1980s, employing younger musicians and pop
+                sounds on albums such as The Man with the Horn (1981) and Tutu
+                (1986). Critics were often unreceptive but the decade garnered
+                Davis his highest level of commercial recognition. He performed
+                sold-out concerts worldwide, while branching out into visual
+                arts, film, and television work, before his death in 1991 from
+                the combined effects of a stroke, pneumonia and respiratory
+                failure. In 2006, Davis was inducted into the Rock and Roll Hall
+                of Fame, which recognized him as "one of the key figures in the
+                history of jazz". Rolling Stone described him as "the most
+                revered jazz trumpeter of all time, not to mention one of the
+                most important musicians of the 20th century," while Gerald
+                Early called him inarguably one of the most influential and
+                innovative musicians of that period.
+            </p>
+            <p>
+                Born into an upper-middle-class family in Alton, Illinois, and
+                raised in East St. Louis, Davis started on the trumpet in his
+                early teens. He left to study at Juilliard in New York City,
+                before dropping out and making his professional debut as a
+                member of saxophonist Charlie Parker's bebop quintet from 1944
+                to 1948. Shortly after, he recorded the Birth of the Cool
+                sessions for Capitol Records, which were instrumental to the
+                development of cool jazz. In the early 1950s, Davis recorded
+                some of the earliest hard bop music while on Prestige Records
+                but did so haphazardly due to a heroin addiction. After a widely
+                acclaimed comeback performance at the Newport Jazz Festival, he
+                signed a long-term contract with Columbia Records, and recorded
+                the album 'Round About Midnight in 1955. It was his first work
+                with saxophonist John Coltrane and bassist Paul Chambers, key
+                members of the sextet he led into the early 1960s. During this
+                period, he alternated between orchestral jazz collaborations
+                with arranger Gil Evans, such as the Spanish music-influenced
+                Sketches of Spain (1960), and band recordings, such as
+                Milestones (1958) and Kind of Blue (1959). The latter recording
+                remains one of the most popular jazz albums of all time, having
+                sold over five million copies in the U.S.
+            </p>
         </article>
     </body>
 </html>
