@@ -801,14 +801,11 @@
 
         <div class="hello">REMEMBER. THAT's AN AD</div>
 
-        <!-- <script type="module" src="./scroll-polyfill/index.js"></script> -->
+        <script type="module" src="./scroll-polyfill/index.js"></script>
 
-        <script src="https://raw.githack.com/raphaelgoetter/scroll-timeline/master/public/scroll-timeline.js"></script>
+        <!-- <script src="https://raw.githack.com/raphaelgoetter/scroll-timeline/master/public/scroll-timeline.js"></script> -->
         <script type="module">
-            const timeline = new ScrollTimeline({
-                source: document.documentElement,
-                axis: "block",
-            });
+            const timeline = new ScrollTimeline({});
 
             const imgs = Array(10)
                 .fill(null)
