@@ -10,8 +10,6 @@
                 position: fixed;
                 inset: 0 0;
                 pointer-events: none;
-                /* animation-name: faces;
-                animation-timeline: scroll(); */
             }
 
             @keyframes blink {
@@ -320,28 +318,30 @@
                 }
             }
 
-            /* :nth-child(1 of .hello) {
-                height: 100dvh;
+            :nth-child(1 of .hello) {
+                background: #46408e54;
             }
 
             :nth-child(2 of .hello) {
-            } */
+                background: #fff5;
+            }
+
+            :nth-child(3 of .hello) {
+                background: #9297ed54;
+            }
 
             .hello {
                 height: 100dvh;
                 scroll-snap-align: start;
                 position: relative;
-                /* outline: 10px solid #333; */
                 z-index: 3;
                 font-size: 150px;
                 font-family: Arial, Helvetica, sans-serif;
                 color: deeppink;
                 width: 100%;
-                /* color: transparent; */
                 text-align: center;
                 display: grid;
                 place-items: center;
-                /* background: #ffffff91; */
             }
 
             @property --img {
@@ -668,8 +668,7 @@
                 }
             }
 
-            .dead-div {
-                width: 0px;
+            .silly-background {
                 background: url("./imgs/full-face/ezgif-frame-001.jpg"),
                     url("./imgs/full-face/ezgif-frame-002.jpg"),
                     url("./imgs/full-face/ezgif-frame-003.jpg"),
@@ -785,15 +784,12 @@
                     url("./imgs/full-face/ezgif-frame-113.jpg"),
                     url("./imgs/full-face/ezgif-frame-114.jpg");
             }
-
-            .app {
-            }
         </style>
     </head>
     <body>
         <div class="video" id="video"></div>
 
-        <div class="dead-div"></div>
+        <!-- <div class="dead-div"></div> -->
 
         <div class="hello">Buy my product!!!</div>
 
@@ -801,9 +797,9 @@
 
         <div class="hello">REMEMBER. THAT's AN AD</div>
 
-        <script type="module" src="./scroll-polyfill/index.js"></script>
-
         <!-- <script src="https://raw.githack.com/raphaelgoetter/scroll-timeline/master/public/scroll-timeline.js"></script> -->
+        <script src="./panelsnap.js"></script>
+        <script type="module" src="./scroll-polyfill/index.js"></script>
         <script type="module">
             const timeline = new ScrollTimeline({});
 
@@ -815,6 +811,23 @@
                         `url('file:///Users/andrzejfricze/crazy/shop/imgs/shoes/${x}.png');`,
                 );
 
+            document.addEventListener("DOMContentLoaded", function () {
+                return;
+                const options = {
+                    container: document.body,
+                    panelSelector: ".hello",
+                    directionThreshold: 50,
+                    delay: 0,
+                    duration: 300,
+                    easing: function easing(x) {
+                        return x < 0.5
+                            ? 4 * x * x * x
+                            : 1 - Math.pow(-2 * x + 2, 3) / 2;
+                    },
+                };
+
+                new PanelSnap(options);
+            });
             const video = window.video;
             const hello = window.hello;
 
@@ -937,8 +950,7 @@
 
             video.animate(
                 {
-                    // backgroundImage: frames,
-                    backgroundColor: ["deeppink", "#fff", "#333"],
+                    backgroundImage: frames,
                 },
                 {
                     fill: "both",
@@ -946,23 +958,6 @@
                     timingFunction: "linear",
                 },
             );
-
-            // hello.animate(
-            //     {
-            //         filter: ["blur(30px)", "blur(0px)"],
-            //     },
-            //     {
-            //         timeline,
-            //         timingFunction: "linear",
-            //     },
-            // );
-
-            const fullSrc = (x) => {
-                x = String(x);
-                const missing = Array(3 - x.length).fill(0);
-
-                return missing.join("").concat(x);
-            };
         </script>
     </body>
 </html>
