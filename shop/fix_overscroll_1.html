@@ -318,28 +318,18 @@
                 }
             }
 
-            /* :nth-child(1 of .hello) {
-                height: 100dvh;
-            }
-
-            :nth-child(2 of .hello) {
-            } */
-
             .hello {
                 height: 100dvh;
                 scroll-snap-align: start;
                 position: relative;
-                /* outline: 10px solid #333; */
                 z-index: 3;
                 font-size: 150px;
                 font-family: Arial, Helvetica, sans-serif;
                 color: deeppink;
                 width: 100%;
-                /* color: transparent; */
                 text-align: center;
                 display: grid;
                 place-items: center;
-                /* background: #ffffff91; */
             }
 
             @property --img {
@@ -350,7 +340,6 @@
 
             :root {
                 overflow-x: hidden;
-                /* scroll-snap-type: y proximity; */
                 overscroll-behavior-y: none;
             }
 
@@ -790,7 +779,9 @@
             .content {
                 /* margin-top: 100dvh;
                 margin-bottom: 100dvh; */
-                animation-range: entry 10% contain 25%;
+                /* animation-range: entry 10% contain 25%; */
+                /* animation-name: background-switch;
+                animation-timeline: scroll(root); */
             }
         </style>
     </head>
@@ -807,6 +798,8 @@
             <div class="hello">REMEMBER. THAT's AN AD</div>
         </div>
 
+        <script src="./panelsnap.js"></script>
+        <!-- <script src="./scroll-snap.js"></script> -->
         <script type="module" src="./scroll-polyfill/index.js"></script>
         <script type="module">
             const subject = window.content;
@@ -814,18 +807,67 @@
             const timeline = new ViewTimeline({
                 subject,
                 axis: "block",
-                inset: [CSS.percent(-100), CSS.percent(-100)],
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const options = {
+                    container: document.body,
+                    panelSelector: ".hello",
+                    directionThreshold: 50,
+                    delay: 0,
+                    duration: 300,
+                    easing: function easing(x) {
+                        return x < 0.5
+                            ? 4 * x * x * x
+                            : 1 - Math.pow(-2 * x + 2, 3) / 2;
+                        // return Math.sqrt(1 - Math.pow(x - 1, 2));
+
+                        // const c5 = (2 * Math.PI) / 4.5;
+
+                        // return x === 0
+                        //     ? 0
+                        //     : x === 1
+                        //       ? 1
+                        //       : x < 0.5
+                        //         ? -(
+                        //               Math.pow(2, 20 * x - 10) *
+                        //               Math.sin((20 * x - 11.125) * c5)
+                        //           ) / 2
+                        //         : (Math.pow(2, -20 * x + 10) *
+                        //               Math.sin((20 * x - 11.125) * c5)) /
+                        //               2 +
+                        //           1;
+                    },
+                };
+
+                new PanelSnap(options);
+                // debugger;
+
+                // const elements = document.getElementsByClassName("snap");
+                // Array.from(elements).forEach((element) => {
+                //     console.log(element);
+                //     // createScrollSnap(element, {
+                //     //     snapDestinationX: "90%",
+                //     //     timeout: 100,
+                //     //     duration: 300,
+                //     // });
+                // });
             });
 
             subject.animate(
                 {
                     backgroundColor: ["deeppink", "#fff", "#000"],
+                    // offset: [0, 0.1],
                 },
                 {
+                    fill: "both",
                     timeline: timeline,
                     timingFunction: "linear",
+                    rangeStart: "contain 0%",
+                    rangeEnd: "contain 100%",
                 },
             );
+
             // const timeline = new ScrollTimeline({
             //     source: document.documentElement,
             //     axis: "block",
@@ -958,27 +1000,6 @@
                 "url('./imgs/full-face/ezgif-frame-113.jpg')",
                 "url('./imgs/full-face/ezgif-frame-114.jpg')",
             ];
-
-            video.animate(
-                {
-                    // backgroundImage: frames,
-                    backgroundColor: ["deeppink", "#fff", "#333"],
-                },
-                {
-                    timeline: timeline,
-                    timingFunction: "linear",
-                },
-            );
-
-            // hello.animate(
-            //     {
-            //         filter: ["blur(30px)", "blur(0px)"],
-            //     },
-            //     {
-            //         timeline,
-            //         timingFunction: "linear",
-            //     },
-            // );
 
             const fullSrc = (x) => {
                 x = String(x);
