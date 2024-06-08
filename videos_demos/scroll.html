@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+    <head>
+        <title>animation-timeline: view()</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                padding: 3lh;
+                display: flex;
+                flex-direction: column;
+                gap: 2lh;
+            }
+
+            div {
+                height: 30dvh;
+                width: 100%;
+                background: #000;
+                border-radius: 5px;
+            }
+
+            body {
+                animation-name: background-change;
+                animation-timeline: scroll();
+                animation-timing-function: linear;
+            }
+
+            @keyframes background-change {
+                0% {
+                    background-color: #000;
+                }
+
+                50% {
+                    background-color: #734c61;
+                }
+
+                100% {
+                    background-color: #fff;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </body>
+</html>
