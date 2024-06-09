@@ -11,7 +11,7 @@
                 padding: 3lh;
                 display: flex;
                 flex-direction: column;
-                gap: 2lh;
+                gap: 3lh;
             }
 
             div {
@@ -25,23 +25,28 @@
                 animation-name: background-change;
                 animation-timeline: view();
                 animation-timing-function: linear;
-                animation-range-start: contain 0%;
-                animation-range-end: contain 100%;
                 animation-fill-mode: both;
 
-                animation-range-start: contain 30%;
-                animation-range-end: contain 70%;
+                animation-range-start: entry 0%;
+                animation-range-end: exit 100%;
+
+                animation-range-start: entry 30%;
+                animation-range-end: exit 30%;
+
+                /* animation-range-start: contain 0%;
+                animation-range-end: contain 100%; */
+
+                /* animation-range-start: contain 30%;
+                animation-range-end: contain 70%; */
             }
 
             @keyframes background-change {
                 0% {
                     background-color: #000;
                 }
-
                 50% {
                     background-color: #734c61;
                 }
-
                 100% {
                     background-color: #fff;
                 }
@@ -56,5 +61,34 @@
         <div></div>
         <div></div>
         <div></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+        <script>
+            // use a script tag or an external JS file
+            document.addEventListener("DOMContentLoaded", (event) => {
+                gsap.registerPlugin(ScrollToPlugin);
+
+                gsap.to(window, {
+                    duration: 6,
+                    ease: "sine.out",
+                    scrollTo: {
+                        y: document.body.getBoundingClientRect().height,
+                        autoKill: true,
+                    },
+                });
+
+                setTimeout(() => {
+                    gsap.to(window, {
+                        duration: 5,
+                        ease: "sine.out",
+                        scrollTo: {
+                            y: 0,
+                            autoKill: true,
+                        },
+                    });
+                }, 2900);
+            });
+        </script>
     </body>
 </html>
