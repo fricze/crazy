@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+    <head>
+        <title>sneaker shop</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            :root {
+                --step: 0;
+            }
+
+            img {
+                object-fit: contain;
+                height: 100%;
+                width: 100%;
+                display: block;
+                flex-shrink: 0;
+                flex-grow: 1;
+            }
+
+            .video.silly-background {
+                display: flex;
+                flex-direction: column;
+                width: 100vw;
+                height: 100%;
+                inset: 0 0;
+                position: fixed;
+                pointer-events: none;
+                /* top: calc((var(--step) * -100%) - 50dvh); */
+                top: calc(var(--step) * -100%);
+                /* transform: scale(5); */
+            }
+
+            .parent {
+                width: 100vw;
+                height: 100dvh;
+                margin-bottom: 400dvh;
+            }
+
+            :nth-child(1 of .hello) {
+                background: #46408e54;
+            }
+
+            :nth-child(2 of .hello) {
+                background: #fff5;
+            }
+
+            :nth-child(3 of .hello) {
+                background: #9297ed54;
+            }
+
+            .hello {
+                height: 100dvh;
+                scroll-snap-align: start;
+                position: relative;
+                z-index: 3;
+                font-size: 150px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: deeppink;
+                width: 100%;
+                text-align: center;
+                display: grid;
+                place-items: center;
+            }
+
+            :root {
+                overflow-x: hidden;
+            }
+
+            :root,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="parent">
+            <div class="video silly-background" id="video"></div>
+        </div>
+
+        <div class="space"></div>
+
+        <!-- <script src="https://raw.githack.com/raphaelgoetter/scroll-timeline/master/public/scroll-timeline.js"></script> -->
+        <!-- <script src="./panelsnap.js"></script> -->
+        <!-- <script type="module" src="./scroll-polyfill/index.js"></script> -->
+        <script>
+            const fullSrc = (x) => {
+                x = String(x);
+                const missing = Array(4 - x.length).fill(0);
+
+                return missing.join("").concat(x);
+            };
+
+            const paths = new Array(385)
+                .fill(0)
+                .map((_, idx) => idx + 1)
+                .map(fullSrc)
+                .map((x) => `./assets/output-${x}.jpg`)
+                .toReversed();
+
+            paths.forEach((src) => {
+                const imgDom = document.createElement("img");
+                imgDom.setAttribute("src", src);
+
+                window.video.appendChild(imgDom);
+            });
+
+            document.addEventListener("scroll", (e) => {
+                const scrollTop = document.scrollingElement.scrollTop;
+                const height =
+                    document.scrollingElement.offsetHeight -
+                    document.body.offsetHeight;
+
+                const scrolled = (scrollTop / height) * 100;
+
+                requestAnimationFrame(() => {
+                    document.documentElement.style.setProperty(
+                        "--step",
+                        Math.round((385 / 100) * scrolled),
+                    );
+                });
+            });
+
+            // const timeline = new ScrollTimeline({});
+
+            // const video = window.video;
+            // const hello = window.hello;
+
+            // video.animate(
+            //     {
+            //         "--step": Array(384)
+            //             .fill(0)
+            //             .reduce(
+            //                 (acc, el) => acc.concat([(acc.at(-1) || 0) + 100]),
+            //                 [0],
+            //             )
+            //             .map((x, i) => i),
+            //     },
+            //     {
+            //         fill: "both",
+            //         timeline: timeline,
+            //         timingFunction: "linear",
+            //     },
+            // );
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+
+        <!-- RoughEase, ExpoScaleEase and SlowMo are all included in the EasePack file -->
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/EasePack.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
+
+        <script>
+            // use a script tag or an external JS file
+            document.addEventListener("DOMContentLoaded", (event) => {
+                gsap.registerPlugin(
+                    ScrollTrigger,
+                    Observer,
+                    ScrollToPlugin,
+                    RoughEase,
+                    ExpoScaleEase,
+                    SlowMo,
+                    CustomEase,
+                );
+                // gsap code here!
+                ScrollTrigger.create({
+                    trigger: "html",
+                    start: "top",
+                    end: "bottom",
+                    onUpdate: (self) => {
+                        const scrolled = self.progress.toFixed(3) * 100;
+                        console.log("progress:", scrolled);
+
+                        requestAnimationFrame(() => {
+                            document.documentElement.style.setProperty(
+                                "--step",
+                                Math.round((385 / 100) * scrolled),
+                            );
+                        });
+                    },
+                });
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+    <head>
+        <title>sneaker shop</title>
+        <style>
+            :root {
+                --step: 0;
+            }
+
+            img {
+                object-fit: contain;
+                height: 100dvh;
+                width: 100%;
+                flex-basis: 100dvh;
+            }
+
+            .video.silly-background {
+                display: flex;
+                flex-direction: column;
+                width: 100vw;
+                background-size: 100%;
+                position: fixed;
+                inset: 0 0;
+                pointer-events: none;
+                top: calc(var(--step) * -100dvh);
+            }
+
+            .parent {
+                width: 100vw;
+                height: 100dvh;
+                margin-bottom: 400dvh;
+            }
+
+            :nth-child(1 of .hello) {
+                background: #46408e54;
+            }
+
+            :nth-child(2 of .hello) {
+                background: #fff5;
+            }
+
+            :nth-child(3 of .hello) {
+                background: #9297ed54;
+            }
+
+            .hello {
+                height: 100dvh;
+                scroll-snap-align: start;
+                position: relative;
+                z-index: 3;
+                font-size: 150px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: deeppink;
+                width: 100%;
+                text-align: center;
+                display: grid;
+                place-items: center;
+            }
+
+            :root {
+                overflow-x: hidden;
+            }
+
+            :root,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            /* .space {
+                height: 300dvh;
+            } */
+        </style>
+    </head>
+    <body>
+        <div class="parent">
+            <div class="video silly-background" id="video">
+                <img src="./imgs/full-face/ezgif-frame-001.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-002.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-003.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-004.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-005.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-006.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-007.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-008.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-009.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-010.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-011.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-012.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-013.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-014.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-015.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-016.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-017.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-018.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-019.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-020.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-021.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-022.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-023.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-024.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-025.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-026.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-027.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-028.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-029.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-030.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-031.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-032.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-033.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-034.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-035.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-036.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-037.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-038.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-039.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-040.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-041.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-042.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-043.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-044.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-045.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-046.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-047.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-048.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-049.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-050.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-051.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-052.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-053.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-054.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-055.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-056.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-057.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-058.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-059.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-060.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-061.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-062.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-063.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-064.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-065.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-066.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-067.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-068.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-069.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-070.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-071.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-072.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-073.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-074.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-075.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-076.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-077.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-078.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-079.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-080.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-081.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-082.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-083.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-084.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-085.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-086.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-087.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-088.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-089.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-090.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-091.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-092.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-093.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-094.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-095.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-096.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-097.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-098.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-099.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-100.jpg" />
+                <img src="./imgs/full-face/ezgif-frame-101.jpg" />
+            </div>
+        </div>
+
+        <!-- <div class="dead-div"></div> -->
+
+        <div class="space"></div>
+        <!-- <div class="hello">Buy my product!!!</div>
+
+        <div class="hello">THAT's AN AD</div>
+
+        <div class="hello">REMEMBER. THAT's AN AD</div> -->
+
+        <!-- <script src="https://raw.githack.com/raphaelgoetter/scroll-timeline/master/public/scroll-timeline.js"></script>
+        <script src="./panelsnap.js"></script> -->
+        <script type="module" src="./scroll-polyfill/index.js"></script>
+        <script type="module">
+            const timeline = new ScrollTimeline({});
+
+            const imgs = Array(10)
+                .fill(null)
+                .map((val, idx) => idx + 1)
+                .map(
+                    (x) =>
+                        `url('file:///Users/andrzejfricze/crazy/shop/imgs/shoes/${x}.png');`,
+                );
+
+            document.addEventListener("DOMContentLoaded", function () {
+                return;
+                const options = {
+                    container: document.body,
+                    panelSelector: ".hello",
+                    directionThreshold: 50,
+                    delay: 0,
+                    duration: 300,
+                    easing: function easing(x) {
+                        return x < 0.5
+                            ? 4 * x * x * x
+                            : 1 - Math.pow(-2 * x + 2, 3) / 2;
+                    },
+                };
+
+                new PanelSnap(options);
+            });
+            const video = window.video;
+            const hello = window.hello;
+
+            video.animate(
+                {
+                    "--step": Array(100)
+                        .fill(0)
+                        .reduce(
+                            (acc, el) => acc.concat([(acc.at(-1) || 0) + 100]),
+                            [0],
+                        )
+                        .map((x, i) => i),
+                },
+                {
+                    fill: "both",
+                    timeline: timeline,
+                    timingFunction: "linear",
+                },
+            );
+        </script>
+    </body>
+</html>

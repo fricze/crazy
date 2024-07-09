@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+    <head>
+        <title>sneaker shop</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            :root {
+                --step: 0;
+            }
+
+            img {
+                object-fit: contain;
+                height: 100%;
+                width: 100%;
+                display: block;
+                flex-shrink: 0;
+                flex-grow: 1;
+            }
+
+            .video.silly-background {
+                display: none;
+                /* display: flex;
+                flex-direction: column;
+                width: 100vw;
+                height: 100%;
+                inset: 0 0;
+                position: fixed;
+                pointer-events: none;
+                top: calc(var(--step) * -100%); */
+            }
+
+            .parent {
+                display: none;
+                width: 100vw;
+                height: 100dvh;
+                margin-bottom: 400dvh;
+            }
+
+            canvas {
+                position: fixed;
+                inset: 0 0;
+            }
+
+            .hello {
+                height: 100dvh;
+                scroll-snap-align: start;
+                position: relative;
+                z-index: 3;
+                font-size: 150px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: deeppink;
+                width: 100%;
+                text-align: center;
+                display: grid;
+                place-items: center;
+            }
+
+            :root {
+                overflow-x: hidden;
+            }
+
+            :root,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .space {
+                height: 500dvh;
+            }
+
+            video {
+                width: 100%;
+                position: fixed;
+                inset: 0 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="parent">
+            <div class="video silly-background" id="video"></div>
+        </div>
+
+        <!-- <canvas id="scrollable"></canvas> -->
+        <video id="scrollable" src="./video.mp4"></video>
+
+        <div class="space"></div>
+
+        <script>
+            document.addEventListener("scroll", (e) => {
+                const scrollTop = document.scrollingElement.scrollTop;
+                const height = window.innerHeight;
+
+                const scrolled = ((scrollTop / height) * 100) / 4;
+
+                const no = Math.round((length / 100) * scrolled);
+                const duration = window.scrollable.duration;
+                const currentTime = (duration / 100) * scrolled;
+
+                requestAnimationFrame(() => {
+                    window.scrollable.currentTime = (duration / 100) * scrolled;
+                });
+            });
+        </script>
+    </body>
+</html>

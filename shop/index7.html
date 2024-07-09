@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+    <head>
+        <title>sneaker shop</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            html.lenis,
+            html.lenis body {
+                height: auto;
+            }
+            .lenis.lenis-smooth {
+                scroll-behavior: auto !important; /* If scroll-behavior is set to "smooth", scrolling will not work as expected. */
+            }
+            .lenis.lenis-smooth [data-lenis-prevent] {
+                overscroll-behavior: contain;
+            }
+            .lenis.lenis-stopped {
+                overflow: hidden;
+            }
+            .lenis.lenis-scrolling iframe {
+                pointer-events: none;
+            }
+
+            :root {
+                --step: 0;
+            }
+
+            img {
+                object-fit: contain;
+                height: 100%;
+                width: 100%;
+                display: block;
+                flex-shrink: 0;
+                flex-grow: 1;
+            }
+
+            .video.silly-background {
+                display: none;
+                /* display: flex;
+                flex-direction: column;
+                width: 100vw;
+                height: 100%;
+                inset: 0 0;
+                position: fixed;
+                pointer-events: none;
+                top: calc(var(--step) * -100%); */
+            }
+
+            .parent {
+                display: none;
+                width: 100vw;
+                height: 100dvh;
+                margin-bottom: 400dvh;
+            }
+
+            canvas {
+                position: fixed;
+                inset: 0 0;
+            }
+
+            .hello {
+                height: 100dvh;
+                scroll-snap-align: start;
+                position: relative;
+                z-index: 3;
+                font-size: 150px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: deeppink;
+                width: 100%;
+                text-align: center;
+                display: grid;
+                place-items: center;
+            }
+
+            :root {
+                overflow-x: hidden;
+            }
+
+            :root,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .space {
+                height: 500dvh;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="parent">
+            <div class="video silly-background" id="video"></div>
+        </div>
+
+        <canvas id="scrollable"></canvas>
+
+        <div class="space"></div>
+
+        <script>
+            window.addEventListener("DOMContentLoaded", (event) => {
+                const canvas = window.scrollable;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            window.addEventListener("resize", () => {
+                const canvas = window.scrollable;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            const fullSrc = (x) => {
+                x = String(x);
+                const missing = Array(4 - x.length).fill(0);
+
+                return missing.join("").concat(x);
+            };
+
+            const imgsNo = 385;
+            const paths = new Array(imgsNo)
+                .fill(0)
+                .map((_, idx) => idx + 1)
+                .map(fullSrc)
+                .toReversed();
+
+            paths.forEach((no) => {
+                const src = `./assets/output-${no}.jpg`;
+                const imgDom = document.createElement("img");
+                imgDom.setAttribute("src", src);
+                imgDom.setAttribute("id", no);
+
+                window.video.appendChild(imgDom);
+            });
+
+            const canvas = window.scrollable;
+            const ctx = canvas.getContext("2d");
+
+            document.addEventListener("scroll", (e) => {
+                const scrollTop = document.scrollingElement.scrollTop;
+                const height = window.innerHeight;
+
+                const scrolledPercentage = ((scrollTop / height) * 100) / 4;
+
+                requestAnimationFrame(() => {
+                    const imgNo =
+                        Math.round((imgsNo / 100) * scrolledPercentage) || 1;
+                    const imgId = fullSrc(imgNo);
+
+                    const image = document.getElementById(imgId);
+                    if (!image) {
+                        return;
+                    }
+
+                    const scale = window.innerWidth / image.width;
+                    ctx.drawImage(
+                        image,
+                        0,
+                        0,
+                        image.width * scale,
+                        image.height * scale,
+                    );
+                });
+            });
+        </script>
+        <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+        <script type="text/javascript">
+            (function () {
+                "use strict";
+
+                const smoothScroll = new Lenis();
+
+                function raf(time) {
+                    smoothScroll.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+
+                smoothScroll.on("scroll", (event) => {
+                    console.log(event);
+                });
+
+                const goToTop = document.querySelector("a.go-to-top");
+                if (goToTop) {
+                    goToTop.addEventListener("click", (event) => {
+                        console.log(event);
+                        event.preventDefault();
+
+                        // Works
+                        //window.scrollTo({
+                        //	top: 0,
+                        //	behavior: 'smooth'
+                        //});
+
+                        // Lenis
+                        smoothScroll.scrollTo(0, {
+                            duration: 1,
+                        });
+                    });
+                }
+            })();
+        </script>
+    </body>
+</html>

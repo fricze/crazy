@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+    <head>
+        <title>sneaker shop</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            :root {
+                --step: 0;
+            }
+
+            img {
+                object-fit: contain;
+                height: 100%;
+                width: 100%;
+                display: block;
+                flex-shrink: 0;
+                flex-grow: 1;
+            }
+
+            .video.silly-background {
+                display: none;
+                /* display: flex;
+                flex-direction: column;
+                width: 100vw;
+                height: 100%;
+                inset: 0 0;
+                position: fixed;
+                pointer-events: none;
+                top: calc(var(--step) * -100%); */
+            }
+
+            .parent {
+                display: none;
+                width: 100vw;
+                height: 100dvh;
+                margin-bottom: 400dvh;
+            }
+
+            canvas {
+                position: fixed;
+                inset: 0 0;
+            }
+
+            .hello {
+                height: 100dvh;
+                scroll-snap-align: start;
+                position: relative;
+                z-index: 3;
+                font-size: 150px;
+                font-family: Arial, Helvetica, sans-serif;
+                color: deeppink;
+                width: 100%;
+                text-align: center;
+                display: grid;
+                place-items: center;
+            }
+
+            :root {
+                overflow-x: hidden;
+            }
+
+            :root,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .space {
+                height: 500dvh;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="parent">
+            <div class="video silly-background" id="video"></div>
+        </div>
+
+        <canvas id="scrollable"></canvas>
+
+        <div class="space"></div>
+
+        <script>
+            window.addEventListener("DOMContentLoaded", (event) => {
+                const canvas = window.scrollable;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            window.addEventListener("resize", () => {
+                const canvas = window.scrollable;
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+
+            const fullSrc = (x) => {
+                x = String(x);
+                const missing = Array(3 - x.length).fill(0);
+
+                return missing.join("").concat(x);
+            };
+
+            const length = 114;
+
+            const paths = new Array(length)
+                .fill(0)
+                .map((_, idx) => idx + 1)
+                .map(fullSrc)
+                .toReversed();
+
+            paths.forEach((no) => {
+                const src = `./imgs/full-face/ezgif-frame-${no}.jpg`;
+                const imgDom = document.createElement("img");
+                imgDom.setAttribute("src", src);
+                imgDom.setAttribute("id", no);
+
+                window.video.appendChild(imgDom);
+            });
+
+            document.addEventListener("scroll", (e) => {
+                const scrollTop = document.scrollingElement.scrollTop;
+                const height = window.innerHeight;
+
+                const scrolled = ((scrollTop / height) * 100) / 4;
+
+                requestAnimationFrame(() => {
+                    const no = Math.round((length / 100) * scrolled);
+                    const id = fullSrc(no);
+                    console.log(no);
+
+                    const scale = 0.5;
+
+                    const canvas = window.scrollable;
+                    const ctx = canvas.getContext("2d");
+
+                    const image = document.getElementById(id);
+                    const _s = window.innerWidth / image.width;
+                    console.log(_s);
+
+                    if (image) {
+                        ctx.drawImage(
+                            image,
+                            0,
+                            0,
+                            image.width * _s,
+                            image.height * _s,
+                        );
+                    }
+                });
+            });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Observer.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+
+        <!-- RoughEase, ExpoScaleEase and SlowMo are all included in the EasePack file -->
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/EasePack.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/CustomEase.min.js"></script>
+    </body>
+</html>
