@@ -14,11 +14,17 @@
                 background: #000;
             }
 
-            /* TODO: can I do it? */
-            @property --easing1 {
-                syntax: "<cubic-bezier>";
+            @property --container-easing {
+                syntax: "*";
                 inherits: false;
-                initial-value: 0;
+                initial-value: linear;
+            }
+
+            @property --text-easing {
+                syntax: "*";
+                inherits: false;
+                /* initial-value: cubic-bezier(0.17, 0.67, 0.83, 0.67); */
+                initial-value: linear;
             }
 
             .close {
@@ -35,7 +41,7 @@
                 border: none;
                 outline: none;
                 cursor: pointer;
-                box-shadow: 0 0 6px 2px #333;
+                box-shadow: 0 0 1px 2px #3333336b;
 
                 &:hover::after {
                     background: #fff;
@@ -94,25 +100,14 @@
                     opacity: 0.7;
                 }
 
+                --delay-out: 0.2s;
+
                 .clip {
                     &:not(:hover, .active) {
                         & > * {
                             filter: blur(4px) brightness(0.5);
                         }
-
-                        & > p {
-                            filter: blur(1px) brightness(0.8);
-                        }
                     }
-
-                    & > * {
-                        /* TODO: Check whether you can put cubic-bezier value in a custom property!! */
-                        transition: all 0.3s cubic-bezier(0.77, 0, 0.175, 1);
-                    }
-
-                    /* img {
-                        filter: blur(0px) brightness(1);
-                    } */
 
                     scroll-margin: 80px;
                     height: 30vh;
@@ -122,19 +117,26 @@
                     place-items: center;
                     margin: 5lh 0;
                     transition:
-                        clip-path 0.3s cubic-bezier(0.77, 0, 0.175, 1),
-                        opacity 0.3s cubic-bezier(0.77, 0, 0.175, 1);
+                        clip-path 0.2s var(--container-easing),
+                        opacity 0.2s var(--container-easing);
                     position: relative;
                     cursor: pointer;
                     text-decoration-color: #fff;
                     text-decoration-thickness: 2px;
                     text-underline-offset: 8px;
+                    transition-delay: var(--delay-out);
 
-                    h1 {
-                        /* text-decoration: underline transparent 3px; */
+                    & > * {
+                        transition: all 0.2s var(--container-easing);
+                        transition-delay: var(--delay-out);
                     }
 
                     &:not(.active):hover {
+                        & > * {
+                            transition-delay: 0s;
+                        }
+
+                        transition-delay: 0s;
                         clip-path: inset(-40px -40px -40px -40px round 15px);
                         opacity: 1;
                         z-index: 5;
@@ -143,14 +145,13 @@
                             border-radius: 5px;
                             top: 0;
                             opacity: 1;
-                        }
-
-                        h1 {
-                            /* text-decoration-color: #fff; */
+                            transition-delay: 0.3s;
+                            filter: blur(0px) brightness(1);
                         }
 
                         img {
                             scale: 1.1;
+                            transition-delay: 0s;
                         }
                     }
 
@@ -165,10 +166,12 @@
                         position: relative;
                         z-index: 5;
                         font-family: Arial, Helvetica, sans-serif;
+                        /* transition-delay: var(--delay-out); */
                     }
 
                     p {
                         position: relative;
+                        filter: blur(1px) brightness(0.8);
                         color: #fff;
                         z-index: 4;
                         font-size: 30px;
@@ -176,9 +179,9 @@
                         margin-top: 2lh;
                         top: 5lh;
                         transition:
-                            0.3s cubic-bezier(0.075, 0.82, 0.165, 1) top,
-                            0.3s cubic-bezier(0.075, 0.82, 0.165, 1) opacity;
-                        transition-delay: 0.3s;
+                            0.3s var(--text-easing) top,
+                            0.3s var(--text-easing) opacity;
+                        transition-delay: 0s;
                         opacity: 0.5;
                         background: #000;
                         padding: 1lh;
@@ -194,8 +197,7 @@
                 z-index: 3;
 
                 .img {
-                    /* transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1) scale; */
-                    /* transition: 3s linear all; */
+                    transition-delay: var(--delay-out);
                     user-select: none;
                     pointer-events: none;
                     position: fixed;
