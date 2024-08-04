@@ -17,7 +17,8 @@
             @property --container-easing {
                 syntax: "*";
                 inherits: false;
-                initial-value: linear;
+                initial-value: cubic-bezier(0.17, 0.67, 0.83, 0.67);
+                /* initial-value: linear; */
             }
 
             @property --text-easing {
@@ -74,57 +75,53 @@
             }
 
             .reveal {
-                .clip-parent {
-                    &:has(.clip.active) {
-                        clip-path: inset(-60px -60px -60vh -60px round 15px);
-                        position: relative;
-                        z-index: 6;
-                        background: #fff;
-                    }
-                }
-                .clip.active {
-                    clip-path: inset(-40px -40px -60vh -40px round 15px);
-                    z-index: 7;
-                    .close {
-                        top: 30px;
-                    }
-
-                    p {
-                        border-radius: 5px;
-                        top: 0;
-                        opacity: 1;
-                    }
-                }
-
-                .clip:not(.active) {
-                    opacity: 0.7;
-                }
-
                 --delay-out: 0.2s;
 
                 .clip {
+                    &.active {
+                        clip-path: inset(-40px -40px -60vh -40px round 15px);
+                        z-index: 7;
+                        transition-delay: 0.2s, 0.2s, 0s;
+
+                        .close {
+                            top: 30px;
+                        }
+
+                        h1 {
+                            transform-origin: left;
+                            transform: perspective(300px) rotateY(5deg);
+                            scale: 1.6;
+                            translate: -100px 0;
+
+                            -webkit-text-fill-color: deeppink;
+                            -webkit-text-stroke-color: deeppink;
+
+                            /* transition:
+                                -webkit-text-fill-color 0.2s
+                                    var(--container-easing),
+                                transform 0.2s var(--container-easing),
+                                translate 0.1s var(--container-easing),
+                                scale 0.2s var(--container-easing);
+                            transition-delay: 0s, var(--delay-out), 0.4s, 0.3s; */
+
+                            transition: all 9s;
+                        }
+
+                        p {
+                            border-radius: 5px;
+                            top: 0;
+                        }
+                    }
+
                     &:not(:hover, .active) {
                         & > * {
                             filter: blur(4px) brightness(0.5);
                         }
-                    }
 
-                    scroll-margin: 80px;
-                    height: 30vh;
-                    width: 100%;
-                    clip-path: inset(0px 0px 0px 0px);
-                    display: grid;
-                    place-items: center;
-                    margin: 5lh 0;
-                    transition:
-                        clip-path 0.2s var(--container-easing),
-                        opacity 0.2s var(--container-easing);
-                    position: relative;
-                    cursor: pointer;
-                    text-decoration-color: #fff;
-                    text-decoration-thickness: 2px;
-                    text-underline-offset: 8px;
-                    transition-delay: var(--delay-out);
+                        p {
+                            filter: blur(1px) brightness(0.8);
+                        }
+                    }
 
                     & > * {
                         transition: all 0.2s var(--container-easing);
@@ -138,13 +135,10 @@
 
                         transition-delay: 0s;
                         clip-path: inset(-40px -40px -40px -40px round 15px);
-                        opacity: 1;
-                        z-index: 5;
 
                         p {
                             border-radius: 5px;
                             top: 0;
-                            opacity: 1;
                             transition-delay: 0.3s;
                             filter: blur(0px) brightness(1);
                         }
@@ -155,34 +149,50 @@
                         }
                     }
 
+                    scroll-margin: 80px;
+                    height: 30vh;
+                    width: 100%;
+                    clip-path: inset(0px 0px 0px 0px);
+                    display: grid;
+                    place-items: center;
+                    margin: 5lh 0;
+                    z-index: 0;
+                    transition:
+                        clip-path 0.2s var(--container-easing),
+                        opacity 0.2s var(--container-easing),
+                        z-index 0s linear;
+                    transition-delay: 0.2s, 0.2s, 1s;
+                    position: relative;
+                    cursor: pointer;
+                    text-decoration-color: #fff;
+                    text-decoration-thickness: 2px;
+                    text-underline-offset: 8px;
+
                     h1 {
                         margin: 0;
                         font-size: 90px;
                         font-weight: bold;
-                        -webkit-text-stroke: 2px white;
+                        /* -webkit-text-stroke: 2px white; */
+                        -webkit-text-stroke-width: 2px;
+                        -webkit-text-stroke-color: white;
+
                         -webkit-text-fill-color: #0000004f;
-                        color: #fff;
                         text-align: center;
                         position: relative;
-                        z-index: 5;
+                        z-index: 3;
                         font-family: Arial, Helvetica, sans-serif;
-                        /* transition-delay: var(--delay-out); */
                     }
 
                     p {
                         position: relative;
-                        filter: blur(1px) brightness(0.8);
                         color: #fff;
                         z-index: 4;
                         font-size: 30px;
                         font-family: Arial, Helvetica, sans-serif;
                         margin-top: 2lh;
                         top: 5lh;
-                        transition:
-                            0.3s var(--text-easing) top,
-                            0.3s var(--text-easing) opacity;
+                        transition: 0.3s var(--text-easing) top;
                         transition-delay: 0s;
-                        opacity: 0.5;
                         background: #000;
                         padding: 1lh;
                     }
@@ -213,32 +223,29 @@
     </head>
     <body>
         <div class="reveal">
-            <div class="clip-parent">
-                <div class="clip">
-                    <button class="close"></button>
-                    <h1>Tony Albert</h1>
-                    <p>
-                        But I must explain to you how all this mistaken idea of
-                        denouncing pleasure and praising pain was born and I
-                        will give you a complete account of the system, and
-                        expound the actual teachings of the great explorer of
-                        the truth, the master-builder of human happiness. No one
-                        rejects, dislikes, or avoids pleasure itself, because it
-                        is pleasure, but because those who do not know how to
-                        pursue pleasure rationally encounter consequences that
-                        are extremely painful. Nor again is there anyone who
-                        loves or pursues or desires to obtain pain of itself,
-                        because it is pain, but because occasionally
-                        circumstances occur in which toil and pain can procure
-                        him some great pleasure. To take a trivial example,
-                        which of us ever undertakes laborious physical exercise,
-                        except to obtain some advantage from it? But who has any
-                        right to find fault with a man who chooses to enjoy a
-                        pleasure that has no annoying consequences, or one who
-                        avoids a pain that produces no resultant pleasure?
-                    </p>
-                    <img src="../00.webp" class="img" />
-                </div>
+            <div class="clip">
+                <button class="close"></button>
+                <h1>Tony Albert</h1>
+                <p>
+                    But I must explain to you how all this mistaken idea of
+                    denouncing pleasure and praising pain was born and I will
+                    give you a complete account of the system, and expound the
+                    actual teachings of the great explorer of the truth, the
+                    master-builder of human happiness. No one rejects, dislikes,
+                    or avoids pleasure itself, because it is pleasure, but
+                    because those who do not know how to pursue pleasure
+                    rationally encounter consequences that are extremely
+                    painful. Nor again is there anyone who loves or pursues or
+                    desires to obtain pain of itself, because it is pain, but
+                    because occasionally circumstances occur in which toil and
+                    pain can procure him some great pleasure. To take a trivial
+                    example, which of us ever undertakes laborious physical
+                    exercise, except to obtain some advantage from it? But who
+                    has any right to find fault with a man who chooses to enjoy
+                    a pleasure that has no annoying consequences, or one who
+                    avoids a pain that produces no resultant pleasure?
+                </p>
+                <img src="../00.webp" class="img" />
             </div>
             <div class="clip">
                 <button class="close"></button>
