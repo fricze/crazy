@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+    <head>
+        <title>starting styles!</title>
+        <style>
+            #groceries {
+                margin: 0 auto;
+                margin-top: 30vh;
+                background: #f9f9f9;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-family: Arial, sans-serif;
+                width: 200px;
+                font-size: 20px;
+                transition: all 0.5s;
+            }
+
+            #groceries div {
+                padding: 5px;
+                border-bottom: 1px solid #ddd;
+
+                &:hover {
+                    text-decoration: underline;
+                    color: deeppink;
+                    cursor: pointer;
+                }
+
+                &::after {
+                    content: "×";
+                    margin-left: 10px;
+                }
+            }
+
+            #groceries-new {
+                margin: 0 auto;
+                background: #f9f9f9;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-family: Arial, sans-serif;
+                width: 200px;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="groceries">
+            <h1>Groceries</h1>
+        </div>
+
+        <form id="groceries-new">
+            <input type="text" placeholder="new grocery" />
+        </form>
+    </body>
+    <script>
+        const groceryList = ["bread", "tomatoes", "milk"];
+
+        const groceriesElement = document.getElementById("groceries");
+
+        groceriesElement.addEventListener("click", (e) => {
+            const isGroceryElement =
+                e.target.classList.contains("grocery-element");
+            if (isGroceryElement) {
+                document.startViewTransition(() => {
+                    e.target.remove();
+                });
+            }
+        });
+
+        groceriesElement.addEventListener("keydown", (e) => {
+            if (e.key !== "Enter") {
+                return;
+            }
+
+            const isGroceryElement =
+                e.target.classList.contains("grocery-element");
+            let sibling;
+
+            if (isGroceryElement) {
+                if (
+                    e?.target?.nextSibling?.classList.contains(
+                        "grocery-element",
+                    )
+                ) {
+                    sibling = e?.target?.nextSibling;
+                }
+
+                if (
+                    e?.target?.previousSibling?.classList?.contains(
+                        "grocery-element",
+                    )
+                ) {
+                    sibling = e?.target?.previousSibling;
+                }
+
+                document.startViewTransition(() => {
+                    e.target.remove();
+                });
+
+                sibling?.focus();
+            }
+        });
+
+        groceryList.forEach((el, idx) => {
+            const newElement = document.createElement("div");
+            newElement.classList.add("grocery-element");
+            newElement.tabIndex = 1;
+
+            setTimeout(() => {
+                document.startViewTransition(() => {
+                    newElement.textContent = el;
+                    groceriesElement.appendChild(newElement);
+                });
+            }, 600 * idx);
+        });
+
+        const groceriesForm = document.getElementById("groceries-new");
+        const input = groceriesForm.getElementsByTagName("input")[0];
+        groceriesForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            document.startViewTransition(() => {
+                const newElement = document.createElement("div");
+                newElement.classList.add("grocery-element");
+                newElement.textContent = input.value;
+                newElement.tabIndex = 1;
+                groceriesElement.appendChild(newElement);
+                input.value = "";
+            });
+        });
+    </script>
+</html>
