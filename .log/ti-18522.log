@@ -1,0 +1,70 @@
+[15:55:47.775] Global cache location '/Users/andrzejfricze/Library/Caches/typescript/4.9', safe file path '/opt/homebrew/lib/node_modules/typescript/lib/typingsafelist.json', types map path /opt/homebrew/lib/node_modules/typescript/lib/typesmap.json
+[15:55:47.776] Processing cache location '/Users/andrzejfricze/Library/Caches/typescript/4.9'
+[15:55:47.776] Trying to find '/Users/andrzejfricze/Library/Caches/typescript/4.9/package.json'...
+[15:55:47.780] Loaded content of '/Users/andrzejfricze/Library/Caches/typescript/4.9/package.json': {"private":true,"dependencies":{"types-registry":"^0.1.685"},"devDependencies":{"@types/aos":"^3.0.4","@types/assert":"^1.5.10","@types/babel__core":"^7.20.5","@types/babel-plugin-macros":"^3.1.3","@types/bootstrap":"^5.2.6","@types/customize-cra":"^1.0.8","@types/eslint":"^8.56.10","@types/feather-icons":"^4.29.2","@types/highlightjs":"^9.12.6","@types/jquery":"^3.5.19","@types/json-server":"^0.14.7","@types/lodash.clamp":"^4.0.8","@types/lodash.omit":"^4.5.8","@types/lodash.pick":"^4.4.8","@types/mdx-js__react":"^1.5.8","@types/modernizr":"^3.5.3","@types/node":"^20.3.1","@types/page":"^1.11.9","@types/react":"^18.3.3","@types/react-dom":"^18.3.0","@types/resolve":"^1.20.6","@types/splitting":"^1.0.6","@types/three":"^0.165.0","@types/webpack":"^5.28.5"}}
+[15:55:47.780] Loaded content of '/Users/andrzejfricze/Library/Caches/typescript/4.9/package-lock.json'
+[15:55:47.786] Adding entry into typings cache: 'aos' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/aos/index.d.ts'
+[15:55:47.792] Adding entry into typings cache: 'assert' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/assert/index.d.ts'
+[15:55:47.797] Adding entry into typings cache: 'babel__core' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/babel__core/index.d.ts'
+[15:55:47.799] Adding entry into typings cache: 'babel-plugin-macros' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/babel-plugin-macros/index.d.ts'
+[15:55:47.800] Adding entry into typings cache: 'bootstrap' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/bootstrap/index.d.ts'
+[15:55:47.801] Adding entry into typings cache: 'customize-cra' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/customize-cra/index.d.ts'
+[15:55:47.802] Adding entry into typings cache: 'eslint' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/eslint/index.d.ts'
+[15:55:47.804] Adding entry into typings cache: 'feather-icons' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/feather-icons/index.d.ts'
+[15:55:47.805] Adding entry into typings cache: 'highlightjs' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/highlightjs/index.d.ts'
+[15:55:47.806] Adding entry into typings cache: 'jquery' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/jquery/index.d.ts'
+[15:55:47.807] Adding entry into typings cache: 'json-server' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/json-server/index.d.ts'
+[15:55:47.809] Adding entry into typings cache: 'lodash.clamp' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/lodash.clamp/index.d.ts'
+[15:55:47.809] Adding entry into typings cache: 'lodash.omit' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/lodash.omit/index.d.ts'
+[15:55:47.811] Adding entry into typings cache: 'lodash.pick' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/lodash.pick/index.d.ts'
+[15:55:47.817] Adding entry into typings cache: 'mdx-js__react' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/mdx-js__react/index.d.ts'
+[15:55:47.818] Adding entry into typings cache: 'modernizr' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/modernizr/index.d.ts'
+[15:55:47.820] Adding entry into typings cache: 'node' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/node/index.d.ts'
+[15:55:47.821] Adding entry into typings cache: 'page' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/page/index.d.ts'
+[15:55:47.824] Adding entry into typings cache: 'react' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/react/ts5.0/index.d.ts'
+[15:55:47.825] Adding entry into typings cache: 'react-dom' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/react-dom/index.d.ts'
+[15:55:47.826] Adding entry into typings cache: 'resolve' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/resolve/index.d.ts'
+[15:55:47.826] Adding entry into typings cache: 'splitting' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/splitting/index.d.ts'
+[15:55:47.827] Adding entry into typings cache: 'three' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/@types/three/index.d.ts'
+[15:55:47.832] Adding entry into typings cache: 'webpack' => '/Users/andrzejfricze/Library/Caches/typescript/4.9/node_modules/webpack/types.d.ts'
+[15:55:47.833] Finished processing cache location '/Users/andrzejfricze/Library/Caches/typescript/4.9'
+[15:55:47.833] Process id: 18523
+[15:55:47.833] NPM location: /Users/andrzejfricze/.nvm/versions/node/v20.10.0/bin/npm (explicit '--npmLocation' not  provided)
+[15:55:47.833] validateDefaultNpmLocation: false
+[15:55:47.833] Npm config file: /Users/andrzejfricze/Library/Caches/typescript/4.9/package.json
+[15:55:47.833] Updating types-registry npm package...
+[15:55:47.833] Exec: /Users/andrzejfricze/.nvm/versions/node/v20.10.0/bin/npm install --ignore-scripts types-registry@latest
+[15:55:48.849]     Succeeded. stdout:
+    
+    up to date, audited 142 packages in 730ms
+
+11 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+[15:55:48.849] Updated types-registry npm package
+[15:55:48.875] Got install request {"projectName":"/dev/null/inferredProject1*","fileNames":["/opt/homebrew/lib/node_modules/typescript/lib/lib.es5.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2016.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.dom.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.dom.iterable.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.webworker.importscripts.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.scripthost.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.core.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.generator.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.iterable.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.promise.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.proxy.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.reflect.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.symbol.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2016.array.include.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2016.full.d.ts","/Users/andrzejfricze/crazy/native-query.js"],"compilerOptions":{"module":1,"target":3,"jsx":1,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"noEmitForJsFiles":true,"maxNodeModuleJsDepth":2},"typeAcquisition":{"enable":true,"include":[],"exclude":[]},"unresolvedImports":[],"projectRootPath":"/Users/andrzejfricze/crazy","kind":"discover"}
+[15:55:48.879] Loaded safelist from types map file '/opt/homebrew/lib/node_modules/typescript/lib/typesmap.json'
+[15:55:48.879] Explicitly included types: []
+[15:55:48.880] Inferred typings from unresolved imports: []
+[15:55:48.880] Result: {"cachedTypingPaths":[],"newTypingNames":[],"filesToWatch":["/Users/andrzejfricze/crazy/bower_components","/Users/andrzejfricze/crazy/node_modules"]}
+[15:55:48.880] Finished typings discovery: {"cachedTypingPaths":[],"newTypingNames":[],"filesToWatch":["/Users/andrzejfricze/crazy/bower_components","/Users/andrzejfricze/crazy/node_modules"]}
+[15:55:48.881] DirectoryWatcher:: Added:: WatchInfo: /Users/andrzejfricze/crazy/bower_components
+[15:55:48.881] DirectoryWatcher:: Added:: WatchInfo: /Users/andrzejfricze/crazy/bower_components 1 undefined Project: /dev/null/inferredProject1* watcher already invoked: false
+[15:55:48.883] Elapsed:: 1.332334041595459ms DirectoryWatcher:: Added:: WatchInfo: /Users/andrzejfricze/crazy/bower_components 1 undefined Project: /dev/null/inferredProject1* watcher already invoked: false
+[15:55:48.883] DirectoryWatcher:: Added:: WatchInfo: /Users/andrzejfricze/crazy/node_modules
+[15:55:48.883] DirectoryWatcher:: Added:: WatchInfo: /Users/andrzejfricze/crazy/node_modules 1 undefined Project: /dev/null/inferredProject1* watcher already invoked: false
+[15:55:48.883] Elapsed:: 0.08070909976959229ms DirectoryWatcher:: Added:: WatchInfo: /Users/andrzejfricze/crazy/node_modules 1 undefined Project: /dev/null/inferredProject1* watcher already invoked: false
+[15:55:48.883] Sending response:
+    {"projectName":"/dev/null/inferredProject1*","typeAcquisition":{"enable":true,"include":[],"exclude":[]},"compilerOptions":{"module":1,"target":3,"jsx":1,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"noEmitForJsFiles":true,"maxNodeModuleJsDepth":2},"typings":[],"unresolvedImports":[],"kind":"action::set"}
+[15:55:48.884] Response has been sent.
+[15:55:48.884] No new typings were requested as a result of typings discovery
+[16:04:21.776] Got install request {"projectName":"/dev/null/inferredProject1*","fileNames":["/opt/homebrew/lib/node_modules/typescript/lib/lib.es5.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2016.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.dom.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.dom.iterable.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.webworker.importscripts.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.scripthost.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.core.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.generator.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.iterable.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.promise.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.proxy.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.reflect.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.symbol.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2016.array.include.d.ts","/opt/homebrew/lib/node_modules/typescript/lib/lib.es2016.full.d.ts","/Users/andrzejfricze/crazy/native-query.js"],"compilerOptions":{"module":1,"target":3,"jsx":1,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"noEmitForJsFiles":true,"maxNodeModuleJsDepth":2},"typeAcquisition":{"enable":true,"include":[],"exclude":[]},"projectRootPath":"/Users/andrzejfricze/crazy","kind":"discover"}
+[16:04:21.777] Explicitly included types: []
+[16:04:21.777] Result: {"cachedTypingPaths":[],"newTypingNames":[],"filesToWatch":["/Users/andrzejfricze/crazy/bower_components","/Users/andrzejfricze/crazy/node_modules"]}
+[16:04:21.777] Finished typings discovery: {"cachedTypingPaths":[],"newTypingNames":[],"filesToWatch":["/Users/andrzejfricze/crazy/bower_components","/Users/andrzejfricze/crazy/node_modules"]}
+[16:04:21.778] Sending response:
+    {"projectName":"/dev/null/inferredProject1*","typeAcquisition":{"enable":true,"include":[],"exclude":[]},"compilerOptions":{"module":1,"target":3,"jsx":1,"allowJs":true,"allowSyntheticDefaultImports":true,"allowNonTsExtensions":true,"noEmitForJsFiles":true,"maxNodeModuleJsDepth":2},"typings":[],"kind":"action::set"}
+[16:04:21.778] Response has been sent.
+[16:04:21.778] No new typings were requested as a result of typings discovery
