@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+    <head>
+        <title>starting styles!</title>
+        <style>
+            #groceries {
+                margin: 40vh auto;
+                background: #f9f9f9;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-family: Arial, sans-serif;
+                width: 200px;
+                font-size: 20px;
+            }
+
+            #groceries div {
+                padding: 5px;
+                border-bottom: 1px solid #ddd;
+                transition:
+                    opacity 0.5s,
+                    translate 0.5s;
+                transition-delay: var(--delay);
+                opacity: 1;
+
+                @starting-style {
+                    opacity: 0;
+                    translate: -100px 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="groceries"></div>
+    </body>
+    <script>
+        const groceryList = ["bread", "tomatoes", "milk"];
+
+        const groceriesElement = document.getElementById("groceries");
+
+        groceryList.forEach((el, idx) => {
+            const newElement = document.createElement("div");
+            newElement.style.setProperty("--delay", `${idx * 0.5}s`);
+            newElement.textContent = el;
+            groceriesElement.appendChild(newElement);
+        });
+    </script>
+</html>
