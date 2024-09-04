@@ -19,13 +19,16 @@
                 border-bottom: 1px solid #ddd;
                 transition:
                     opacity 0.5s,
-                    translate 0.5s;
+                    translate 0.5s,
+                    height 0.5s;
                 transition-delay: var(--delay);
                 opacity: 1;
+                height: 2em;
 
                 @starting-style {
                     opacity: 0;
-                    translate: -100px 0;
+                    /* translate: -100px 0; */
+                    height: 0;
                 }
             }
         </style>

@@ -3,6 +3,13 @@
     <head>
         <title>starting styles!</title>
         <style>
+            :root {
+                view-transition-name: none;
+            }
+            ::view-transition {
+                pointer-events: none;
+            }
+
             #groceries {
                 margin: 0 auto;
                 margin-top: 30vh;
@@ -41,6 +48,40 @@
                 font-family: Arial, sans-serif;
                 width: 200px;
                 font-size: 20px;
+                margin-top: 2lh;
+            }
+
+            .grocery-element {
+                view-transition-class: grocery-element;
+            }
+
+            @keyframes grow-x {
+                from {
+                    background-color: red;
+                }
+
+                to {
+                    background-color: black;
+                }
+            }
+
+            @keyframes shrink-x {
+                from {
+                    background-color: red;
+                }
+
+                to {
+                    background-color: black;
+                }
+            }
+
+            /* This is different than animating DOM element. Animation, even with fill-mode, won't stay. Because you animate copy of element not DOM */
+            ::view-transition-old(group-0) {
+                animation: 0.5s linear shrink-x;
+            }
+
+            ::view-transition-new(target-element) {
+                animation: 0.5s linear grow-x;
             }
         </style>
     </head>
@@ -95,6 +136,7 @@
                 }
 
                 document.startViewTransition(() => {
+                    e.target.style.viewTransitionName = `target-element`;
                     e.target.remove();
                 });
 
@@ -103,31 +145,47 @@
         });
 
         groceryList.forEach((el, idx) => {
-            const newElement = document.createElement("div");
-            newElement.classList.add("grocery-element");
-            newElement.tabIndex = 1;
+            setTimeout(async () => {
+                const newElement = document.createElement("div");
+                newElement.classList.add("grocery-element");
+                newElement.tabIndex = 1;
+                newElement.style.viewTransitionName = `target-element`;
 
-            setTimeout(() => {
-                document.startViewTransition(() => {
+                const transition = document.startViewTransition(() => {
                     newElement.textContent = el;
                     groceriesElement.appendChild(newElement);
                 });
-            }, 600 * idx);
+
+                await transition.finished;
+                newElement.style.viewTransitionName = `group-${idx}`;
+            }, 200 * idx);
         });
 
         const groceriesForm = document.getElementById("groceries-new");
         const input = groceriesForm.getElementsByTagName("input")[0];
-        groceriesForm.addEventListener("submit", (e) => {
+        groceriesForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            document.startViewTransition(() => {
-                const newElement = document.createElement("div");
-                newElement.classList.add("grocery-element");
-                newElement.textContent = input.value;
-                newElement.tabIndex = 1;
+            const newElement = document.createElement("div");
+            newElement.style.viewTransitionName = `target-element`;
+            newElement.classList.add("grocery-element");
+            newElement.textContent = input.value;
+            newElement.tabIndex = 1;
+
+            const T = document.startViewTransition(() => {
                 groceriesElement.appendChild(newElement);
-                input.value = "";
             });
+
+            input.value = "";
+
+            await T.finished;
+
+            groceriesElement.querySelector(
+                "div:last-child",
+            ).style.viewTransitionName = `group-${Math.random()}`.replace(
+                ".",
+                "",
+            );
         });
     </script>
 </html>
