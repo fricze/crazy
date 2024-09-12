@@ -12,6 +12,11 @@
                 padding: 0;
             }
 
+            :root {
+                --image-y-origin: 50%;
+                --image-x-origin: 50%;
+            }
+
             @keyframes caption-in {
                 0% {
                     translate: 0 100%;
@@ -29,6 +34,16 @@
                     0.045
                 );
             }
+
+            /* ::view-transition-new(main-image):only-child {
+                animation: caption-in ease-in 0.25s;
+                animation-timing-function: cubic-bezier(
+                    0.6,
+                    -0.28,
+                    0.735,
+                    0.045
+                );
+            } */
 
             @keyframes caption-out {
                 0% {
@@ -121,6 +136,24 @@
                 }
             }
 
+            @keyframes zoom-in {
+                0% {
+                    transform: scale(0);
+                }
+                100% {
+                    transform: scale(1);
+                }
+            }
+
+            @keyframes zoom-out {
+                0% {
+                    transform: scale(1);
+                }
+                100% {
+                    transform: scale(0);
+                }
+            }
+
             #main-photo:has(img) {
                 inset: 0;
                 display: flex;
@@ -139,6 +172,17 @@
                     object-position: center;
                     /* object-fit: contain; has issues with transition */
                     object-fit: cover;
+
+                    body.view-transition & {
+                        animation: zoom-in 0.3s;
+                    }
+
+                    &.leaving {
+                        animation: zoom-out 0.3s;
+                    }
+
+                    transform-origin: var(--image-x-origin)
+                        var(--image-y-origin);
                 }
 
                 figcaption {
@@ -172,9 +216,17 @@
             document.startViewTransition =
                 document.startViewTransition ||
                 function (callback) {
+                    document.body.classList.add("view-transition");
                     callback();
+
                     return {
-                        finished: Promise.resolve(),
+                        finished: Promise.all(
+                            document
+                                .getAnimations()
+                                .map((animation) => animation.finished),
+                        ).then(() => {
+                            document.body.classList.remove("view-transition");
+                        }),
                     };
                 };
 
@@ -184,19 +236,30 @@
             let activeFigure;
 
             mainPhoto.addEventListener("click", async (e) => {
-                const trans = document.startViewTransition(() => {
-                    activeFigure?.appendChild(mainPhoto.querySelector("img"));
-                    activeFigure?.appendChild(
-                        mainPhoto.querySelector("figcaption"),
-                    );
+                const children = [
+                    mainPhoto.querySelector("img"),
+                    mainPhoto.querySelector("figcaption"),
+                ];
+
+                children.forEach((el) => {
+                    el.classList.add("leaving");
                 });
 
-                await trans.finished;
+                await Promise.all(
+                    document
+                        .getAnimations()
+                        .map((animation) => animation.finished),
+                );
+
+                activeFigure?.replaceChildren(...children);
+
+                // await trans.finished;
 
                 activeFigure
                     .querySelectorAll("img, figcaption")
                     .forEach((el) => {
                         el.style.viewTransitionName = "";
+                        el.classList.remove("leaving");
                     });
                 activeFigure.classList.remove("active");
             });
@@ -212,6 +275,21 @@
 
                     const caption = figure.querySelector("figcaption");
                     caption.style.viewTransitionName = "image-caption";
+
+                    // TODO: make position image based, not click based
+                    // so probably: find image rect, and use this rect to
+                    // calculate transform origin
+                    const x = e.clientX - e.currentTarget.offsetLeft;
+                    const y = e.clientY - e.currentTarget.offsetTop;
+
+                    document.documentElement.style.setProperty(
+                        "--image-y-origin",
+                        (e.pageY / window.innerHeight) * 100 + "%",
+                    );
+                    document.documentElement.style.setProperty(
+                        "--image-x-origin",
+                        (x / window.innerWidth) * 100 + "%",
+                    );
 
                     document.startViewTransition(() => {
                         mainPhoto.appendChild(image);

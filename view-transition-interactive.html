@@ -21,6 +21,7 @@
                 width: 200px;
                 font-size: 20px;
                 transition: all 0.5s;
+                /* view-transition-name: groceries; */
             }
 
             #groceries div {
@@ -57,11 +58,11 @@
 
             @keyframes grow-x {
                 from {
-                    background-color: red;
+                    opacity: 0;
                 }
 
                 to {
-                    background-color: black;
+                    opacity: 1;
                 }
             }
 
@@ -77,13 +78,21 @@
 
             /* This is different than animating DOM element. Animation, even with
             fill-mode, won't stay. Because you animate copy of element not DOM */
-            /* ::view-transition-old(group-0) {
+            ::view-transition-old(target-element) {
                 animation: 0.5s linear shrink-x;
-            } */
+            }
 
             ::view-transition-new(target-element) {
                 animation: 0.5s linear grow-x;
             }
+
+            /* ::view-transition-new(groceries) {
+                animation: 0.5s linear grow-container;
+            }
+
+            ::view-transition-old(groceries) {
+                animation: 0.5s linear grow-old-container;
+            } */
         </style>
     </head>
     <body>
