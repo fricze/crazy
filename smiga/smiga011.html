@@ -104,24 +104,25 @@
                 width: 100%;
                 height: 100dvh;
                 top: 0;
+                padding: calc(1.25em - 5px);
             }
 
             #gallery figure.image {
-                height: 300px;
+                height: 230px;
                 width: 200px;
 
                 --init-position: 50%;
                 --speed: 2;
                 position: relative;
-                transition: top 0.4s var(--spring-easing);
+                transition: top 0.4s ease;
 
                 will-change: top;
 
                 top: max(
                     calc(
                         var(--init-position) - var(--scroll-position) *
-                            var(--speed) * 100% + var(--scroll-position-delayed) *
-                            -50% + 50%
+                            var(--speed) * 2 * 100% +
+                            var(--scroll-position-delayed) * -50% + 350%
                     ),
                     0%
                 );
@@ -164,9 +165,11 @@
 
                 img {
                     object-fit: cover;
+                    margin: 0;
+                    aspect-ratio: 2 / 3;
                     width: 100%;
                     height: 100%;
-                    padding: 1lh;
+                    padding: 5px;
                 }
 
                 margin: 0;
@@ -175,23 +178,6 @@
                 figcaption {
                     display: none;
                 }
-
-                /* transition: clip-path 0.2s
-                    cubic-bezier(0.6, -0.28, 0.735, 0.045);
-                clip-path: inset(5% 20% 15% 10% round 15px); */
-
-                /* &:hover {
-                    clip-path: inset(0% 0% 0% 0%);
-
-                    img {
-                        scale: 2;
-                        transition: scale 0.3s 0.1s;
-                    }
-
-                    figcaption {
-                        translate: 0 0;
-                    }
-                } */
 
                 figcaption {
                     transition: translate 0.2s;
@@ -219,28 +205,12 @@
         </template>
 
         <script>
-            const gallery = document.getElementById("gallery");
-
-            gallery.addEventListener("click", (e) => {
-                const figure = e.target.closest(".image");
-                if (figure) {
-                    const mainFigure = figure.cloneNode(true);
-
-                    document.startViewTransition(() => {
-                        // mainPhoto.appendChild(mainFigure);
-                    });
-                }
-            });
-
-            new Array(9).fill(0).forEach((_, idx) => {
+            new Array(10).fill(0).forEach((_, idx) => {
                 const template = document.querySelector("#image");
                 const clone = template.content.cloneNode(true);
+                const imgIdx = idx >= 9 ? `0${idx + 1}` : `00${idx + 1}`;
                 clone.children[0].getElementsByTagName("img")[0].src =
-                    `./001/00${idx + 1}.jpg`;
-                clone.children[0].getElementsByTagName(
-                    "figcaption",
-                )[0].textContent =
-                    `Sky photo from my gallery. No. 00${idx + 1}`;
+                    `./landscapes/${imgIdx}.jpg`;
 
                 gallery.appendChild(clone);
             });
