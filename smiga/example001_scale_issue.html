@@ -12,6 +12,49 @@
                 padding: 0;
             }
 
+            :root {
+                --spring-easing: linear(
+                    0 0%,
+                    0 2.27%,
+                    0.02 4.53%,
+                    0.04 6.8%,
+                    0.06 9.07%,
+                    0.1 11.33%,
+                    0.14 13.6%,
+                    0.25 18.15%,
+                    0.39 22.7%,
+                    0.56 27.25%,
+                    0.77 31.8%,
+                    1 36.35%,
+                    0.89 40.9%,
+                    0.85 43.18%,
+                    0.81 45.45%,
+                    0.79 47.72%,
+                    0.77 50%,
+                    0.75 52.27%,
+                    0.75 54.55%,
+                    0.75 56.82%,
+                    0.77 59.1%,
+                    0.79 61.38%,
+                    0.81 63.65%,
+                    0.85 65.93%,
+                    0.89 68.2%,
+                    1 72.7%,
+                    0.97 74.98%,
+                    0.95 77.25%,
+                    0.94 79.53%,
+                    0.94 81.8%,
+                    0.94 84.08%,
+                    0.95 86.35%,
+                    0.97 88.63%,
+                    1 90.9%,
+                    0.99 93.18%,
+                    0.98 95.45%,
+                    0.99 97.73%,
+                    1 100%
+                );
+            }
+
             @keyframes caption-in {
                 0% {
                     translate: 0 100%;
@@ -21,7 +64,7 @@
                 }
             }
 
-            ::view-transition-new(image-caption):only-child {
+            ::view-transition-new(image-caption) {
                 animation: caption-in ease-in 0.25s;
                 animation-timing-function: cubic-bezier(
                     0.6,
@@ -40,25 +83,34 @@
                 }
             }
 
-            ::view-transition-old(image-caption):only-child {
-                animation: caption-out ease-out 0.25s;
-                animation-timing-function: cubic-bezier(
-                    0.6,
-                    -0.28,
-                    0.735,
-                    0.045
-                );
+            @keyframes image-in {
+                from {
+                    clip-path: circle(10% at 50% 50%);
+                }
+                to {
+                    clip-path: circle(100% at 50% 50%);
+                }
             }
 
-            /* ::view-transition-old(main-image):only-child {
-                animation: caption-out ease-in 0.25s;
-                animation-timing-function: cubic-bezier(
-                    0.6,
-                    -0.28,
-                    0.735,
-                    0.045
-                );
-            } */
+            @keyframes image-out {
+                from {
+                    clip-path: circle(100% at 50% 50%);
+                }
+                to {
+                    clip-path: circle(10% at 50% 30%);
+                }
+            }
+
+            ::view-transition-new(main-image-in) {
+                animation-name: image-in;
+                animation-duration: 0.5s;
+                animation-timing-function: ease-in;
+            }
+
+            ::view-transition-old(main-image-out) {
+                animation-name: image-out;
+                animation-duration: 0.3s;
+            }
 
             #gallery {
                 width: 80vw;
@@ -73,7 +125,6 @@
 
             #gallery figure.image {
                 background: #999;
-                /* border: 1px solid #999; */
 
                 img {
                     margin: 0;
@@ -99,7 +150,7 @@
                     clip-path: inset(0% 0% 0% 0%);
 
                     img {
-                        /* scale: 2; */
+                        scale: 2;
                         transition: scale 0.3s 0.1s;
                     }
 
@@ -184,7 +235,20 @@
 
             let activeFigure;
 
+            document.addEventListener("keydown", async (e) => {
+                if (e.key === "ArrowLeft") {
+                    return;
+                }
+
+                if (e.key === "ArrowRight") {
+                    return;
+                }
+            });
+
             mainPhoto.addEventListener("click", async (e) => {
+                mainPhoto.querySelector("img").style.viewTransitionName =
+                    "main-image-out";
+
                 const trans = document.startViewTransition(() => {
                     activeFigure?.appendChild(mainPhoto.querySelector("img"));
                     activeFigure?.appendChild(
@@ -209,7 +273,7 @@
                 if (figure) {
                     figure.classList.add("active");
                     const image = figure.querySelector("img");
-                    image.style.viewTransitionName = "main-image";
+                    image.style.viewTransitionName = "main-image-in";
 
                     const caption = figure.querySelector("figcaption");
                     caption.style.viewTransitionName = "image-caption";
