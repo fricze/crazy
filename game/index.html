@@ -6,7 +6,6 @@
             :root {
                 --step-size: 80px;
                 --steps-no: 96;
-                /* scroll-snap-type: y mandatory; */
 
                 animation: adjust-pos linear both;
                 /* animation-timing-function: steps(var(--steps-no), jump-start); */
@@ -161,7 +160,33 @@
                 }
             }
 
+            @keyframes path {
+                0% {
+                    translate: 0 0;
+                }
+                59% {
+                    translate: 0 0;
+                }
+                60% {
+                    translate: 0 -30px;
+                }
+                65% {
+                    translate: 0 -30px;
+                }
+                66% {
+                    translate: 0 0;
+                }
+                100% {
+                    translate: 0 0;
+                }
+            }
+
             #kapturek {
+                animation-name: path;
+                animation-timing-function: linear;
+                animation-timeline: scroll();
+
+                /* translate: 0 -30px; */
                 position: fixed;
                 left: 50%;
                 top: 50%;
@@ -249,11 +274,34 @@
                 background-position-y: -20px;
 
                 animation-name: idle-sprite;
+                /* TODO: learn how exactly steps work, cause me no comp */
                 animation-timing-function: steps(2, jump-none);
-                animation-duration: 0.8s;
+                animation-duration: 1.2s;
                 animation-iteration-count: infinite;
 
                 transform: scale(calc(1 - round(up, var(--scroll-speed))), 1);
+            }
+
+            @keyframes skrzynia-stay {
+                from {
+                    left: 2000px;
+                }
+                to {
+                    left: 300px;
+                }
+            }
+
+            #skrzynia {
+                animation-name: skrzynia-stay;
+                animation-timeline: scroll();
+                animation-timing-function: linear;
+
+                width: 30px;
+                height: 30px;
+                background: red;
+                position: fixed;
+                top: 520px;
+                left: 1000px;
             }
         </style>
     </head>
@@ -266,5 +314,7 @@
 
         <div id="kapturek"></div>
         <div id="kapturek-stay"></div>
+
+        <div id="skrzynia"></div>
     </body>
 </html>
