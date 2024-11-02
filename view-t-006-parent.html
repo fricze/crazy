@@ -38,19 +38,6 @@
             #groceries div {
                 padding: 5px;
                 border-bottom: 1px solid #ddd;
-                height: 38px;
-
-                transition:
-                    opacity 0.5s,
-                    padding 0.5s,
-                    height 0.5s;
-
-                @starting-style {
-                    opacity: 0;
-                    height: 0;
-                    padding-top: 0;
-                    padding-bottom: 0;
-                }
 
                 &:hover {
                     text-decoration: underline;
@@ -88,7 +75,7 @@
         </style>
     </head>
     <body>
-        <h1 class="real-dom">@starting-style on the other hand…</h1>
+        <h1 class="real-dom">View transitions don't animate real DOM</h1>
         <div id="groceries">
             <h1>Groceries</h1>
         </div>
@@ -107,6 +94,7 @@
                 e.target.classList.contains("grocery-element");
             if (isGroceryElement) {
                 document.startViewTransition(() => {
+                    e.target.style.viewTransitionName = "remove";
                     e.target.remove();
                 });
             }
@@ -138,7 +126,10 @@
                     sibling = e?.target?.previousSibling;
                 }
 
-                e.target.remove();
+                document.startViewTransition(() => {
+                    e.target.style.viewTransitionName = "remove";
+                    e.target.remove();
+                });
 
                 sibling?.focus();
             }
@@ -151,7 +142,12 @@
                 newElement.tabIndex = 1;
 
                 newElement.textContent = el;
-                groceriesElement.appendChild(newElement);
+
+                const t = document.startViewTransition(() => {
+                    groceriesElement.appendChild(newElement);
+                });
+
+                await t.finished;
             }, 500 * idx);
         });
 
@@ -165,7 +161,9 @@
             newElement.textContent = input.value;
             newElement.tabIndex = 1;
 
-            groceriesElement.appendChild(newElement);
+            document.startViewTransition(() => {
+                groceriesElement.appendChild(newElement);
+            });
 
             input.value = "";
         });

@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
     <head>
+        <script src="https://flackr.github.io/scroll-timeline/dist/scroll-timeline.js"></script>
         <title>Image reveal using scroll-timeline</title>
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
@@ -35,18 +36,10 @@
                 object-fit: cover;
 
                 animation-timeline: view();
+                animation-range-start: 20%;
                 animation-range-end: 50%;
                 animation-name: img-reveal;
-            }
-
-            p {
-                margin: var(--basic-line-height) 0;
-                margin: 1lh 0;
-            }
-
-            h1 {
-                font-size: 40px;
-                line-height: 52px;
+                animation-fill-mode: both;
             }
 
             @keyframes img-reveal {
@@ -58,6 +51,16 @@
                     opacity: 1;
                     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
                 }
+            }
+
+            p {
+                margin: var(--basic-line-height) 0;
+                margin: 1lh 0;
+            }
+
+            h1 {
+                font-size: 40px;
+                line-height: 52px;
             }
 
             .progress-indicator {

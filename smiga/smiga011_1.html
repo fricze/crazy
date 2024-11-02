@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="UTF-8" />
         <title>Smiga 001</title>
         <style type="text/css">
             * {
@@ -116,6 +117,10 @@
                 justify-content: center;
                 height: 100dvh;
                 top: 0;
+
+                p {
+                    filter: blur(calc(var(--scroll-speed) * 10px));
+                }
             }
 
             #gallery figure.image {

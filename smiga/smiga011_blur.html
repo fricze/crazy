@@ -71,6 +71,7 @@
                 width: 200px;
 
                 --init-position: 50%;
+                --speed: 2;
                 position: relative;
                 transition: top 0.4s ease;
 
@@ -78,7 +79,8 @@
 
                 top: max(
                     calc(
-                        var(--init-position) - var(--scroll-position) * 4 * 100% +
+                        var(--init-position) - var(--scroll-position) *
+                            var(--speed) * 2 * 100% +
                             var(--scroll-position-delayed) * -50% + 350%
                     ),
                     0%
@@ -127,6 +129,8 @@
                     width: 100%;
                     height: 100%;
                     padding: 5px;
+                    filter: blur(calc(var(--scroll-speed) * 10px));
+                    scale: min(1, calc(1 - var(--scroll-speed) * 0.5));
                 }
 
                 margin: 0;

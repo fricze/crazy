@@ -1,18 +1,12 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="UTF-8" />
+
         <title>starting styles!</title>
         <style>
             * {
                 box-sizing: border-box;
-            }
-
-            :root {
-                view-transition-name: none;
-            }
-
-            ::view-transition {
-                pointer-events: none;
             }
 
             #groceries {
@@ -26,7 +20,6 @@
                 width: 300px;
                 font-size: 24px;
                 transition: all 0.5s;
-                view-transition-name: groceries;
             }
 
             input {
@@ -35,21 +28,34 @@
                 width: 100%;
             }
 
-            #groceries div {
-                padding: 5px;
-                border-bottom: 1px solid #ddd;
-                height: 38px;
-
+            #groceries .grocery-element {
+                grid-template-rows: 1fr;
+                display: grid;
                 transition:
-                    opacity 0.5s,
-                    padding 0.5s,
-                    height 0.5s;
+                    grid-template-rows 0.3s,
+                    padding 0.3s;
+                overflow: hidden;
 
                 @starting-style {
-                    opacity: 0;
-                    height: 0;
                     padding-top: 0;
                     padding-bottom: 0;
+
+                    grid-template-rows: 0fr;
+
+                    .content {
+                        visibility: hidden;
+                    }
+                }
+
+                .content {
+                    min-height: 0;
+                    transition: visibility 0.3s;
+                    visibility: visible;
+
+                    &::after {
+                        content: "×";
+                        margin-left: 10px;
+                    }
                 }
 
                 &:hover {
@@ -58,9 +64,13 @@
                     cursor: pointer;
                 }
 
-                &::after {
-                    content: "×";
-                    margin-left: 10px;
+                padding: 5px;
+                border-bottom: 1px solid #ddd;
+
+                &.leaving {
+                    grid-template-rows: 0fr;
+                    padding-top: 0;
+                    padding-bottom: 0;
                 }
             }
 
@@ -88,9 +98,10 @@
         </style>
     </head>
     <body>
-        <h1 class="real-dom">@starting-style on the other hand…</h1>
+        <h1 class="real-dom">Animate to auto height!</h1>
         <div id="groceries">
             <h1>Groceries</h1>
+            <div id="groceries-list"></div>
         </div>
 
         <form id="groceries-new">
@@ -98,17 +109,30 @@
         </form>
     </body>
     <script>
-        const groceryList = ["Bread", "Tomatoes", "Milk"];
+        const groceryList = [
+            "Bread",
+            "Tomatoes",
+            "Milk with chocolate and banana",
+        ];
 
-        const groceriesElement = document.getElementById("groceries");
+        const groceriesElement = document.getElementById("groceries-list");
 
         groceriesElement.addEventListener("click", (e) => {
-            const isGroceryElement =
-                e.target.classList.contains("grocery-element");
-            if (isGroceryElement) {
-                document.startViewTransition(() => {
-                    e.target.remove();
+            const groceryElement = e.target.closest(".grocery-element");
+
+            if (groceryElement) {
+                groceryElement.classList.add("leaving");
+                // For transitions only
+                groceryElement.addEventListener("transitionend", () => {
+                    groceryElement.remove();
                 });
+
+                // For all kinds of animations
+                // Promise.all(
+                //     groceryElement
+                //         .getAnimations({ subtree: true })
+                //         .map((animation) => animation.finished),
+                // ).then(() => groceryElement.remove());
             }
         });
 
@@ -117,13 +141,12 @@
                 return;
             }
 
-            const isGroceryElement =
-                e.target.classList.contains("grocery-element");
+            const groceryElement = e.target.closest(".grocery-element");
             let sibling;
 
-            if (isGroceryElement) {
+            if (groceryElement) {
                 if (
-                    e?.target?.nextSibling?.classList.contains(
+                    groceryElement?.nextSibling?.classList.contains(
                         "grocery-element",
                     )
                 ) {
@@ -131,14 +154,19 @@
                 }
 
                 if (
-                    e?.target?.previousSibling?.classList?.contains(
+                    groceryElement?.previousSibling?.classList?.contains(
                         "grocery-element",
                     )
                 ) {
                     sibling = e?.target?.previousSibling;
                 }
 
-                e.target.remove();
+                groceryElement.classList.add("leaving");
+                Promise.all(
+                    groceryElement
+                        .getAnimations({ subtree: true })
+                        .map((animation) => animation.finished),
+                ).then(() => groceryElement.remove());
 
                 sibling?.focus();
             }
@@ -147,12 +175,15 @@
         groceryList.forEach((el, idx) => {
             setTimeout(async () => {
                 const newElement = document.createElement("div");
+                const content = document.createElement("div");
+                content.classList.add("content");
+                newElement.appendChild(content);
                 newElement.classList.add("grocery-element");
                 newElement.tabIndex = 1;
 
-                newElement.textContent = el;
+                content.textContent = el;
                 groceriesElement.appendChild(newElement);
-            }, 500 * idx);
+            }, 1000 * idx);
         });
 
         const groceriesForm = document.getElementById("groceries-new");
@@ -161,9 +192,12 @@
             e.preventDefault();
 
             const newElement = document.createElement("div");
+            const content = document.createElement("div");
+            content.classList.add("content");
+            newElement.appendChild(content);
             newElement.classList.add("grocery-element");
-            newElement.textContent = input.value;
             newElement.tabIndex = 1;
+            content.textContent = input.value;
 
             groceriesElement.appendChild(newElement);
 

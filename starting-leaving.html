@@ -1,13 +1,11 @@
 <!doctype html>
 <html>
     <head>
+        <meta charset="UTF-8" />
         <title>starting styles!</title>
         <style>
-            :root {
-                view-transition-name: none;
-            }
-            ::view-transition {
-                pointer-events: none;
+            * {
+                box-sizing: border-box;
             }
 
             #groceries {
@@ -18,10 +16,15 @@
                 border: 1px solid #ddd;
                 border-radius: 5px;
                 font-family: Arial, sans-serif;
-                width: 200px;
-                font-size: 20px;
+                width: 300px;
+                font-size: 24px;
                 transition: all 0.5s;
-                /* view-transition-name: groceries; */
+            }
+
+            input {
+                font-family: Arial, sans-serif;
+                font-size: 24px;
+                width: 100%;
             }
 
             #groceries div {
@@ -38,6 +41,29 @@
                     content: "×";
                     margin-left: 10px;
                 }
+
+                height: 38px;
+
+                transition:
+                    opacity 0.5s,
+                    padding 0.5s,
+                    height 0.5s;
+
+                @starting-style {
+                    opacity: 0;
+                    height: 0;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
+
+                /* No @leaving-style :(  */
+
+                &.leaving {
+                    opacity: 0;
+                    height: 0;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                }
             }
 
             #groceries-new {
@@ -47,65 +73,34 @@
                 border: 1px solid #ddd;
                 border-radius: 5px;
                 font-family: Arial, sans-serif;
-                width: 200px;
-                font-size: 20px;
+                width: 300px;
+                font-size: 24px;
                 margin-top: 2lh;
             }
 
-            .grocery-element {
-                view-transition-class: grocery-element;
+            .real-dom {
+                position: fixed;
+                font-family: Arial, sans-serif;
+                top: 0;
+                left: 0;
+                text-align: center;
+                width: 100%;
+                color: deeppink;
             }
-
-            @keyframes grow-x {
-                from {
-                    opacity: 0;
-                }
-
-                to {
-                    opacity: 1;
-                }
-            }
-
-            @keyframes shrink-x {
-                from {
-                    background-color: red;
-                }
-
-                to {
-                    background-color: black;
-                }
-            }
-
-            /* This is different than animating DOM element. Animation, even with
-            fill-mode, won't stay. Because you animate copy of element not DOM */
-            ::view-transition-old(target-element) {
-                animation: 0.5s linear shrink-x;
-            }
-
-            ::view-transition-new(target-element) {
-                animation: 0.5s linear grow-x;
-            }
-
-            /* ::view-transition-new(groceries) {
-                animation: 0.5s linear grow-container;
-            }
-
-            ::view-transition-old(groceries) {
-                animation: 0.5s linear grow-old-container;
-            } */
         </style>
     </head>
     <body>
+        <h1 class="real-dom">Why no @leaving-style? :(</h1>
         <div id="groceries">
             <h1>Groceries</h1>
         </div>
 
         <form id="groceries-new">
-            <input type="text" placeholder="new grocery" />
+            <input type="text" placeholder="Add to list" />
         </form>
     </body>
     <script>
-        const groceryList = ["bread", "tomatoes", "milk"];
+        const groceryList = ["Bread", "Tomatoes", "Milk"];
 
         const groceriesElement = document.getElementById("groceries");
 
@@ -113,9 +108,18 @@
             const isGroceryElement =
                 e.target.classList.contains("grocery-element");
             if (isGroceryElement) {
-                document.startViewTransition(() => {
-                    e.target.remove();
-                });
+                e.target.classList.add("leaving");
+                // For transitions only
+                // e.target.addEventListener("transitionend", () => {
+                //     e.target.remove();
+                // });
+
+                // For all kinds of animations
+                Promise.all(
+                    e.target
+                        .getAnimations({ subtree: true })
+                        .map((animation) => animation.finished),
+                ).then(() => e.target.remove());
             }
         });
 
@@ -145,10 +149,12 @@
                     sibling = e?.target?.previousSibling;
                 }
 
-                document.startViewTransition(() => {
-                    e.target.style.viewTransitionName = `target-element`;
-                    e.target.remove();
-                });
+                e.target.classList.add("leaving");
+                Promise.all(
+                    e.target
+                        .getAnimations({ subtree: true })
+                        .map((animation) => animation.finished),
+                ).then(() => e.target.remove());
 
                 sibling?.focus();
             }
@@ -159,16 +165,10 @@
                 const newElement = document.createElement("div");
                 newElement.classList.add("grocery-element");
                 newElement.tabIndex = 1;
-                newElement.style.viewTransitionName = `target-element`;
 
-                const transition = document.startViewTransition(() => {
-                    newElement.textContent = el;
-                    groceriesElement.appendChild(newElement);
-                });
-
-                await transition.finished;
-                newElement.style.viewTransitionName = `group-${idx}`;
-            }, 200 * idx);
+                newElement.textContent = el;
+                groceriesElement.appendChild(newElement);
+            }, 500 * idx);
         });
 
         const groceriesForm = document.getElementById("groceries-new");
@@ -177,25 +177,13 @@
             e.preventDefault();
 
             const newElement = document.createElement("div");
-            newElement.style.viewTransitionName = `target-element`;
             newElement.classList.add("grocery-element");
             newElement.textContent = input.value;
             newElement.tabIndex = 1;
 
-            const T = document.startViewTransition(() => {
-                groceriesElement.appendChild(newElement);
-            });
+            groceriesElement.appendChild(newElement);
 
             input.value = "";
-
-            await T.finished;
-
-            groceriesElement.querySelector(
-                "div:last-child",
-            ).style.viewTransitionName = `group-${Math.random()}`.replace(
-                ".",
-                "",
-            );
         });
     </script>
 </html>

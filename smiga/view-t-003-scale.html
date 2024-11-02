@@ -12,49 +12,6 @@
                 padding: 0;
             }
 
-            :root {
-                --spring-easing: linear(
-                    0 0%,
-                    0 2.27%,
-                    0.02 4.53%,
-                    0.04 6.8%,
-                    0.06 9.07%,
-                    0.1 11.33%,
-                    0.14 13.6%,
-                    0.25 18.15%,
-                    0.39 22.7%,
-                    0.56 27.25%,
-                    0.77 31.8%,
-                    1 36.35%,
-                    0.89 40.9%,
-                    0.85 43.18%,
-                    0.81 45.45%,
-                    0.79 47.72%,
-                    0.77 50%,
-                    0.75 52.27%,
-                    0.75 54.55%,
-                    0.75 56.82%,
-                    0.77 59.1%,
-                    0.79 61.38%,
-                    0.81 63.65%,
-                    0.85 65.93%,
-                    0.89 68.2%,
-                    1 72.7%,
-                    0.97 74.98%,
-                    0.95 77.25%,
-                    0.94 79.53%,
-                    0.94 81.8%,
-                    0.94 84.08%,
-                    0.95 86.35%,
-                    0.97 88.63%,
-                    1 90.9%,
-                    0.99 93.18%,
-                    0.98 95.45%,
-                    0.99 97.73%,
-                    1 100%
-                );
-            }
-
             @keyframes caption-in {
                 0% {
                     translate: 0 300%;
@@ -66,12 +23,7 @@
 
             ::view-transition-new(image-caption) {
                 animation: caption-in ease-in 0.25s;
-                animation-timing-function: cubic-bezier(
-                    0.6,
-                    -0.28,
-                    0.735,
-                    0.045
-                );
+                animation-timing-function: ease-in;
             }
 
             @keyframes caption-out {
@@ -94,22 +46,22 @@
 
             @keyframes image-out {
                 from {
-                    clip-path: circle(100% at 50% 50%);
+                    filter: blur(20px);
                 }
                 to {
-                    clip-path: circle(10% at 50% 30%);
+                    filter: blur(0px);
                 }
             }
 
             ::view-transition-new(main-image-in) {
                 animation-name: image-in;
-                animation-duration: 0.5s;
+                animation-duration: 0.3s;
                 animation-timing-function: ease-in;
             }
 
-            ::view-transition-old(main-image-out) {
+            ::view-transition-new(main-image-out) {
                 animation-name: image-out;
-                animation-duration: 0.3s;
+                animation-duration: 0.5s;
             }
 
             #gallery {
@@ -141,8 +93,7 @@
                 overflow: hidden;
                 position: relative;
 
-                transition: clip-path 0.2s
-                    cubic-bezier(0.6, -0.28, 0.735, 0.045);
+                transition: clip-path 0.2s;
                 clip-path: inset(5% 20% 15% 10% round 15px);
 
                 &:hover,
@@ -150,6 +101,7 @@
                     clip-path: inset(0% 0% 0% 0%);
 
                     img {
+                        scale: 2;
                         transition: scale 0.3s 0.1s;
                     }
 
@@ -287,8 +239,9 @@
             new Array(9).fill(0).forEach((_, idx) => {
                 const template = document.querySelector("#image");
                 const clone = template.content.cloneNode(true);
+                const imgIdx = idx >= 9 ? `0${idx + 1}` : `00${idx + 1}`;
                 clone.children[0].getElementsByTagName("img")[0].src =
-                    `./001/00${idx + 1}.jpg`;
+                    `./landscapes/${imgIdx}.jpg`;
                 clone.children[0].getElementsByTagName(
                     "figcaption",
                 )[0].textContent =

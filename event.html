@@ -1,0 +1,114 @@
+<!doctype html>
+
+<html>
+    <head>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&display=swap");
+
+            body {
+                background: #f0f0f0;
+                padding: 2rlh;
+                margin: 0;
+            }
+
+            :root {
+                font-size: 20px;
+                line-height: 1.45;
+                font-family: "Martian Mono", sans-serif;
+            }
+
+            input,
+            textarea {
+                font-family: "Martian Mono", sans-serif;
+                outline: none;
+                border: none;
+                border-bottom: 1px solid #333;
+                font-size: 20px;
+                padding: 0;
+                margin: 0;
+                line-height: 1rlh;
+                padding: 0.25rlh;
+                resize: none;
+                caret-color: blueviolet;
+            }
+
+            input {
+                height: 1.5rlh;
+            }
+
+            #create {
+                display: grid;
+                row-gap: 0.5lh;
+                column-gap: 16px;
+                max-width: 50ch;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            input,
+            textarea,
+            label {
+                grid-column: span 3;
+            }
+
+            label {
+                display: grid;
+                grid-template-columns: subgrid;
+
+                input,
+                p {
+                    grid-row: 1;
+                }
+
+                &:has(input + input) {
+                    input {
+                        grid-column: span 1;
+                    }
+                }
+
+                input {
+                    grid-column: 2 / span 2;
+                }
+
+                p {
+                    grid-column: 1 / span 1;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <section id="new-event">
+            <form id="create">
+                <input type="text" name="event-name" placeholder="Event Name" />
+
+                <textarea placeholder="Description" rows="14"></textarea>
+
+                <label for="date">
+                    <p>Event date:</p>
+
+                    <input type="date" id="dateInput" name="date" />
+                    <input type="time" id="timeInput" name="time" />
+                </label>
+
+                <label for="guests">
+                    <p>Guests:</p>
+
+                    <input
+                        type="number"
+                        id="guests"
+                        min="0"
+                        placeholder="~80"
+                    />
+                </label>
+            </form>
+
+            <script>
+                const today = new Date().toISOString().slice(0, 10);
+                window.dateInput.value = today;
+
+                const time = "17:30";
+                window.timeInput.value = time;
+            </script>
+        </section>
+    </body>
+</html>

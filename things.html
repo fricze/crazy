@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" src="form.css" />
+        <style>
+            body {
+                line-height: 1.4;
+            }
+
+            main {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 25vh auto;
+                min-height: 30vh;
+                width: 20vw;
+                background-color: #f0f0f0;
+                border-radius: 10px;
+                view-transition-name: main;
+                padding: 1lh 0;
+            }
+
+            :root {
+                --spring-easing: linear(
+                    0,
+                    0.01,
+                    0.04 1.5%,
+                    0.163 3.2%,
+                    0.824 9.2%,
+                    1.055,
+                    1.199 14.2%,
+                    1.24,
+                    1.263,
+                    1.265 18.2%,
+                    1.243 19.9%,
+                    0.996 28.8%,
+                    0.951,
+                    0.93 34.1%,
+                    0.929 35.7%,
+                    0.935 37.5%,
+                    1 46.3%,
+                    1.018 51.4%,
+                    1.017 55.1%,
+                    0.995 68.6%,
+                    1.001 85.5%,
+                    1
+                );
+                --spring-duration: 0.5s;
+            }
+
+            /* ::view-transition-group(*),
+            ::view-transition-old(*),
+            ::view-transition-new(*) {
+                animation-timing-function: var(--spring-easing);
+                animation-duration: var(--spring-duration);
+            } */
+
+            .active {
+                min-height: 50vh;
+                width: 30vw;
+                border-radius: 0px;
+            }
+
+            ul {
+                view-transition-name: list;
+            }
+
+            ul,
+            li {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            input[type="checkbox"] {
+                --size: 20px;
+                border-radius: 50%;
+                height: var(--size);
+                width: var(--size);
+            }
+
+            label {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 24px;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                gap: 0.25lh;
+            }
+
+            #main {
+                display: flex;
+                flex-direction: column;
+                gap: 1lh;
+            }
+
+            .active #new-reminder {
+                display: block;
+            }
+
+            #new-reminder {
+                view-transition-name: button;
+                padding: 0.5lh;
+                font-size: 20px;
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <main id="main">
+            <ul id="list">
+                <todo-item>Thing 1 reminder</todo-item>
+                <todo-item>Thing 2 reminder</todo-item>
+                <todo-item>Thing 3 reminder</todo-item>
+                <todo-item>Thing 4 reminder</todo-item>
+                <todo-item>Thing 5 reminder</todo-item>
+            </ul>
+            <button id="new-reminder">New reminder</button>
+        </main>
+
+        <script>
+            class Item extends HTMLElement {
+                constructor() {
+                    // Always call super first in constructor
+                    super();
+                }
+
+                connectedCallback() {
+                    this.innerHTML = `<li>
+                      <label>
+                        <input type="checkbox">
+                        <span>${this.textContent}</span>
+                      </label>
+                    </li>`;
+                }
+            }
+
+            customElements.define("todo-item", Item);
+
+            const main = document.getElementById("main");
+            main.addEventListener("click", (event) => {
+                if (event.target.closest("li")) {
+                    return;
+                }
+
+                document.startViewTransition(() => {
+                    main.classList.toggle("active");
+                });
+            });
+
+            const list = document.getElementById("list");
+
+            const button = document.getElementById("new-reminder");
+            button.addEventListener("click", (event) => {
+                event.stopPropagation();
+
+                const item = document.createElement("todo-item");
+                item.textContent = "New thing";
+                list.appendChild(item);
+
+                // if (event.target.closest("li")) {
+                //     return;
+                // }
+                // document.startViewTransition(() => {
+                //     main.classList.toggle("active");
+                // });
+            });
+        </script>
+    </body>
+</html>
