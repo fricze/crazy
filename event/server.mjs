@@ -15,9 +15,9 @@ app.get("/", (req, res) => {
 });
 
 app.post("/save", (req, res) => {
-  const postData = req.body.webpage;
+  const postData = req.body.webpage.replaceAll("&#10;", "");
 
-  fs.writeFile("./prev.html", postData, async (err) => {
+  fs.writeFile("./speaker_prev.html", postData, async (err) => {
     if (err) {
       console.error(err);
     } else {
