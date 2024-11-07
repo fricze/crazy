@@ -1,0 +1,108 @@
+<!doctype html>
+
+<html>
+    <head>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&display=swap");
+
+            body {
+                background: #f0f0f0;
+                padding: 0;
+                margin: 0;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4 {
+                margin: 0;
+                padding: 0;
+                margin-bottom: 0.5rlh;
+            }
+
+            :root {
+                font-size: 20px;
+                line-height: 1.45;
+                font-family: "Martian Mono", sans-serif;
+            }
+
+            input,
+            textarea {
+                font-family: "Martian Mono", sans-serif;
+                outline: none;
+                border: none;
+                border-bottom: 1px solid #333;
+                font-size: 20px;
+                padding: 0;
+                margin: 0;
+                line-height: 1rlh;
+                padding: 0.25rlh;
+                resize: none;
+                caret-color: blueviolet;
+            }
+
+            input {
+                height: 1.5rlh;
+            }
+
+            input,
+            textarea,
+            label {
+                grid-column: span 3;
+            }
+
+            label {
+                display: grid;
+                grid-template-columns: subgrid;
+
+                input,
+                p {
+                    grid-row: 1;
+                }
+
+                &:has(input + input) {
+                    input {
+                        grid-column: span 1;
+                    }
+                }
+
+                input {
+                    grid-column: 2 / span 2;
+                }
+
+                p {
+                    grid-column: 1 / span 1;
+                }
+            }
+
+            #eventView {
+                padding: 1rlh;
+                background: white;
+                background: linear-gradient(45deg, #8b39e7, #ffffff00);
+                /* border-radius: 8px; */
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+                width: 640px;
+                height: 480px;
+            }
+
+            #eventViewDescription {
+                margin-bottom: 2rlh;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section id="eventView">
+            <h1 id="eventViewName"></h1>
+            <p id="eventViewDescription"></p>
+            <div style="margin-bottom: 0.5lh">
+                <span>Event date: </span>
+                <time id="eventViewDateTime"></time>
+            </div>
+            <div>
+                <span>Guests allowed:</span>
+                <span id="eventViewGuests"></span>
+            </div>
+        </section>
+    </body>
+</html>

@@ -1,14 +1,20 @@
-<!doctype html>
-
-<html>
-    <head>
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head>
         <style>
-            @import url("https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&display=swap");
+            @import url("https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&amp;display=swap");
 
             body {
                 background: #f0f0f0;
-                padding: 2rlh;
+                padding: 0;
                 margin: 0;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4 {
+                margin: 0;
+                padding: 0;
+                margin-bottom: 0.5rlh;
             }
 
             :root {
@@ -36,12 +42,13 @@
                 height: 1.5rlh;
             }
 
-            #create {
+            #createEvent {
                 display: grid;
                 row-gap: 0.5lh;
                 column-gap: 16px;
-                max-width: 50ch;
                 grid-template-columns: 1fr 1fr 1fr;
+                width: 640px;
+                height: 480px;
             }
 
             input,
@@ -59,7 +66,7 @@
                     grid-row: 1;
                 }
 
-                &:has(input + input) {
+                &amp;:has(input + input) {
                     input {
                         grid-column: span 1;
                     }
@@ -73,42 +80,36 @@
                     grid-column: 1 / span 1;
                 }
             }
+
+            #eventView {
+                padding: 1rlh;
+                background: white;
+                background: linear-gradient(45deg, #8b39e7, #ffffff00);
+                /* border-radius: 8px; */
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+                width: 640px;
+                height: 480px;
+            }
+
+            #eventViewDescription {
+                margin-bottom: 2rlh;
+            }
         </style>
     </head>
 
     <body>
-        <section id="new-event">
-            <form id="create">
-                <input type="text" name="event-name" placeholder="Event Name" />
-
-                <textarea placeholder="Description" rows="14"></textarea>
-
-                <label for="date">
-                    <p>Event date:</p>
-
-                    <input type="date" id="dateInput" name="date" />
-                    <input type="time" id="timeInput" name="time" />
-                </label>
-
-                <label for="guests">
-                    <p>Guests:</p>
-
-                    <input
-                        type="number"
-                        id="guests"
-                        min="0"
-                        placeholder="~80"
-                    />
-                </label>
-            </form>
-
-            <script>
-                const today = new Date().toISOString().slice(0, 10);
-                window.dateInput.value = today;
-
-                const time = "17:30";
-                window.timeInput.value = time;
-            </script>
+        <section id="eventView">
+            <h1 id="eventViewName">Birthday Party</h1>
+            <p id="eventViewDescription">Come celebrate with us! it's going to be super party starter, very lovely!<br /><br />You're going to love it<br />seriiiiously!<br /><br />Come celebrate with us!</p>
+            <div style="margin-bottom: 0.5lh">
+                <span>Event date: </span>
+                <time id="eventViewDateTime">2024-11-04 17:30</time>
+            </div>
+            <div>
+                <span>Guests allowed:</span>
+                <span id="eventViewGuests">80</span>
+            </div>
         </section>
-    </body>
-</html>
+    
+
+</body></html>

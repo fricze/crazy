@@ -1,0 +1,238 @@
+<!doctype html>
+
+<html>
+    <head>
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Martian+Mono:wght@100..800&display=swap");
+
+            iframe {
+                border: none;
+                outline: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            body {
+                background: #f0f0f0;
+                padding: 2rlh;
+                margin: 0;
+
+                display: flex;
+                flex-direction: row;
+                gap: 48px;
+            }
+
+            h1,
+            h2,
+            h3,
+            h4 {
+                margin: 0;
+                padding: 0;
+                margin-bottom: 0.5rlh;
+            }
+
+            :root {
+                font-size: 20px;
+                line-height: 1.45;
+                font-family: "Martian Mono", sans-serif;
+            }
+
+            input,
+            button,
+            textarea {
+                font-family: "Martian Mono", sans-serif;
+                outline: none;
+                border: none;
+                border-bottom: 1px solid #333;
+                font-size: 20px;
+                padding: 0;
+                margin: 0;
+                line-height: 1rlh;
+                padding: 0.25rlh;
+                resize: none;
+                caret-color: blueviolet;
+            }
+
+            input {
+                height: 1.5rlh;
+            }
+
+            #createEvent {
+                display: grid;
+                row-gap: 0.5lh;
+                column-gap: 16px;
+                width: 45vw;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+
+            input,
+            textarea,
+            label {
+                grid-column: span 3;
+            }
+
+            label {
+                display: grid;
+                grid-template-columns: subgrid;
+
+                input,
+                p {
+                    grid-row: 1;
+                }
+
+                &:has(input + input) {
+                    input {
+                        grid-column: span 1;
+                    }
+                }
+
+                input {
+                    grid-column: 2 / span 2;
+                }
+
+                p {
+                    grid-column: 1 / span 1;
+                }
+            }
+
+            #eventView {
+                width: 45vw;
+                padding: 1rlh;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            }
+
+            #eventViewDescription {
+                margin-bottom: 2rlh;
+            }
+
+            iframe {
+                width: 45vw;
+            }
+
+            #saveImage {
+                margin-bottom: 1rlh;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section id="new-event">
+            <h1>New Event</h1>
+            <button id="saveImage">Save</button>
+
+            <form id="createEvent">
+                <input
+                    id="eventName"
+                    type="text"
+                    name="eventName"
+                    placeholder="Event Name"
+                    value="Birthday Party"
+                />
+
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Description"
+                    rows="14"
+                >
+Come celebrate with us! it's going to be super party starter, very lovely!
+
+You're going to love it
+
+Come celebrate with us!</textarea
+                >
+
+                <label for="date">
+                    <p>Event date:</p>
+
+                    <input type="date" id="dateInput" name="date" />
+                    <input type="time" id="timeInput" name="time" />
+                </label>
+
+                <label for="guestsNumber">
+                    <p>Guests:</p>
+
+                    <input
+                        type="number"
+                        id="guestsNumber"
+                        min="0"
+                        placeholder="~80"
+                        value="80"
+                    />
+                </label>
+            </form>
+
+            <script>
+                const today = new Date().toISOString().slice(0, 10);
+                window.dateInput.value = today;
+
+                const time = "17:30";
+                window.timeInput.value = time;
+
+                const updateForm = () => {
+                    const date = window.dateInput.value;
+                    const time = window.timeInput.value;
+                    const dateTime = `${date} ${time}`;
+
+                    const iframe = window.preview.contentWindow.window.document;
+
+                    const eventViewName =
+                        window.preview.contentWindow.window.document.getElementById(
+                            "eventViewName",
+                        );
+                    const eventViewDateTime =
+                        window.preview.contentWindow.window.document.getElementById(
+                            "eventViewDateTime",
+                        );
+                    const eventViewDescription =
+                        window.preview.contentWindow.window.document.getElementById(
+                            "eventViewDescription",
+                        );
+                    const eventViewGuests =
+                        window.preview.contentWindow.window.document.getElementById(
+                            "eventViewGuests",
+                        );
+
+                    eventViewDateTime.innerText = dateTime;
+                    eventViewName.innerText = window.eventName.value;
+                    eventViewDescription.innerText = window.description.value;
+                    eventViewGuests.innerText = window.guestsNumber.value || 0;
+                };
+
+                window.createEvent.onchange = updateForm;
+                window.createEvent.oninput = updateForm;
+            </script>
+        </section>
+
+        <iframe id="preview" src="./preview.html"></iframe>
+
+        <script>
+            window.preview.addEventListener("load", function (e) {
+                updateForm();
+            });
+
+            const headers = new Headers();
+            headers.append("Content-Type", "application/json");
+
+            window.saveImage.onclick = async () => {
+                const serializer = new XMLSerializer();
+                const text = serializer.serializeToString(
+                    window.preview.contentWindow.window.document,
+                );
+                console.log(text);
+                const f = await fetch("http://localhost:2020/save", {
+                    headers,
+                    method: "POST",
+                    body: JSON.stringify({ webpage: text }),
+                });
+                const b = response.blob();
+
+                const file = URL.createObjectURL(b);
+                // const v = await f.json();
+                console.log(file);
+            };
+        </script>
+    </body>
+</html>
