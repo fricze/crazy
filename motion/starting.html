@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+    <head>
+        <title>starting styles!</title>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            :root {
+                view-transition-name: none;
+            }
+
+            ::view-transition {
+                pointer-events: none;
+            }
+
+            #groceries {
+                margin: 0 auto;
+                margin-top: 30vh;
+                background: #f9f9f9;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-family: Arial, sans-serif;
+                width: 300px;
+                font-size: 24px;
+                transition: all 0.5s;
+                view-transition-name: groceries;
+            }
+
+            input {
+                font-family: Arial, sans-serif;
+                font-size: 24px;
+                width: 100%;
+            }
+
+            #groceries .grocery-element {
+                .grocery-content {
+                    padding: 5px;
+                    border-bottom: 1px solid #ddd;
+
+                    &::before {
+                        content: "×";
+                        margin-right: 10px;
+                    }
+                }
+
+                display: flex;
+                height: 38px;
+
+                transition:
+                    opacity 0.5s,
+                    padding 0.5s,
+                    height 0.5s;
+
+                /* @starting-style {
+                    opacity: 0;
+                    height: 0;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                } */
+
+                &:hover {
+                    text-decoration: underline;
+                    color: deeppink;
+                    cursor: pointer;
+                }
+            }
+
+            #groceries-new {
+                margin: 0 auto;
+                background: #f9f9f9;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-family: Arial, sans-serif;
+                width: 300px;
+                font-size: 24px;
+                margin-top: 2lh;
+            }
+
+            .real-dom {
+                position: fixed;
+                font-family: Arial, sans-serif;
+                top: 0;
+                left: 0;
+                text-align: center;
+                width: 100%;
+                color: deeppink;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="groceries">
+            <h1>Groceries</h1>
+        </div>
+
+        <form id="groceries-new">
+            <input type="text" placeholder="Add to list" />
+        </form>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.13/dist/motion.js"></script>
+    <script>
+        const { animate, scroll } = Motion;
+
+        const groceryList = ["Bread", "Tomatoes", "Milk"];
+
+        const groceriesElement = document.getElementById("groceries");
+
+        const easing = `
+            linear(
+                0, 0.218 2.1%, 0.862 6.5%, 1.114, 1.296 10.7%, 1.346, 1.37 12.9%, 1.373,
+                1.364 14.5%, 1.315 16.2%, 1.032 21.8%, 0.941 24%, 0.891 25.9%, 0.877,
+                0.869 27.8%, 0.87, 0.882 30.7%, 0.907 32.4%, 0.981 36.4%, 1.012 38.3%, 1.036,
+                1.046 42.7% 44.1%, 1.042 45.7%, 0.996 53.3%, 0.988, 0.984 57.5%, 0.985 60.7%,
+                1.001 68.1%, 1.006 72.2%, 0.998 86.7%, 1
+              )
+        `;
+
+        groceriesElement.addEventListener("click", (e) => {
+            const groceryElement = e.target.closest(".grocery-element");
+
+            groceryElement
+                ?.animate(
+                    {
+                        opacity: [1, 0],
+                        height: [groceryElement.height, "0"],
+                        transform: ["scaleX(1)", "scaleX(0)"],
+                    },
+                    { easing: easing, duration: 800 },
+                )
+                .finished.then(() => {
+                    groceryElement.remove();
+                });
+        });
+
+        groceriesElement.addEventListener("keydown", (e) => {
+            if (e.key !== "Enter") {
+                return;
+            }
+
+            const isGroceryElement =
+                e.target.classList.contains("grocery-element");
+            let sibling;
+
+            if (isGroceryElement) {
+                if (
+                    e?.target?.nextSibling?.classList.contains(
+                        "grocery-element",
+                    )
+                ) {
+                    sibling = e?.target?.nextSibling;
+                }
+
+                if (
+                    e?.target?.previousSibling?.classList?.contains(
+                        "grocery-element",
+                    )
+                ) {
+                    sibling = e?.target?.previousSibling;
+                }
+
+                e.target
+                    ?.animate(
+                        {
+                            opacity: [1, 0],
+                            height: [e.target.height, "0"],
+                            transform: ["scaleX(1)", "scaleX(0)"],
+                        },
+                        { easing: easing, duration: 800 },
+                    )
+                    .finished.then(() => {
+                        e.target.remove();
+                    });
+
+                sibling?.focus();
+            }
+        });
+
+        groceryList.forEach((el, idx) => {
+            setTimeout(async () => {
+                const newElement = document.createElement("div");
+
+                const content = document.createElement("div");
+                content.classList.add("grocery-content");
+                content.textContent = el;
+
+                newElement.appendChild(content);
+                newElement.classList.add("grocery-element");
+                newElement.tabIndex = 1;
+
+                groceriesElement.appendChild(newElement);
+
+                newElement.animate(
+                    {
+                        opacity: [0, 1],
+                        transform: ["scaleX(0)", "scaleX(1)"],
+                    },
+                    {
+                        duration: 600,
+                        easing: easing,
+                    },
+                );
+            }, 500 * idx);
+        });
+
+        const groceriesForm = document.getElementById("groceries-new");
+        const input = groceriesForm.getElementsByTagName("input")[0];
+
+        window.document.onclick = (e) => {
+            input.focus();
+        };
+
+        groceriesForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const newElement = document.createElement("div");
+            const content = document.createElement("div");
+            content.classList.add("grocery-content");
+
+            newElement.appendChild(content);
+            newElement.classList.add("grocery-element");
+            newElement.tabIndex = 1;
+
+            content.textContent = input.value;
+
+            groceriesElement.appendChild(newElement);
+
+            newElement.animate(
+                {
+                    opacity: [0, 1],
+                    transform: ["scaleX(0)", "scaleX(1)"],
+                },
+                {
+                    duration: 600,
+                    easing: easing,
+                },
+            );
+
+            input.value = "";
+        });
+    </script>
+</html>

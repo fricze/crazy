@@ -14,6 +14,8 @@
                 outline: none;
                 padding: 0;
                 margin: 0;
+                /* user-select: none;
+                pointer-events: none; */
             }
 
             body {
@@ -195,7 +197,10 @@ Come celebrate with us!</textarea
                 const f = await fetch("http://localhost:2020/save", {
                     headers,
                     method: "POST",
-                    body: JSON.stringify({ webpage: text }),
+                    body: JSON.stringify({
+                        webpage: text,
+                        fileName: "przemek_n_future.png",
+                    }),
                 });
                 const b = response.blob();
 

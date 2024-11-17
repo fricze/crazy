@@ -15,13 +15,17 @@ app.get("/", (req, res) => {
 });
 
 app.post("/save", (req, res) => {
-  const postData = req.body.webpage.replaceAll("&#10;", "");
+  const postData = req.body.webpage
+    .replaceAll("&#10;", "")
+    .replaceAll("&amp;", "&");
+
+  const fileName = req.body.fileName;
 
   fs.writeFile("./speaker_prev.html", postData, async (err) => {
     if (err) {
       console.error(err);
     } else {
-      const img = await makeScreenshot();
+      const img = await makeScreenshot(fileName);
 
       const imgBlob = new Blob([img], { type: "image/png" });
 
