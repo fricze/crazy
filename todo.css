@@ -1,0 +1,15 @@
+form {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out;
+
+    &.opened {
+        grid-template-rows: 1fr;
+    }
+
+    ul {
+        overflow-y: hidden;
+        padding-left: 10px;
+        margin-left: -10px;
+    }
+}

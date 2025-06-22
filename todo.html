@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Todo List</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+        <!-- and it's easy to individually load additional languages -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/go.min.js"></script>
+
+        <script>
+            hljs.highlightAll();
+        </script>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-size: 24px;
+                font-family: Arial, sans-serif;
+            }
+
+            body {
+                display: grid;
+                place-items: center;
+                height: 100dvh;
+            }
+
+            ul,
+            li {
+                list-style: none;
+            }
+
+            #todo-code {
+                position: absolute;
+                position-anchor: --todo-list;
+                background-color: #000;
+                margin: 0;
+                left: calc(anchor(left));
+                bottom: anchor(top);
+                color: #fff;
+                border-radius: 10px;
+                pre,
+                code {
+                    * {
+                        font-size: 32px;
+                    }
+                }
+            }
+
+            #todo-list {
+                anchor-name: --todo-list;
+                display: flex;
+                flex-direction: column;
+                background: linear-gradient(
+                    135deg,
+                    rgb(7 38 51) 0%,
+                    rgba(0, 0, 0, 1) 50%
+                );
+                padding: 0.5rlh 20px;
+                border-radius: 10px;
+                width: 80%;
+                transition:
+                    border-radius 0.3s ease-out,
+                    box-shadow 0.3s ease-out;
+
+                &:hover {
+                    h1 {
+                        color: #ccc;
+                    }
+                }
+
+                h1 {
+                    font-size: 2rem;
+                    color: #999;
+                    border-bottom: 1px solid #999;
+                    margin-bottom: 0.5lh;
+                    transition: color 0.3s ease-out;
+                }
+
+                &.opened {
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                    border-radius: 5px;
+
+                    h1 {
+                        color: #ccc;
+                    }
+                }
+            }
+
+            li {
+                color: #ddd;
+
+                label {
+                    margin: 0.25lh 0;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 16px;
+                    font-size: 1.8rem;
+                }
+            }
+
+            input[type="checkbox"] {
+                --size: 25px;
+                appearance: none;
+                -webkit-appearance: none;
+                width: var(--size);
+                height: var(--size);
+                border: 2px solid #999;
+                border-radius: 5px;
+                background-color: #333;
+
+                &:checked {
+                    background-color: #999;
+                }
+            }
+
+            form {
+                display: grid;
+                grid-template-rows: 0fr;
+                transition: grid-template-rows 0.3s ease-out;
+
+                &.opened {
+                    grid-template-rows: 1fr;
+                }
+
+                ul {
+                    overflow-y: hidden;
+                    padding-left: 10px;
+                    margin-left: -10px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <section id="todo-list">
+            <h1>Todo</h1>
+            <form>
+                <ul>
+                    <li>
+                        <label>
+                            <input type="checkbox" />
+                            Buy milk
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" />
+                            Buy bread
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" />
+                            Buy eggs
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" />
+                            Buy milk
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" />
+                            Buy bread
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" />
+                            Buy eggs
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" />
+                            Buy milk
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" />
+                            Buy bread
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" />
+                            Buy eggs
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" />
+                            Buy milk
+                        </label>
+                    </li>
+                </ul>
+            </form>
+        </section>
+
+        <!-- <div id="todo-code">
+            <pre><code class="language-css">
+form {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease-out;
+}
+            </code></pre>
+        </div> -->
+
+        <script>
+            const todoList = document.getElementById("todo-list");
+            const todoForm = todoList.querySelector("form");
+
+            todoList.addEventListener("click", function (event) {
+                const target = event.target;
+                if (!target.closest("form")) {
+                    todoList.classList.toggle("opened");
+                    todoForm.classList.toggle("opened");
+                }
+            });
+        </script>
+    </body>
+</html>

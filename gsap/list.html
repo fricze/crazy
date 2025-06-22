@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Todo List</title>
+
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/Flip.min.js"></script>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-size: 24px;
+                font-family: Arial, sans-serif;
+            }
+
+            body {
+                display: grid;
+                height: 100dvh;
+            }
+
+            ul,
+            li {
+                list-style: none;
+            }
+
+            #todo-code {
+                position: absolute;
+                position-anchor: --todo-list;
+                align-items: start;
+                background-color: #000;
+                margin: 0;
+                left: calc(anchor(left));
+                bottom: anchor(top);
+                color: #fff;
+                border-radius: 10px;
+                pre,
+                code {
+                    * {
+                        font-size: 32px;
+                    }
+                }
+            }
+
+            #todo-list {
+                anchor-name: --todo-list;
+                display: flex;
+                align-items: start;
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding: 0.5rlh 20px;
+                border-radius: 10px;
+                width: 80%;
+                justify-content: space-between;
+                transition:
+                    border-radius 0.3s ease-out,
+                    box-shadow 0.3s ease-out;
+
+                &:hover {
+                    h1 {
+                        color: #ccc;
+                    }
+                }
+
+                h1 {
+                    font-size: 2rem;
+                    color: #999;
+                    border-bottom: 1px solid #999;
+                    margin-bottom: 0.5lh;
+                    transition: color 0.3s ease-out;
+                }
+
+                &.opened {
+                    .box:nth-child(1) {
+                        order: 2;
+                    }
+                    .box:nth-child(2) {
+                        /* order: 3; */
+                        width: 100%;
+                    }
+                    .box:nth-child(3) {
+                        order: 0;
+                        /* width: 40%; */
+                    }
+                }
+            }
+
+            li {
+                color: #ddd;
+
+                label {
+                    margin: 0.25lh 0;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 16px;
+                    font-size: 1.8rem;
+                }
+            }
+
+            input[type="checkbox"] {
+                --size: 25px;
+                appearance: none;
+                -webkit-appearance: none;
+                width: var(--size);
+                height: var(--size);
+                border: 2px solid #999;
+                border-radius: 5px;
+                background-color: #333;
+
+                &:checked {
+                    background-color: #999;
+                }
+            }
+
+            .box {
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                border-radius: 5px;
+                background: linear-gradient(
+                    135deg,
+                    rgb(7 38 51) 0%,
+                    rgba(0, 0, 0, 1) 50%
+                );
+
+                &:nth-child(1),
+                &:nth-child(2) {
+                    width: 45%;
+                }
+            }
+        </style>
+    </head>
+    <body id="content">
+        <ul id="todo-list">
+            <li class="box">
+                lorem ipsum dolor sit amet Lorem Ipsum is simply dummy text of
+                the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an
+                unknown printer took a galley of type and scrambled it to make a
+                type specimen book. It has survived
+            </li>
+            <li class="box">
+                lorem ipsum dolor sit amet Lorem Ipsum is simply dummy text of
+                the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an
+                unknown printer took a galley of type and scrambled it to make a
+                type specimen book. It has survived
+            </li>
+            <li class="box">
+                lorem ipsum dolor sit amet Lorem Ipsum is simply dummy text of
+                the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an
+                unknown printer took a galley of type and scrambled it to make a
+                type specimen book. It has survived not only five centuries, but
+                also the leap into electronic typesetting, remaining essentially
+                unchanged. It was popularised in the 1960s with the release of
+                Letraset sheets containing Lorem Ipsum passages, and more
+                recently with desktop publishing software like Aldus PageMaker
+                including versions of Lorem Ipsum.
+            </li>
+        </ul>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", (event) => {
+                gsap.registerPlugin(Flip);
+
+                const todoList = document.getElementById("todo-list");
+
+                document.body.addEventListener("click", function (event) {
+                    const target = event.target;
+
+                    if (!target.closest("form")) {
+                        const state = Flip.getState(
+                            document.querySelectorAll(".box"),
+                        );
+                        todoList.classList.toggle("opened");
+
+                        Flip.from(state, {
+                            duration: 0.5,
+                            yoyo: true,
+                        }).yoyo(true);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
